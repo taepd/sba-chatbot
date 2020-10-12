@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import {Divider, InputBase } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -23,6 +24,14 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     flexShrink: 0,
   },
+  align:{
+    marginLeft  : 'auto',
+    marginRight : 'auto'
+  },
+  inputBase:{
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    width: 300
+  }
 }));
 
 export default function Header(props) {
@@ -32,8 +41,8 @@ export default function Header(props) {
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
-        <Button size="small">Subscribe</Button>
-        <Typography
+        <Button variant="contrain" color="primary" >프로젝트</Button>
+        {/* <Typography
           component="h2"
           variant="h5"
           color="inherit"
@@ -42,10 +51,14 @@ export default function Header(props) {
           className={classes.toolbarTitle}
         >
           {title}
-        </Typography>
-        <IconButton>
+        </Typography> */}
+        <div className={classes.align}>
+        <InputBase className={classes.inputBase}>
+        </InputBase>
+        <IconButton >
           <SearchIcon />
         </IconButton>
+        </div>
         <Button variant="outlined" size="small">
           Sign up
         </Button>

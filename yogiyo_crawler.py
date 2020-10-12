@@ -8,7 +8,7 @@ from util.file_helper import FileReader
 import json
 import requests
 import time
-
+import pandas as pd
 
 class YogiyoCrawler:
 
@@ -150,7 +150,7 @@ class YogiyoCrawler:
     def json_to_csv(self, json_data, start, end):
         reader = self.reader
         reader.context = os.path.join(baseurl, 'data/csv/store')
-        reader.fname = f'yogiyo_store({start}~{end}).json'
+        reader.fname = f'yogiyo_store({start}~{end}).csv'
         reader.new_file()
         reader.json_to_csv(json_data)
 
@@ -198,6 +198,7 @@ if __name__ == '__main__':
     #     yogiyo.get_json_store(start, end)
     #     start += 1000
     #     end += 1000
+    # yogiyo.get_json_store(64000, 65000)
 
 
     # -------------------------
@@ -225,9 +226,24 @@ if __name__ == '__main__':
     # yogiyo.get_json_review(42000, 42612, json_data)
 
     #---------------------------
-    # json을 csv로
-    input_file_path = f'./data/json/store/yogiyo_store(0~1000).json'
-    yogiyo.json_to_csv(input_file_path, 0, 1000)
+    # json을 csv로(매장)
+    # start = 0
+    # end = 1000
+    # for i in range(849):
+    #     input_file_path = f'./data/json/store/yogiyo_store({start}~{end}).json'
+    #     try:
+    #         yogiyo.json_to_csv(input_file_path, start, end)
+    #     except:
+    #         pass
+    #     start += 1000
+    #     end += 1000
+
+    #---------------------------
+    # csv 병합
+    input_path = './data/csv/store'
+    output_file = './data/csv/store/yogiyo_store(total).csv'
+    reader = FileReader()
+    reader.merge_csv(input_path, output_file, '*.csv')
 
 
 
