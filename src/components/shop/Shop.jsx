@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const sections = [
-  { title: '매장', url: '#' },
+  { title: '매장', url: '/shop' },
   { title: '메뉴', url: '#' },
   { title: '주문', url: '#' },
   { title: '리뷰', url: '#' },
