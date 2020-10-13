@@ -34,14 +34,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Header(props) {
+const Header = (props) => {
   const classes = useStyles();
   const { sections, title } = props;
 
   return (
-    <React.Fragment>
+    <>
       <Toolbar className={classes.toolbar}>
-        <Button variant="contrain" color="primary" >프로젝트</Button>
+        <Button color="primary" >프로젝트</Button>
         {/* <Typography
           component="h2"
           variant="h5"
@@ -77,7 +77,7 @@ export default function Header(props) {
           </Link>
         ))}
       </Toolbar>
-    </React.Fragment>
+    </>
   );
 }
 
@@ -85,3 +85,5 @@ Header.propTypes = {
   sections: PropTypes.array,
   title: PropTypes.string,
 };
+
+export default Header

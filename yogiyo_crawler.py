@@ -215,14 +215,14 @@ if __name__ == '__main__':
 
     # -------------------------
     # 리뷰 크롤링
-    # file_path = f'./data/yogiyo_store_id_list(seoul).json'
-    # json_data = yogiyo.load_json(file_path)
-    # start = 0
-    # end = 1000
-    # for i in range(42):
-    #     yogiyo.get_json_review(start, end, json_data)
-    #     start += 1000
-    #     end += 1000
+    file_path = f'./data/yogiyo_store_id_list(seoul).json'
+    json_data = yogiyo.load_json(file_path)
+    start = 0
+    end = 1000
+    for i in range(42):
+        yogiyo.get_json_review(start, end, json_data)
+        start += 1000
+        end += 1000
     # yogiyo.get_json_review(42000, 42612, json_data)
 
     #---------------------------
@@ -240,10 +240,10 @@ if __name__ == '__main__':
 
     #---------------------------
     # csv 병합
-    input_path = './data/csv/store'
-    output_file = './data/csv/store/yogiyo_store(total).csv'
-    reader = FileReader()
-    reader.merge_csv(input_path, output_file, '*.csv')
+    # input_path = './data/csv/store'
+    # output_file = './data/csv/store/yogiyo_store(total).csv'
+    # reader = FileReader()
+    # reader.merge_csv(input_path, output_file, '*.csv')
 
 
 

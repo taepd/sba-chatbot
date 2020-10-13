@@ -6,12 +6,12 @@ import Container from '@material-ui/core/Container';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
-import Header from './Header';
+import Header from '../common/Header';
 import MainFeaturedPost from './MainFeaturedPost';
 import FeaturedPost from './FeaturedPost';
 import Main from './Main';
 import Sidebar from './Sidebar';
-import Footer from './Footer';
+import Footer from '../common/Footer';
 import post1 from './blog-post.1.md';
 import post2 from './blog-post.2.md';
 import post3 from './blog-post.3.md';
@@ -23,12 +23,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const sections = [
-  { title: 'Technology', url: '#' },
-  { title: 'Design', url: '#' },
-  { title: 'Culture', url: '#' },
-  { title: 'Business', url: '#' },
-  { title: 'Politics', url: '#' },
-  { title: 'Opinion', url: '#' },
+  { title: '매장', url: '#' },
+  { title: '메뉴', url: '#' },
+  { title: '주문', url: '#' },
+  { title: '리뷰', url: '#' },
+  { title: '관리자', url: '#' },
   { title: 'Science', url: '#' },
   { title: 'Health', url: '#' },
   { title: 'Style', url: '#' },
@@ -89,11 +88,11 @@ const sidebar = {
   ],
 };
 
-export default function Blog() {
+const Shop = () => {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+      <>
       <CssBaseline />
       <Container maxWidth="lg">
         <Header title="Blog" sections={sections} />
@@ -116,6 +115,8 @@ export default function Blog() {
         </main>
       </Container>
       <Footer title="Footer" description="Something here to give the footer a purpose!" />
-    </React.Fragment>
+    </>
   );
 }
+
+export default Shop
