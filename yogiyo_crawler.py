@@ -217,13 +217,13 @@ if __name__ == '__main__':
     # 리뷰 크롤링
     file_path = f'./data/yogiyo_store_id_list(seoul).json'
     json_data = yogiyo.load_json(file_path)
-    start = 0
-    end = 1000
-    for i in range(42):
-        yogiyo.get_json_review(start, end, json_data)
-        start += 1000
-        end += 1000
-    # yogiyo.get_json_review(42000, 42612, json_data)
+    # start = 0
+    # end = 1000
+    # for i in range(42):
+    #     yogiyo.get_json_review(start, end, json_data)
+    #     start += 1000
+    #     end += 1000
+    yogiyo.get_json_review(42000, 42612, json_data)
 
     #---------------------------
     # json을 csv로(매장)

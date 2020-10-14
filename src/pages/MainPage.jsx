@@ -1,15 +1,14 @@
 import React from 'react'
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
-import {Shop} from '../components/shop'
-import {SignIn} from '../components/user'
+import {Main} from '../components'
+import {ShopPage} from '../pages'
 
 const MainPage = () => <>
     <BrowserRouter>
         <div className="main">
             <Switch>
-                <Route exact path="/" component={Shop}/>
-                <Route exact path="/shop" component={SignIn}/>
-                
+                <Route exact path="/" component={Main}/>
+                <Route exact path="/shop" component={ShopPage}/>
             </Switch>
         </div>
     </BrowserRouter>

@@ -9,6 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 // import Link from '@material-ui/core/Link';
 import {Divider, InputBase } from '@material-ui/core';
+import { NoEncryption } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -24,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
   toolbarLink: {
     padding: theme.spacing(1),
     flexShrink: 0,
+    textDecoration: 'none',
+    color: 'inherit',
+    "&:hover": {
+      textDecoration: 'underline'},
+    
   },
   align:{
     marginLeft  : 'auto',

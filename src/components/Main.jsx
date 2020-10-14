@@ -6,15 +6,15 @@ import Container from '@material-ui/core/Container';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
-import Header from '../common/Header';
-import MainFeaturedPost from './MainFeaturedPost';
-import FeaturedPost from './FeaturedPost';
-import MainPost from './MainPost';
-import Sidebar from './Sidebar';
-import Footer from '../common/Footer';
-import post1 from './blog-post.1.md';
-import post2 from './blog-post.2.md';
-import post3 from './blog-post.3.md';
+import Header from './common/Header';
+import MainFeaturedPost from './shop/MainFeaturedPost';
+import FeaturedPost from './shop/FeaturedPost';
+import Main from './shop/MainPost';
+import Sidebar from './shop/Sidebar';
+import Footer from './common/Footer';
+import post1 from './shop/blog-post.1.md';
+import post2 from './shop/blog-post.2.md';
+import post3 from './shop/blog-post.3.md';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -104,7 +104,7 @@ const Shop = () => {
             ))}
           </Grid>
           <Grid container spacing={5} className={classes.mainGrid}>
-            <MainPost title="From the firehose" posts={posts} />
+            <Main title="From the firehose" posts={posts} />
             <Sidebar
               title={sidebar.title}
               description={sidebar.description}
