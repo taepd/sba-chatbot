@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import {Main} from '../components'
-import {ShopPage} from '../pages'
+import {ShopPage, ReviewPage} from '../pages'
 
 const MainPage = () => <>
     <BrowserRouter>
@@ -9,6 +9,7 @@ const MainPage = () => <>
             <Switch>
                 <Route exact path="/" component={Main}/>
                 <Route exact path="/shop" component={ShopPage}/>
+                <Route exact path="/review" component={ReviewPage}/>
             </Switch>
         </div>
     </BrowserRouter>
