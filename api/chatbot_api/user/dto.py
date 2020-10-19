@@ -15,13 +15,13 @@ class UserDto(db.Model):
     lat: float = db.Column(db.Float)
     lng: float = db.Column(db.Float)
 
-    # def __init__(self, userid, password, name, addr, lat, lng):
-    #     self.userid = userid
-    #     self.password = password
-    #     self.name = name
-    #     self.addr = addr
-    #     self.lat = lat
-    #     self.lng = lng
+    def __init__(self, userid, password, name, addr, lat, lng):
+        self.userid = userid
+        self.password = password
+        self.name = name
+        self.addr = addr
+        self.lat = lat
+        self.lng = lng
 
     def __repr__(self):
         return f'User(userid={self.userid}, ' \

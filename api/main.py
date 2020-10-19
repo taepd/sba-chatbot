@@ -3,6 +3,11 @@ from flask_restful import Api
 from chatbot_api.ext.db import url, db
 from chatbot_api.ext.routes import initialize_routes
 from chatbot_api.user.dao import UserDao
+from chatbot_api.shop.dto import ShopDto
+from chatbot_api.food.dto import FoodDto
+from chatbot_api.review.dto import ReviewDto
+from chatbot_api.order.dto import OrderDto
+from chatbot_api.user.dto import UserDto
 from flask_cors import CORS
 
 
@@ -35,8 +40,8 @@ def test():
 app.app_context().push()
 
 # 유저 추가 (create)
-# user = UserDto(userid='tom', password='1', name='tom', addr="서울시 서초구", lat=37.1234, lng=128.1234)
-# UserDao.add(user)
+user = UserDto(userid='tom', password='1', name='tom', addr="서울시 서초구", lat=37.1234, lng=128.1234)
+UserDao.add(user)
 
 # 유저 조회
 # 전체 조회
