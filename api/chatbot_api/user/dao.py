@@ -66,7 +66,7 @@ class UserDao:
 
     @classmethod
     def find_by_name(cls, name):
-        return cls.query.filer_by(name == name).all()
+        return UserDto.query.filer_by(name == name).all()
 
     @classmethod
     def find_by_id(cls, userid):

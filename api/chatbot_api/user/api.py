@@ -1,7 +1,7 @@
 from typing import List
 from flask_restful import Resource, reqparse
-from com_sba_api.user.dao import UserDao
-from com_sba_api.user.dto import UserDto
+from chatbot_api.user.dao import UserDao
+# from com_sba_api.user.dto import UserDto
 
 
 class User(Resource):
@@ -21,3 +21,7 @@ class User(Resource):
 class Users(Resource):
     def get(self):
         ...
+
+
+user = User()
+print(user.get('tom'))

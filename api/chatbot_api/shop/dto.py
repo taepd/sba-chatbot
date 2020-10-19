@@ -12,13 +12,17 @@ class ShopDto(db.Model):
     shop_id: int = db.Column(db.Integer, primary_key=True, index=True)
     shop_name: str = db.Column(db.String(30))
     shop_addr: str = db.Column(db.String(100))
-    shop_img: str = db.Column(db.String(200))
+    shop_img: str = db.Column(db.String(200), default='shop_default.png')
     cat: str = db.Column(db.String(20))
     shop_lat: float = db.Column(db.Float)
     shop_lng: float = db.Column(db.Float)
     shop_rev_avg: float = db.Column(db.Float)
     shop_rev_amt: int = db.Column(db.Integer)
     opentime: str = db.Column(db.Date)
+
+    foods = db.relationship('FoodDto', backref='shop', lazy=True)
+    reviews = db.relationship('ReviewDto', backref='shop', lazy=True)
+    orders = db.relationship('OrderDto', backref='shop', lazy=True)
 
     def __init__(self, shop_id, shop_name, shop_addr, shop_img, cat,
                  shop_lat, shop_lng, shop_rev_avg, shop_rev_amt, opentime):

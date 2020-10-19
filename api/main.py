@@ -40,8 +40,8 @@ def test():
 app.app_context().push()
 
 # 유저 추가 (create)
-user = UserDto(userid='tom', password='1', name='tom', addr="서울시 서초구", lat=37.1234, lng=128.1234)
-UserDao.add(user)
+# user = UserDto(userid='tom', password='1', name='tom', addr="서울시 서초구", lat=37.1234, lng=128.1234)
+# UserDao.add(user)
 
 # 유저 조회
 # 전체 조회

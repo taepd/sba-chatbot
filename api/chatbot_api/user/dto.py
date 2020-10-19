@@ -15,6 +15,10 @@ class UserDto(db.Model):
     lat: float = db.Column(db.Float)
     lng: float = db.Column(db.Float)
 
+    foods = db.relationship('FoodDto', backref='user', lazy=True)
+    reviews = db.relationship('ReviewDto', backref='user', lazy=True)
+    orders = db.relationship('OrderDto', backref='user', lazy=True)
+
     def __init__(self, userid, password, name, addr, lat, lng):
         self.userid = userid
         self.password = password
@@ -25,8 +29,11 @@ class UserDto(db.Model):
 
     def __repr__(self):
         return f'User(userid={self.userid}, ' \
-               f'password={self.password}, name={self.name},' \
-               f'addr={self.addr}, lat={self.lat}, lng={self.lng})'
+               f'password={self.password}, ' \
+               f'name={self.name},' \
+               f'addr={self.addr}, ' \
+               f'lat={self.lat}, ' \
+               f'lng={self.lng})'
 
     @property
     def json(self):

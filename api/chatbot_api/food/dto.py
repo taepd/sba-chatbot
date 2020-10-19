@@ -15,7 +15,11 @@ class FoodDto(db.Model):
     price: int = db.Column(db.Integer)
     food_rev_avg: float = db.Column(db.Float)
     food_rev_amt: float = db.Column(db.Integer)
+
     shop_id: int = db.Column(db.Integer, db.ForeignKey(ShopDto.shop_id))
+
+    reviews = db.relationship('ReviewDto', backref='food', lazy=True)
+    orders = db.relationship('OrderDto', backref='food', lazy=True)
 
     def __init__(self, food_id, food_name, price, food_rev_avg,
                  food_rev_amt, shop_id):
@@ -27,9 +31,12 @@ class FoodDto(db.Model):
         self.shop_id = shop_id
 
     def __repr__(self):
-        return f'Food(food_id={self.food_id}, food_name={self.food_name}, ' \
-               f'price={self.price}, food_rev_avg={self.food_rev_avg},' \
-               f'food_rev_amt={self.food_rev_amt}, shop_id="{self.shop_id}"'
+        return f'Food(food_id={self.food_id}, ' \
+               f'food_name={self.food_name}, ' \
+               f'price={self.price}, ' \
+               f'food_rev_avg={self.food_rev_avg}, ' \
+               f'food_rev_amt={self.food_rev_amt}, ' \
+               f'shop_id="{self.shop_id}"'
 
     @property
     def json(self):
