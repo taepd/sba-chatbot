@@ -1,13 +1,13 @@
 from flask import Flask
 from flask_restful import Api
-from com_sba_api.ext.db import url, db
-from com_sba_api.ext.routes import initialize_routes
-from com_sba_api.item.api import Item, Items
-from com_sba_api.article.api import Article, Articles
-from com_sba_api.user.api import User, Users
+from chatbot_api.ext.db import url, db
+from chatbot_api.ext.routes import initialize_routes
+from chatbot_api.user.dao import UserDao
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
 print('========== url ==========')
 print(url)
 app.config['SQLALCHEMY_DATABASE_URI'] = url
@@ -25,3 +25,30 @@ initialize_routes(api)
 
 with app.app_context():
     db.create_all()
+
+
+@app.route('/api/test')
+def test():
+    return {'test': 'Success'}
+
+# context 생성
+app.app_context().push()
+
+# 유저 추가 (create)
+# user = UserDto(userid='tom', password='1', name='tom', addr="서울시 서초구", lat=37.1234, lng=128.1234)
+# UserDao.add(user)
+
+# 유저 조회
+# 전체 조회
+# user_list = UserDao.find_all()
+# print(user_list)
+# print(type(user_list))  # <class 'list'>
+# print(user_list[0])
+# print(type(user_list[0]))
+
+
+
+
+
+
+

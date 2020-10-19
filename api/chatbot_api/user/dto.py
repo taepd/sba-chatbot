@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, Float, String, ForeignKey, create_engine
+# from sqlalchemy import Column, Integer, Float, String, ForeignKey, create_engine
 from chatbot_api.ext.db import Base, db
-from sqlalchemy.orm import sessionmaker
+# from sqlalchemy.orm import sessionmaker
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
 
 
@@ -15,13 +15,13 @@ class UserDto(db.Model):
     lat: float = db.Column(db.Float)
     lng: float = db.Column(db.Float)
 
-    def __init__(self, userid, password, name, addr, lat, lng):
-        self.userid = userid
-        self.password = password
-        self.name = name
-        self.addr = addr
-        self.lat = lat
-        self.lng = lng
+    # def __init__(self, userid, password, name, addr, lat, lng):
+    #     self.userid = userid
+    #     self.password = password
+    #     self.name = name
+    #     self.addr = addr
+    #     self.lat = lat
+    #     self.lng = lng
 
     def __repr__(self):
         return f'User(userid={self.userid}, ' \
@@ -39,13 +39,7 @@ class UserDto(db.Model):
             'lng': self.lng
         }
 
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
 
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
 
 
 # engine = create_engine('mysql+mysqlconnector://root:1004@127.0.0.1/mariadb?charset=utf8', encoding='utf8', echo=True)

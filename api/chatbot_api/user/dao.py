@@ -12,10 +12,10 @@ from chatbot_api.user.dto import UserDto
 
 
 class UserDao:
-    def __init__(self):
-        self.engine = create_engine('mysql+mysqlconnector://root:1004@127.0.0.1/mariadb?charset=utf8', encoding='utf8', echo=True)
-        Session = sessionmaker(bind=self.engine)
-        self.session = Session()
+    # def __init__(self):
+    #     self.engine = create_engine('mysql+mysqlconnector://root:1004@127.0.0.1/mariadb?charset=utf8', encoding='utf8', echo=True)
+    #     Session = sessionmaker(bind=self.engine)
+    #     self.session = Session()
 
     # def create_table(self):
     #     if not self.engine.dialect.has_table(self.engine, "user"):
@@ -48,9 +48,21 @@ class UserDao:
     #     ...
     # --------------------------------------------------
 
+    # create
+    @classmethod
+    def add(cls, user):
+        db.session.add(user)
+        db.session.commit()
+
+    # delete
+    @classmethod
+    def delete(cls, user):
+        db.session.delete(cls)
+        db.session.commit()
+
     @classmethod
     def find_all(cls):
-        return cls.query.all()
+        return UserDto.query.all()
 
     @classmethod
     def find_by_name(cls, name):
@@ -61,12 +73,13 @@ class UserDao:
         return cls.query.filter_by(userid == userid).first()
 
 
-if __name__ == '__main__':
-    user_dao = UserDao()
-    # user_dao.create_table()
-    # user_dao.add_user(User(userid='tom', password='1', name='tom', addr="서울시 서초구", lat=37.1234, lng=128.1234))
-    # user_dao.delete_table()
-    # print(user_dao.fetch_user('tom'))
 
-    # for row in user_dao.fetch_all_users():
-    #     print(row)
+
+# user_dao.add_user(User(userid='tom', password='1', name='tom', addr="서울시 서초구", lat=37.1234, lng=128.1234))
+# user_dao.delete_table()
+# print(user_dao.fetch_user('tom'))
+
+# for row in user_dao.fetch_all_users():
+#     print(row)
+
+
