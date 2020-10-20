@@ -1,8 +1,5 @@
 # from sqlalchemy import Column, Integer, Float, String, Date, ForeignKey, create_engine
 from chatbot_api.ext.db import Base, db
-from chatbot_api.user.dto import UserDto
-from chatbot_api.shop.dto import ShopDto
-from chatbot_api.food.dto import FoodDto
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
@@ -16,9 +13,9 @@ class OrderDto(db.Model):
     order_time: str = db.Column(db.Date)
     order_cmnt: str = db.Column(db.String(200))
 
-    userid: str = db.Column(db.String(20), db.ForeignKey(UserDto.userid))
-    shop_id: int = db.Column(db.Integer, db.ForeignKey(ShopDto.shop_id))
-    food_id: int = db.Column(db.Integer, db.ForeignKey(FoodDto.food_id))
+    userid: str = db.Column(db.String(20), db.ForeignKey('user.userid'))
+    shop_id: int = db.Column(db.Integer, db.ForeignKey('shop.shop_id'))
+    food_id: int = db.Column(db.Integer, db.ForeignKey('food.food_id'))
 
     reviews = db.relationship('ReviewDto', backref='review', lazy=True)
 

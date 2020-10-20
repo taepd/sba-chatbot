@@ -23,5 +23,5 @@ class Users(Resource):
         ...
 
 
-user = User()
-print(user.get('tom'))
+# user = User()
+# print(user.get('tom'))

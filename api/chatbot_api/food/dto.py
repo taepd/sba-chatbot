@@ -1,6 +1,6 @@
 # from sqlalchemy import Column, Integer, Float, String, Date, ForeignKey, create_engine
 from chatbot_api.ext.db import Base, db
-from chatbot_api.shop.dto import ShopDto
+from chatbot_api.order.dto import OrderDto
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
@@ -16,7 +16,7 @@ class FoodDto(db.Model):
     food_rev_avg: float = db.Column(db.Float)
     food_rev_amt: float = db.Column(db.Integer)
 
-    shop_id: int = db.Column(db.Integer, db.ForeignKey(ShopDto.shop_id))
+    shop_id: int = db.Column(db.Integer, db.ForeignKey('shop.shop_id'))
 
     reviews = db.relationship('ReviewDto', backref='food', lazy=True)
     orders = db.relationship('OrderDto', backref='food', lazy=True)

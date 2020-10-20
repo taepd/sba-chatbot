@@ -1,9 +1,5 @@
 # from sqlalchemy import Column, Integer, Float, String, Date, ForeignKey, create_engine
 from chatbot_api.ext.db import Base, db
-from chatbot_api.user.dto import UserDto
-from chatbot_api.shop.dto import ShopDto
-from chatbot_api.food.dto import FoodDto
-from chatbot_api.order.dto import OrderDto
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
@@ -21,11 +17,10 @@ class ReviewDto(db.Model):
     review_time: str = db.Column(db.Date)
     review_img: str = db.Column(db.String(300))
 
-    userid: str = db.Column(db.String(20), db.ForeignKey(UserDto.userid))
-    shop_id: int = db.Column(db.Integer, db.ForeignKey(ShopDto.shop_id))
-    food_id: int = db.Column(db.Integer, db.ForeignKey(FoodDto.food_id))
-    order_id: int = db.Column(db.Integer, db.ForeignKey(OrderDto.food_id))
-
+    userid: str = db.Column(db.String(20), db.ForeignKey('user.userid'))
+    shop_id: int = db.Column(db.Integer, db.ForeignKey('shop.shop_id'))
+    food_id: int = db.Column(db.Integer, db.ForeignKey('food.food_id'))
+    order_id: int = db.Column(db.Integer, db.ForeignKey('order.order_id'))
 
     def __init__(self, review_id, review_cmnt, taste_rate, quantity_rate,
                  delivery_rate, review_time, review_img, userid, shop_id, food_id, order_id):
