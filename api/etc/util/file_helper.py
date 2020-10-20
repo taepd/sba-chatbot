@@ -62,7 +62,7 @@ class FileReader:
 
             csv_writer = csv.writer(output_file)
             try:
-                csv_writer.writerow(data[0].keys())
+                csv_writer.writerow(data[0].keys())  # 컬럼 처리
                 for line in data:
                     csv_writer.writerow(line.values())
             except:

@@ -14,10 +14,10 @@ import pandas as pd
 from pandas import DataFrame
 
 CSV_COLUMNS = ['id', 'name', 'address', 'distance', 'lng', 'lat', 'delivery_fee', 'min_order_amount',
-               'open_time_description', 'review_avg', 'categories']
+               'open_time_description', 'review_avg', 'categories']  # shop 컬럼 커스텀 지정
 mycolums = ['storeid', 'comment', 'rating', 'menu_summary', 'rating_quantity', 'rating_taste', 'rating_delivery',
-            'time', 'nickname', 'customerid']
-menu_column = ['id', 'name', 'price', 'id', 'review_count']
+            'time', 'nickname', 'customerid']  # review 컬럼 커스텀 지정
+menu_column = ['id', 'name', 'price', 'id', 'review_count']  # food  컬럼 커스텀 지정
 
 
 class YogiyoModel:
@@ -31,7 +31,7 @@ class YogiyoModel:
         # self.yogiyo.get_seoul_data()
         # self.yogiyo.merge()
 
-    def _process(self, item):
+    def _process(self, item):  # 컬럼명으로 된 변수들에 조건에 맞는 값을 저장
         if item['city'] == '서울':
             id = item['id']
             name = item['name']
@@ -59,7 +59,7 @@ class YogiyoModel:
         return [id, name, address, distance, lng, lat, delivery_fee, min_order_amount, open_time_description,
                 review_avg, categories]
 
-    def convert(self):
+    def convert(self):  # json을 읽어와서 process()에서 지정한 컬럼만 csv파일로 만듬
         with open(self.filename, 'rb') as json_file:
             data = json.load(json_file)
             with open(self.filename + '.csv', 'wt', newline='', encoding="UTF-8-SIG") as csv_file:
@@ -81,12 +81,12 @@ class YogiyoModel:
                     reviews = item['reviews']
                     for idx in reviews:
                         comment = idx['comment']
-                        comment = comment.replace('\n', ' ')
+                        comment = comment.replace('\n', ' ')  # '\n' 을 공백으로 전처리
                         imsi = [item['id'], comment, idx['rating'], idx['menu_summary'], idx['rating_quantity'],
                                 idx['rating_taste'], idx['rating_delivery'], idx['time'], idx['nickname'], idx['id']]
                         result.append(imsi)
                 else:
-                    id = ''
+                    id = ''  # 아이디 없는 경우 예외처리
 
         result = pd.DataFrame(result, columns=mycolums)
         outputname = f'{self.filename}.csv'
@@ -111,7 +111,7 @@ class YogiyoModel:
 
         print('------------ finished --------')
 
-    def merge(self):
+    def merge(self):  # 여러 개의 csv파일을 한 번에 처리해서 병합
         data = []
         for file in allFile_list:
             df = pd.read_csv(file)
@@ -139,6 +139,5 @@ if __name__ == '__main__':
     print(allFile_list)
 
     for file in allFile_list:
-        for file in allFile_list:
-            YogiyoModel(f'{file}').merge()
+        YogiyoModel(f'{file}').merge()
     # filename = '.\csv\seoul.csv'
