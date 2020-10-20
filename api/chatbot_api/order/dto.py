@@ -17,7 +17,7 @@ class OrderDto(db.Model):
     shop_id: int = db.Column(db.Integer, db.ForeignKey('shop.shop_id'))
     food_id: int = db.Column(db.Integer, db.ForeignKey('food.food_id'))
 
-    reviews = db.relationship('ReviewDto', backref='review', lazy=True)
+    reviews = db.relationship('ReviewDto', backref='order', lazy=True)
 
     def __init__(self, order_id, order_time, order_cmnt, userid, shop_id, food_id):
         self.order_id = order_id

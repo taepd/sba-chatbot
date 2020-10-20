@@ -198,7 +198,7 @@ if __name__ == '__main__':
     #     yogiyo.get_json_store(start, end)
     #     start += 1000
     #     end += 1000
-    # yogiyo.get_json_store(64000, 65000)
+    # yogiyo.get_json_store(0, 1000)
 
 
     # -------------------------
@@ -215,15 +215,15 @@ if __name__ == '__main__':
 
     # -------------------------
     # 리뷰 크롤링
-    file_path = f'./data/yogiyo_store_id_list(seoul).json'
-    json_data = yogiyo.load_json(file_path)
+    # file_path = f'./data/yogiyo_store_id_list(seoul).json'
+    # json_data = yogiyo.load_json(file_path)
     # start = 0
     # end = 1000
     # for i in range(42):
     #     yogiyo.get_json_review(start, end, json_data)
     #     start += 1000
     #     end += 1000
-    yogiyo.get_json_review(42000, 42612, json_data)
+    # yogiyo.get_json_review(42000, 42612, json_data)
 
     #---------------------------
     # json을 csv로(매장)
@@ -237,6 +237,7 @@ if __name__ == '__main__':
     #         pass
     #     start += 1000
     #     end += 1000
+    yogiyo.json_to_csv(f'./../../data/json/store/yogiyo_store({0}~{1000}).json', 0, 1000)
 
     #---------------------------
     # csv 병합

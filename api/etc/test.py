@@ -8,7 +8,7 @@ import csv
 import json
 import glob
 
-input_file = r'C:\Users\USER\data\json\store'
+input_file = r'./../../data/csv/store'
 
 import pandas as pd
 from pandas import DataFrame
@@ -136,6 +136,7 @@ class YogiyoModel:
 
 if __name__ == '__main__':
     allFile_list = glob.glob(os.path.join(input_file, 'yogiyo_*' + '.csv'))
+    print(allFile_list)
 
     for file in allFile_list:
         for file in allFile_list:
