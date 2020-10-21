@@ -1,7 +1,9 @@
 from haversine import haversine, Unit
 import pandas as pd
+import numpy as np
 import folium
 
+pd.set_option('display.max_columns', 100)
 
 class Preprocessor:
     pass
@@ -12,8 +14,7 @@ file_path = r'./../../data/csv/gangnam.csv'
 df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
 
 file_path2 = r'./../../data/csv/store.csv'
-shop_df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
-
+shop_df = pd.read_csv(file_path2, sep=',', encoding='utf-8-sig')
 # print(df)
 # print(df.columns)
 # print(df['nickname'])
@@ -78,7 +79,6 @@ target_lat, target_lng = target_geo_list = (37.520775, 127.022767)
 
 # 리뷰 리스트에서 id(shop)를 중복을 제거하고 리스트로 리턴
 shop_list = df['id'].drop_duplicates().tolist()
-print(shop_list)
 
 
 # 기준점으로 부터 반경 1km 이내의 매장만 필터링
@@ -89,8 +89,10 @@ def filter_shop(i):
         return i
 
 
-filtered_shop_list = filter(filter_shop, shop_list)
-# print(list(filtered_shop_list))
+filtered_shop_list = list(filter(filter_shop, shop_list))
+
+
+print(filtered_shop_list)
 
 
 # ================================
@@ -107,26 +109,44 @@ user_list = sum(user_list, [])
 # print('--------------------------')
 # 중복 제거
 user_list = list(set(user_list))
+try:
+    user_list.remove(np.nan)
+    user_list.remove('손님')
+except:
+    '해당값이 없음'
+print('===================')
 print(user_list)
 # ================================
-user_df = pd.DataFrame()
+user_columns = ['userid', 'pwd', 'name', 'age', 'addr', 'lat', 'lng']
+user_df = pd.DataFrame(columns=user_columns)
+
+
 count = 0
-for shop in shop_list:
+
+for shop in filtered_shop_list:
     for user in user_list:
         is_shop_user = (df['id'] == shop) & (df['nickname'] == user)
         user_review_list = df[is_shop_user]
+
         if not user_review_list.empty:
             userid = f'user{str(count).zfill(6)}'
-            df['userid'] = userid
-            user_df['userid'] = userid
-            user_df['lat'] = shop_df[shop_df['id'] == shop]['lat']
-            user_df['lng'] = shop_df[shop_df['id'] == shop]['lng']
+            # index를 기준으로 review와 order에 데이터 삽입
+            for i in user_review_list.index:
+                print(i)
+                df.loc[i, 'userid'] = userid
+                print(df.loc[i])
+            lat = shop_df[shop_df['id'] == shop]['lat'].head(1).to_string(index=False)
+            lng = shop_df[shop_df['id'] == shop]['lng'].head(1).to_string(index=False)
+            addr = shop_df[shop_df['id'] == shop]['address'].head(1).to_string(index=False)
+            _user_df = pd.DataFrame([[userid, "", userid, "", addr, lat, lng]], columns=user_columns)
+            user_df = user_df.append(_user_df, ignore_index=True)
 
             count += 1
+            break
     break
 
 print(user_df)
-print(df)
+# print(df)
 
 
 
