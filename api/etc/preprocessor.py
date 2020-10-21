@@ -7,35 +7,37 @@ class Preprocessor:
     pass
 
 
-
 # csv파일 불러옴
-file_path = r'./../../data/csv/yeongdeungpo.csv'
+file_path = r'./../../data/csv/gangnam.csv'
 df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
 
 # print(df)
 # print(df.columns)
 # print(df['nickname'])
 
-### 닉네임이 'ph**'인 데이터 필터링 ###
+### 닉네임에 따라 데이터 필터링 ###
 # 해당 조건을 만족하면 true, 아니면 false인 dataframe 리턴
-user = df['nickname'] == 'ev**'
+user = df['nickname'] == 'ph**'
 # 조건이 true인 행들만 담아 dataframe으로 리턴
 user = df[user]
 
 # print(user)
 
-# print(ph['id'].drop_duplicates().tolist())
+# print(user['id'].drop_duplicates().tolist())
 
 # 조건을 만족하는 리뷰 리스트의 shopid를 중복을 제거하고 리스트로 리턴
 user_shop_list = user['id'].drop_duplicates().tolist()
 
 # 기준점 위경도
 # target = df.head(1)
-target_geo = df[['lat', 'lng']].iloc[1].to_frame()
-print(target_geo)
+# target_geo = df[['lat', 'lng']].iloc[1].to_frame() //df 방식
+# print(target_geo)
+target_lat, target_lng = target_geo_list = (37.502985, 127.024222)
+
+
 
 # 이중 리스트로 되어있는 것을 flatten
-target_lat, target_lng = target_geo_list = sum(target_geo.values.tolist(), [])
+# target_lat, target_lng = target_geo_list = sum(target_geo.values.tolist(), [])  # df방식
 # print(sum(target_geo.values.tolist(), []))
 
 # folium map 생성

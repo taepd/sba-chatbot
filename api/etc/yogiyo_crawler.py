@@ -58,7 +58,7 @@ class YogiyoCrawler:
         error_list = []
         for index in range(start, end):
             id = list_data[index]
-            url = f"https://www.yogiyo.co.kr/api/v1/restaurants/{id}/menu"
+            url = f"https://www.yogiyo.co.kr/api/v1/restaurants/{id}/menu?add_photo_menu=android"
             ajson = self.get_json(url)
 
             print(f'{index}번 크롤링 중')
@@ -76,6 +76,7 @@ class YogiyoCrawler:
                         item_dict["price"] = item["price"]
                         item_dict["id"] = item["id"]
                         item_dict["review_count"] = item["review_count"]
+                        item_dict["image"] = item["image"]
                         item_list.append(item_dict)
                     pre_json["menus"] = item_list
                     json_list.append(pre_json)
@@ -85,7 +86,7 @@ class YogiyoCrawler:
 
         # 파일 저장
         reader = self.reader
-        reader.context = os.path.join(baseurl, 'data/json/menu(seoul)')
+        reader.context = os.path.join(baseurl, './../../data/json/menu(seoul)')
         reader.fname = f'yogiyo_menu({start}~{end}).json'
         reader.new_file()
         reader.json_save(json_list)
@@ -203,15 +204,15 @@ if __name__ == '__main__':
 
     # -------------------------
     # 메뉴 크롤링
-    # file_path = f'./data/yogiyo_store_id_list(seoul).json'
-    # json_data = yogiyo.load_json(file_path)
-    # start = 0
-    # end = 1000
+    file_path = f'./../../data/yogiyo_store_id_list(seoul).json'
+    json_data = yogiyo.load_json(file_path)
+    start = 0
+    end = 1000
     # for i in range(10):
     #     yogiyo.get_json_menu(start, end, json_data)
     #     start += 1000
     #     end += 1000
-    # yogiyo.get_json_menu(230, 235, json_data)
+    # yogiyo.get_json_menu(777, 800, json_data)
 
     # -------------------------
     # 리뷰 크롤링
@@ -237,7 +238,7 @@ if __name__ == '__main__':
     #         pass
     #     start += 1000
     #     end += 1000
-    yogiyo.json_to_csv(f'./../../data/json/store/yogiyo_store({0}~{1000}).json', 0, 1000)
+    # yogiyo.json_to_csv(f'./../../data/json/store/yogiyo_store({0}~{1000}).json', 0, 1000)
 
     #---------------------------
     # csv 병합
