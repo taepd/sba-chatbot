@@ -22,11 +22,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 api = Api(app)
 
-
+'''
 @app.before_first_request
 def create_tables():
     db.create_all()
-
+'''
 
 initialize_routes(api)
 
@@ -34,9 +34,9 @@ with app.app_context():
     db.create_all()
 
 
-@app.route('/api/test')
-def test():
-    return {'test': 'Success'}
+# @app.route('/api/test')
+# def test():
+#     return {'test': 'Success'}
 
 # context 생성
 app.app_context().push()

@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 db = SQLAlchemy()
+
 config = {
     'user': 'mychatbot',
     'password': 'mychatbot',
