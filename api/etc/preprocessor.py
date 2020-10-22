@@ -201,7 +201,7 @@ for user in user_list:
                 df.loc[i, 'order_time'] = order_time
 
                 is_owner_cmnt = owner_cmnt_df['orderid'] == df['orderid'].to_string(index=False)
-                owner_cmnt = owner_cmnt_df[is_owner_cmnt]['comment'].to_string(index=False)
+                owner_cmnt = owner_cmnt_df[is_owner_cmnt]['owner_comment'].to_string(index=False)
                 df.loc[i, 'owner_cmnt'] = owner_cmnt
                 # ===============================
 
