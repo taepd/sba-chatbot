@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 baseurl = os.path.dirname(os.path.abspath(__file__))
 
 from util.file_helper import FileReader
-
+import pdb
 import json
 import requests
 import time
@@ -61,28 +61,38 @@ class YogiyoCrawler:
             url = f"https://www.yogiyo.co.kr/api/v1/restaurants/{id}/menu?add_photo_menu=android"
             ajson = self.get_json(url)
 
-            print(f'{index}번 크롤링 중')
 
-            try:
-                if isinstance(ajson[0], dict):
-                    # 필요 데이터만 전처리
-                    # print(ajson)
-                    # print(len(ajson))
-                    pre_json = {"id": id}  # 전처리 데이터를 담을 json. 우선 id를 담는다.
-                    item_list = []
-                    for item in ajson[0]["items"]:
-                        item_dict = dict()
-                        item_dict["name"] = item["name"]
-                        item_dict["price"] = item["price"]
-                        item_dict["id"] = item["id"]
-                        item_dict["review_count"] = item["review_count"]
-                        item_dict["image"] = item["image"]
-                        item_list.append(item_dict)
+            print(f'{index}번 크롤링 중')
+            pre_json = {"id": id, "menus": []}  # 전처리 데이터를 담을 json. 우선 id를 담는다.
+            item_list = []
+            id_set = set()  # 중복 아이템 관리 리스트
+            for i in range(len(ajson)):
+                try:
+                    if isinstance(ajson[i], dict):
+                        # 필요 데이터만 전처리
+                        # print(ajson)
+                        # print(len(ajson))
+                        for item in ajson[i]["items"]:
+                            if item["id"] not in id_set:
+                                item_dict = dict()
+                                item_dict["name"] = item["name"]
+                                item_dict["price"] = item["price"]
+                                item_dict["id"] = item["id"]
+                                item_dict["review_count"] = item["review_count"]
+                                # image 누락 아이템 예외 처리
+                                try:
+                                    item_dict["image"] = item["image"]
+                                except:
+                                    item_dict["image"] = "no_image"
+                                item_list.append(item_dict)
+                                # 중복 관리를 위해 리스트에 id 추가
+                                id_set.add(item["id"])
                     pre_json["menus"] = item_list
-                    json_list.append(pre_json)
-            except:
-                print(f'오류 데이터: id:{id}', ajson)
-                error_list.append(id)
+                except:
+                    error_list.append(id)
+                    print(f'오류 데이터: id:{id}')
+                    print(i)
+            json_list.append(pre_json)
 
         # 파일 저장
         reader = self.reader
@@ -206,13 +216,20 @@ if __name__ == '__main__':
     # 메뉴 크롤링
     file_path = f'./../../data/yogiyo_store_id_list(seoul).json'
     json_data = yogiyo.load_json(file_path)
+
+    file_path = r'./../../data/csv/gangnam_seocho.csv'
+    df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
+
+    # 강남 서초만
+    shop_list = df['id'].drop_duplicates().tolist()
+    print(len(shop_list))
     start = 0
     end = 1000
-    # for i in range(10):
-    #     yogiyo.get_json_menu(start, end, json_data)
-    #     start += 1000
-    #     end += 1000
-    # yogiyo.get_json_menu(777, 800, json_data)
+    for i in range(5):
+        yogiyo.get_json_menu(start, end, shop_list)
+        start += 1000
+        end += 1000
+    # yogiyo.get_json_menu(0, 6000, shop_list)
 
     # -------------------------
     # 리뷰 크롤링
