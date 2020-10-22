@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from chatbot_api.ext.db import db, Base
+from chatbot_api.ext.db import db, openSession
+from com_sba_api.user.service import UserService
 from chatbot_api.user.dto import UserDto
 '''
 어플리케이션이 SQLAlchemy ORM을 사용한다면, 
@@ -48,29 +49,44 @@ class UserDao:
     #     ...
     # --------------------------------------------------
 
-    # create
-    @classmethod
-    def add(cls, user):
-        db.session.add(user)
-        db.session.commit()
-
-    # delete
-    @classmethod
-    def delete(cls, user):
-        db.session.delete(cls)
-        db.session.commit()
-
     @classmethod
     def find_all(cls):
-        return UserDto.query.all()
+        return cls.query.all()
 
     @classmethod
     def find_by_name(cls, name):
-        return UserDto.query.filer_by(name == name).all()
+        return cls.query.filer_by(name == name).all()
 
     @classmethod
     def find_by_id(cls, userid):
         return cls.query.filter_by(userid == userid).first()
+
+    @staticmethod
+    def save(user):
+        db.session.add(user)
+        db.session.commit()
+
+    @staticmethod
+    def insert_many():
+        service = UserService()
+        Session = openSession()
+        session = Session()
+        df = service.hook()
+        print(df.head())
+        session.bulk_insert_mappings(UserDto, df.to_dict(orient="records"))
+        session.commit()
+        session.close()
+
+    @staticmethod
+    def modify_user(user):
+        db.session.add(user)
+        db.session.commit()
+
+    @classmethod
+    def delete_user(cls,id):
+        data = cls.query.get(id)
+        db.session.delete(data)
+        db.session.commit()
 
 
 
@@ -82,4 +98,7 @@ class UserDao:
 # for row in user_dao.fetch_all_users():
 #     print(row)
 
-
+'''    
+u = UserDao()
+u.insert_many()
+'''
