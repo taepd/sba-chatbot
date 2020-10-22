@@ -8,8 +8,6 @@ import csv
 import json
 import glob
 
-input_file = r'./../../data/csv/store'
-
 import pandas as pd
 from pandas import DataFrame
 
@@ -17,7 +15,7 @@ CSV_COLUMNS = ['id', 'name', 'address', 'distance', 'lng', 'lat', 'delivery_fee'
                'open_time_description', 'review_avg', 'categories']  # shop 컬럼 커스텀 지정
 mycolums = ['storeid', 'comment', 'rating', 'menu_summary', 'rating_quantity', 'rating_taste', 'rating_delivery',
             'time', 'nickname', 'customerid']  # review 컬럼 커스텀 지정
-menu_column = ['id', 'name', 'price', 'id', 'review_count']  # food  컬럼 커스텀 지정
+menu_column = ['food_id', 'food_name', 'price', 'food_img', 'food_rev_cnt', 'shop_id']  # food  컬럼 커스텀 지정
 
 
 class YogiyoModel:
@@ -101,8 +99,9 @@ class YogiyoModel:
             for item in data:
                 id = item['id']
                 menus = item['menus']
+                # ['food_id', 'food_name', 'price', 'food_img', 'food_rev_cnt', 'shop_id']
                 for idx in menus:
-                    imsi = [item['id'], idx['name'], idx['price'], idx['id'], idx['review_count']]
+                    imsi = [idx['id'], idx['name'], idx['price'], idx['image'], idx['review_count'], id]
                     result.append(imsi)
 
         result = pd.DataFrame(result, columns=menu_column)
@@ -135,9 +134,20 @@ class YogiyoModel:
 
 
 if __name__ == '__main__':
-    allFile_list = glob.glob(os.path.join(input_file, 'yogiyo_*' + '.csv'))
+
+    input_path = r'./../../data/json/menu(seoul)'
+    allFile_list = glob.glob(os.path.join(input_path, 'yogiyo_menu_gs(*'))
+
     print(allFile_list)
 
     for file in allFile_list:
-        YogiyoModel(f'{file}').merge()
+        YogiyoModel(f'{file}').menu_csv()
     # filename = '.\csv\seoul.csv'
+
+
+    # allFile_list = glob.glob(os.path.join(input_path, 'yogiyo_*' + '.csv'))
+    # print(allFile_list)
+    #
+    # for file in allFile_list:
+    #     YogiyoModel(f'{file}').merge()
+    # # filename = '.\csv\seoul.csv'

@@ -214,22 +214,22 @@ if __name__ == '__main__':
 
     # -------------------------
     # 메뉴 크롤링
-    file_path = f'./../../data/yogiyo_store_id_list(seoul).json'
-    json_data = yogiyo.load_json(file_path)
-
-    file_path = r'./../../data/csv/gangnam_seocho.csv'
-    df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
-
-    # 강남 서초만
-    shop_list = df['id'].drop_duplicates().tolist()
-    print(len(shop_list))
-    start = 0
-    end = 1000
-    for i in range(5):
-        yogiyo.get_json_menu(start, end, shop_list)
-        start += 1000
-        end += 1000
-    # yogiyo.get_json_menu(0, 6000, shop_list)
+    # file_path = f'./../../data/yogiyo_store_id_list(seoul).json'
+    # json_data = yogiyo.load_json(file_path)
+    #
+    # file_path = r'./../../data/csv/gangnam_seocho.csv'
+    # df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
+    #
+    # # 강남 서초만
+    # shop_list = df['id'].drop_duplicates().tolist()
+    # print(len(shop_list))
+    # start = 0
+    # end = 1000
+    # # for i in range(5):
+    # #     yogiyo.get_json_menu(start, end, shop_list)
+    # #     start += 1000
+    # #     end += 1000
+    # yogiyo.get_json_menu(5000, 5965, shop_list)
 
     # -------------------------
     # 리뷰 크롤링

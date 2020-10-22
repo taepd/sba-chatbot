@@ -16,28 +16,24 @@ class Preprocessor:
 
 
 # csv파일 불러옴
-# 파이참 방식
-file_path = r'./../../data/csv/gangnam_seocho.csv'
-df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
+# file_path = r'./../../data/csv/gangnam_seocho.csv'
+# df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
 
-file_path2 = r'./../../data/csv/store.csv'
-shop_df = pd.read_csv(file_path2, sep=',', encoding='utf-8-sig')
+# file_path2 = r'./../../data/csv/store.csv'
+# shop_df = pd.read_csv(file_path2, sep=',', encoding='utf-8-sig')
 
-file_path3 = r'./../../data/csv/menu/yogiyo_menu_gs.csv'
-food_df = pd.read_csv(file_path3, sep=',', encoding='utf-8-sig')
-
-file_path4 = r'./../../data/csv/owner_comment.csv'
-owner_cmnt_df = pd.read_csv(file_path4, sep=',', encoding='utf-8-sig')
+# file_path3 = r'./../../data/csv/menu.csv'
+# food_df = pd.read_csv(file_path3, sep=',', encoding='utf-8-sig')
 
 # vscode 방식
-# file_path = r'./data/csv/gangnam_seocho.csv'
-# df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
-#
-# file_path2 = r'./data/csv/store.csv'
-# shop_df = pd.read_csv(file_path2, sep=',', encoding='utf-8-sig')
-#
-# file_path3 = r'./data/csv/menu.csv'
-# food_df = pd.read_csv(file_path3, sep=',', encoding='utf-8-sig')
+file_path = r'./data/csv/gangnam_seocho.csv'
+df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
+
+file_path2 = r'./data/csv/store.csv'
+shop_df = pd.read_csv(file_path2, sep=',', encoding='utf-8-sig')
+
+file_path3 = r'./data/csv/menu.csv'
+food_df = pd.read_csv(file_path3, sep=',', encoding='utf-8-sig')
 
 
 # print(df)
@@ -106,7 +102,7 @@ user_df = pd.DataFrame(columns=user_columns)
 
 # # order_review DataFrame
 # order_review_columns = ['order_id', 'order_time', 'order_cmnt', 'userid', 'shop_id', 'food_id']
-# order_review_df = pd.DataFrame(columns=order_review_columns)
+order_review_df = pd.DataFrame(columns=order_review_columns)
 
 # 리뷰 리스트에서 id(shop)를 중복을 제거하고 리스트로 리턴
 shop_list = df['id'].drop_duplicates().tolist()
@@ -175,6 +171,18 @@ for user in user_list:
             # index를 기준으로 review에 userid 추가/order_df data 생성
             for i in user_review_list.index:
 
+                # ===============================
+                # order DateFrame 생성
+                order_id = df.loc[i, 'orderid']
+                # order_id = df[df['id'] == shop]['orderid'].head(1).to_string(index=False)
+                # order_id가 float 형태의 문자열이라 포맷 변환(나중에 문자열 포매팅으로 변환할 것)
+                order_id = int(float(order_id))
+                # print('order_id:', order_id)
+
+                order_time = df.loc[i, 'time']
+                shop_id = df.loc[i, 'id']
+                shop_id = int(float(shop_id))
+                # print('shop_id:', shop_id)
 
                 food_name = df.loc[i, 'menu_summary']
                 # 메뉴명 누락(nan)인 경우 제외
@@ -185,35 +193,39 @@ for user in user_list:
                     food_name = ""
                 # print(food_name)
 
-                is_food_name = (food_df['shop_id'] == shop) & (food_df['food_name'] == food_name)
-                food_id = food_df[is_food_name]['food_id'].to_string(index=False)
+                is_food_name = (food_df['id'] == shop) & (food_df['name'] == food_name)
+                food_id = food_df[is_food_name]['id.1'].to_string(index=False)
                 # 해당 메뉴가 없을 경우 공백으로 처리
                 if food_id == 'Series([], )':
                     food_id = ""
+                # print(type(food_id))
+                # print(food_id)
+                _order_df = pd.DataFrame([[order_id, order_time, "", userid, shop_id, food_id]], columns=order_columns)
+                order_df = order_df.append(_order_df, ignore_index=True)
+
+                # print(order_df)
+                # pdb.set_trace()  # debug point
+                # ===============================
+
                 # ===============================
                 # review DataFrame에 컬럼 추가
                 # print(i)
                 df.loc[i, 'userid'] = userid
                 # print(df.loc[i])
                 df.loc[i, 'food_id'] = food_id
+                df.loc[i, 'order_id'] = order_id
 
-                order_time = df.loc[i, 'time']
-                df.loc[i, 'order_time'] = order_time
-
-                is_owner_cmnt = owner_cmnt_df['orderid'] == df['orderid'].to_string(index=False)
-                owner_cmnt = owner_cmnt_df[is_owner_cmnt]['comment'].to_string(index=False)
-                df.loc[i, 'owner_cmnt'] = owner_cmnt
                 # ===============================
-
     count += 1
 
-    if count >= 1:
+    if count >= 100:
         break
     # break
 
 # print(user_df)
 # print(df)
 user_df.to_csv('user_df.csv', sep=',', encoding='utf-8-sig', index=False)
+order_df.to_csv('order_df.csv', sep=',', encoding='utf-8-sig', index=False)
 df.to_csv('review_df.csv', sep=',', encoding='utf-8-sig', index=False)
 
 
