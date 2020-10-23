@@ -1,3 +1,9 @@
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+baseurl = os.path.dirname(os.path.abspath(__file__))
+
 from haversine import haversine, Unit
 import pandas as pd
 import numpy as np
@@ -5,11 +11,8 @@ import folium
 import pdb
 pd.set_option('display.max_columns', 100)
 
-import os
-import sys
+from util.file_helper import FileReader
 
-sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-baseurl = os.path.dirname(os.path.abspath(__file__))
 
 class Preprocessor:
     pass
@@ -17,27 +20,27 @@ class Preprocessor:
 
 # csv파일 불러옴
 # 파이참 방식
-file_path = r'./../../data/csv/gangnam_seocho.csv'
-df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
+file_path = r'./../../data/csv/review_df.csv'
+df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig', dtype={'userid': str, 'food_id': float, 'order_time': str})
+print('오더리뷰 로딩완료')
 
-file_path2 = r'./../../data/csv/store.csv'
-shop_df = pd.read_csv(file_path2, sep=',', encoding='utf-8-sig')
-
-file_path3 = r'./../../data/csv/menu/yogiyo_menu_gs.csv'
-food_df = pd.read_csv(file_path3, sep=',', encoding='utf-8-sig')
-
-file_path4 = r'./../../data/csv/owner_comment.csv'
-owner_cmnt_df = pd.read_csv(file_path4, sep=',', encoding='utf-8-sig')
+# file_path2 = r'./../../data/csv/store.csv'
+# shop_df = pd.read_csv(file_path2, sep=',', encoding='utf-8-sig')
+# print('매장 로딩완료')
+# file_path3 = r'./../../data/csv/menu/yogiyo_menu_gs.csv'
+# food_df = pd.read_csv(file_path3, sep=',', encoding='utf-8-sig')
+# print('메뉴 로딩완료')
 
 # vscode 방식
-# file_path = r'./data/csv/gangnam_seocho.csv'
+# file_path = r'./data/csv/gangnam_seocho(add_owner_cmnt).csv'
 # df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
 #
 # file_path2 = r'./data/csv/store.csv'
 # shop_df = pd.read_csv(file_path2, sep=',', encoding='utf-8-sig')
 #
-# file_path3 = r'./data/csv/menu.csv'
+# file_path3 =  r'./data/csv/menu/yogiyo_menu_gs.csv'
 # food_df = pd.read_csv(file_path3, sep=',', encoding='utf-8-sig')
+
 
 
 # print(df)
@@ -98,7 +101,7 @@ owner_cmnt_df = pd.read_csv(file_path4, sep=',', encoding='utf-8-sig')
 
 
 # 기준점 위경도
-target_lat, target_lng = target_geo_list = (37.520775, 127.022767)
+target_lat, target_lng = target_geo_list = (37.520591, 127.042618)
 
 # user DataFrame
 user_columns = ['userid', 'pwd', 'name', 'age', "gender", 'addr', 'lat', 'lng']
@@ -127,7 +130,9 @@ filtered_shop_list = list(filter(filter_shop, shop_list))
 
 # ================================
 # 기준점 내의 매장에 리뷰를 쓴 아이디 리스트 필터링
+
 user_list = []
+
 for shop in filtered_shop_list:
     nickname = df[df['id'] == shop]['nickname'].tolist()
     user_list.append(nickname)
@@ -148,10 +153,23 @@ except:
     '해당값이 없음'
 # print('===================')
 # print(user_list)
+# user_series = pd.Series(user_list)
+# user_series.to_csv('user_df(37.520775, 127.022767).csv', sep=',', encoding='utf-8-sig', index=False)
+
 # ================================
+# 파이참일 때
+# user_list = pd.read_csv('./../../user_df(37.520775, 127.022767).csv')
+
+# vscode일 때
+# user_list = pd.read_csv('./user_df(37.520775, 127.022767).csv')
+
+# print(user_list.head())
+# user_list = user_list['0'].tolist()
+# print(user_list)
+
 
 # userid pk생성을 위한 index count
-count = 0
+count = 794
 
 for user in user_list:
     # user DateFrame 생성
@@ -200,21 +218,17 @@ for user in user_list:
                 order_time = df.loc[i, 'time']
                 df.loc[i, 'order_time'] = order_time
 
-                is_owner_cmnt = owner_cmnt_df['orderid'] == df['orderid'].to_string(index=False)
-                owner_cmnt = owner_cmnt_df[is_owner_cmnt]['owner_comment'].to_string(index=False)
-                df.loc[i, 'owner_cmnt'] = owner_cmnt
                 # ===============================
 
     count += 1
+    print(f'{count}번 완료')
 
-    if count >= 1:
-        break
-    # break
+
 
 # print(user_df)
 # print(df)
-user_df.to_csv('user_df.csv', sep=',', encoding='utf-8-sig', index=False)
-df.to_csv('review_df.csv', sep=',', encoding='utf-8-sig', index=False)
+user_df.to_csv(f'user_df.csv({target_lat}, {target_lng})', sep=',', encoding='utf-8-sig', index=False)
+df.to_csv(f'review_df.csv', sep=',', encoding='utf-8-sig', index=False)
 
 
 

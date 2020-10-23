@@ -3,7 +3,8 @@ from chatbot_api.ext.db import Base, db
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
-
+from chatbot_api.food.dto import FoodDto
+from chatbot_api.review.dto import ReviewDto
 
 class ShopDto(db.Model):
     __tablename__ = "shop"
@@ -17,15 +18,14 @@ class ShopDto(db.Model):
     shop_lat: float = db.Column(db.Float)
     shop_lng: float = db.Column(db.Float)
     shop_rev_avg: float = db.Column(db.Float)
-    shop_rev_amt: int = db.Column(db.Integer)
+    shop_rev_cnt: int = db.Column(db.Integer)
     opentime: str = db.Column(db.Date)
 
     foods = db.relationship('FoodDto', backref='shop', lazy=True)
     reviews = db.relationship('ReviewDto', backref='shop', lazy=True)
-    orders = db.relationship('OrderDto', backref='shop', lazy=True)
 
     def __init__(self, shop_id, shop_name, shop_addr, shop_img, cat,
-                 shop_lat, shop_lng, shop_rev_avg, shop_rev_amt, opentime):
+                 shop_lat, shop_lng, shop_rev_avg, shop_rev_cnt, opentime):
         self.shop_id = shop_id
         self.shop_name = shop_name
         self.shop_addr = shop_addr
@@ -34,14 +34,14 @@ class ShopDto(db.Model):
         self.shop_lat = shop_lat
         self.shop_lng = shop_lng
         self.shop_rev_avg = shop_rev_avg
-        self.shop_rev_amt = shop_rev_amt
+        self.shop_rev_cnt = shop_rev_cnt
         self.opentime =opentime
 
     def __repr__(self):
         return f'Shop(shop_id={self.shop_id}, shop_name={self.shop_name}, ' \
                f'shop_addr={self.shop_addr}, ,shop_img={self.shop_img}, cat={self.cat},' \
                f'shop_lat={self.shop_lat}, shop_lng="{self.shop_lng}"' \
-               f'shopt_rev_avg={self.shop_rev_avg}, shop_rev_amt={self.shop_rev_amt}' \
+               f'shopt_rev_avg={self.shop_rev_avg}, shop_rev_cnt={self.shop_rev_cnt}' \
                f'opentime={self.opentime}'
 
     @property
@@ -55,6 +55,19 @@ class ShopDto(db.Model):
             'shop_lat': self.shop_lat,
             'shop_lng': self.shop_lng,
             'shop_rev_avg': self.shop_rev_avg,
-            'shop_rev_amt': self.shop_rev_amt,
+            'shop_rev_cnt': self.shop_rev_cnt,
             'opentime': self.opentime
         }
+
+
+class UserVo:
+    shop_id: int = 0
+    shop_name: str = ''
+    shop_addr: str = ''
+    shop_img: str = ''
+    cat: str = ''
+    shop_lat: float = 0.0
+    shop_lng: float = 0.0
+    shop_rev_avg: float = 0.0 
+    shop_rev_cnt: int = 0
+    opentime: str = ''

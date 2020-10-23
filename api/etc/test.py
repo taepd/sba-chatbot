@@ -11,8 +11,8 @@ import glob
 import pandas as pd
 from pandas import DataFrame
 
-CSV_COLUMNS = ['id', 'name', 'address', 'distance', 'lng', 'lat', 'delivery_fee', 'min_order_amount',
-               'open_time_description', 'review_avg', 'categories']  # shop 컬럼 커스텀 지정
+CSV_COLUMNS = ['shop_id', 'shop_name', 'shop_addr', 'shop_img', 'cat', 'shop_lat', 'shop_lng', 'shop_rev_avg',
+               'shop_rev_cnt', 'open_time']  # shop 컬럼 커스텀 지정
 mycolums = ['storeid', 'comment', 'rating', 'menu_summary', 'rating_quantity', 'rating_taste', 'rating_delivery',
             'time', 'nickname', 'customerid']  # review 컬럼 커스텀 지정
 menu_column = ['food_id', 'food_name', 'price', 'food_img', 'food_rev_cnt', 'shop_id']  # food  컬럼 커스텀 지정
@@ -31,31 +31,29 @@ class YogiyoModel:
 
     def _process(self, item):  # 컬럼명으로 된 변수들에 조건에 맞는 값을 저장
         if item['city'] == '서울':
-            id = item['id']
-            name = item['name']
-            address = item['address']
-            categories = item['categories']
-            distance = item['distance']
-            lat = item['lat']
-            delivery_fee = item['delivery_fee']
-            min_order_amount = item['min_order_amount']
-            open_time_description = item['open_time_description']
-            lng = item['lng']
-            review_avg = item['review_avg']
+            shop_id = item['id']
+            shop_name = item['name']
+            shop_addr = item['address']
+            cat = item['categories']
+            shop_lat = item['lat']
+            shop_lng = item['lng']
+            open_time = item['open_time_description']
+            shop_rev_avg = item['review_avg']
+            shop_rev_cnt = item['review_count']
+            shop_img = item['logo_url']
         else:
-            id = ''
-            name = ''
-            address = ''
-            categories = ''
-            distance = ''
-            lat = ''
-            delivery_fee = ''
-            min_order_amount = ''
-            open_time_description = ''
-            lng = ''
-            review_avg = ''
-        return [id, name, address, distance, lng, lat, delivery_fee, min_order_amount, open_time_description,
-                review_avg, categories]
+            shop_id = ''
+            shop_name = ''
+            shop_addr = ''
+            shop_img = ''
+            cat = ''
+            shop_lat = ''
+            shop_lng = ''
+            shop_rev_avg = ''
+            shop_rev_cnt = ''
+            open_time = ''
+        return [shop_id, shop_name, shop_addr, shop_img, cat, shop_lat, shop_lng, shop_rev_avg, shop_rev_cnt,
+                open_time]
 
     def convert(self):  # json을 읽어와서 process()에서 지정한 컬럼만 csv파일로 만듬
         with open(self.filename, 'rb') as json_file:
@@ -135,8 +133,8 @@ class YogiyoModel:
 
 if __name__ == '__main__':
 
-    input_path = r'./../../data/json/menu(seoul)'
-    allFile_list = glob.glob(os.path.join(input_path, 'yogiyo_menu_gs(*'))
+    input_path = r'./../../data/json/store/'
+    # allFile_list = glob.glob(os.path.join(input_path, 'yogiyo_menu_gs(*'))
 
     print(allFile_list)
 
