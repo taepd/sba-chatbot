@@ -20,16 +20,23 @@ class Preprocessor:
 
 # csv파일 불러옴
 # 파이참 방식
-file_path = r'./../../data/csv/review_df.csv'
-df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig', dtype={'userid': str, 'food_id': float, 'order_time': str})
+file_path = r'./../../data/csv/important/review_df.csv'
+# df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig', dtype={'userid': str, 'food_id': float, 'order_time': str})
+df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
 print('오더리뷰 로딩완료')
 
 # file_path2 = r'./../../data/csv/store.csv'
 # shop_df = pd.read_csv(file_path2, sep=',', encoding='utf-8-sig')
 # print('매장 로딩완료')
-# file_path3 = r'./../../data/csv/menu/yogiyo_menu_gs.csv'
-# food_df = pd.read_csv(file_path3, sep=',', encoding='utf-8-sig')
-# print('메뉴 로딩완료')
+file_path3 = r'./../../data/csv/important/food.csv'
+food_df = pd.read_csv(file_path3, sep=',', encoding='utf-8-sig')
+print('메뉴 로딩완료')
+
+file_path4 = r'./../../data/csv/위경도(강남_서초).csv'
+point_df = pd.read_csv(file_path4, sep=',', encoding='utf-8-sig')
+
+
+
 
 # vscode 방식
 # file_path = r'./data/csv/gangnam_seocho(add_owner_cmnt).csv'
@@ -101,7 +108,7 @@ print('오더리뷰 로딩완료')
 
 
 # 기준점 위경도
-target_lat, target_lng = target_geo_list = (37.520591, 127.042618)
+target_lat, target_lng = target_geo_list = (point_df.loc[2]['lat'], point_df.loc[2]['lng'])
 
 # user DataFrame
 user_columns = ['userid', 'pwd', 'name', 'age', "gender", 'addr', 'lat', 'lng']
@@ -112,13 +119,13 @@ user_df = pd.DataFrame(columns=user_columns)
 # order_review_df = pd.DataFrame(columns=order_review_columns)
 
 # 리뷰 리스트에서 id(shop)를 중복을 제거하고 리스트로 리턴
-shop_list = df['id'].drop_duplicates().tolist()
+shop_list = df['shop_id'].drop_duplicates().tolist()
 
 
 
 # 기준점으로 부터 반경 1km 이내의 매장만 필터링
 def filter_shop(i):
-    one_row = df[df['id'] == i].head(1)
+    one_row = df[df['shop_id'] == i].head(1)
     if haversine(target_geo_list,
                  [one_row['lat'].head(1), one_row['lng'].head(1)]) <= 1:
         return i
@@ -134,7 +141,7 @@ filtered_shop_list = list(filter(filter_shop, shop_list))
 user_list = []
 
 for shop in filtered_shop_list:
-    nickname = df[df['id'] == shop]['nickname'].tolist()
+    nickname = df[df['shop_id'] == shop]['nickname'].tolist()
     user_list.append(nickname)
 
 # print(user_list)
@@ -144,7 +151,7 @@ user_list = sum(user_list, [])
 # print('--------------------------')
 # 중복 제거
 user_list = list(set(user_list))
-print(len(user_list))
+print('user count', len(user_list))
 # pdb.set_trace()
 try:
     user_list.remove(np.nan)
@@ -169,7 +176,7 @@ except:
 
 
 # userid pk생성을 위한 index count
-count = 794
+count = 1439
 
 for user in user_list:
     # user DateFrame 생성
@@ -177,7 +184,7 @@ for user in user_list:
     userid = f'user{str(count).zfill(6)}'
     lat = target_lat
     lng = target_lng
-    addr = '서울특별시 강남구 신사동 534-20'  # 하드 코딩 주의!! 기준점 위/경도로 검색해서 주소 입력해야함
+    addr = point_df.loc[2]['addr']
     # 잘못한거지만 형식 남겨둠
     # lat = shop_df[shop_df['id'] == shop]['lat'].head(1).to_string(index=False)
     # lng = shop_df[shop_df['id'] == shop]['lng'].head(1).to_string(index=False)
@@ -185,7 +192,7 @@ for user in user_list:
     _user_df = pd.DataFrame([[userid, "", userid, "", "", addr, lat, lng]], columns=user_columns)
     user_df = user_df.append(_user_df, ignore_index=True)
     for shop in filtered_shop_list:
-        is_shop_user = (df['id'] == shop) & (df['nickname'] == user)
+        is_shop_user = (df['shop_id'] == shop) & (df['nickname'] == user)
         user_review_list = df[is_shop_user]
         if not user_review_list.empty:
 
@@ -201,35 +208,42 @@ for user in user_list:
                 except:
                     print('메뉴명 누락(nan)')
                     food_name = ""
-                # print(food_name)
+
 
                 is_food_name = (food_df['shop_id'] == shop) & (food_df['food_name'] == food_name)
-                food_id = food_df[is_food_name]['food_id'].to_string(index=False)
+                food_id = food_df[is_food_name]['food_id']
+                # food_id가 여러 개 검색되었을 경우 예외 처리
+                if len(food_id) > 1:
+                    food_id = food_id.iloc[0]
+                else:
+                    food_id = food_id.to_string(index=False)
+
                 # 해당 메뉴가 없을 경우 공백으로 처리
                 if food_id == 'Series([], )':
                     food_id = ""
                 # ===============================
                 # review DataFrame에 컬럼 추가
                 # print(i)
+                # print('food_id:', food_id)
                 df.loc[i, 'userid'] = userid
                 # print(df.loc[i])
                 df.loc[i, 'food_id'] = food_id
 
                 order_time = df.loc[i, 'time']
                 df.loc[i, 'order_time'] = order_time
-
+                # print(df.loc[i])
+                # pdb.set_trace()
                 # ===============================
 
-    count += 1
     print(f'{count}번 완료')
+    count += 1
 
 
 
 # print(user_df)
 # print(df)
-user_df.to_csv(f'user_df.csv({target_lat}, {target_lng})', sep=',', encoding='utf-8-sig', index=False)
-df.to_csv(f'review_df.csv', sep=',', encoding='utf-8-sig', index=False)
-
+user_df.to_csv(f'user_df({target_lat}, {target_lng}).csv', sep=',', encoding='utf-8-sig', index=False)
+df.to_csv(r'./../../data/csv/important/review_df.csv', sep=',', encoding='utf-8-sig', index=False)
 
 
 
