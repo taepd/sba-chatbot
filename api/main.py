@@ -26,20 +26,18 @@ api = Api(app)
 @app.before_first_request
 def create_tables():
     db.create_all()
+with app.app_context():
+    db.create_all()
 '''
 
 initialize_routes(api)
-
-with app.app_context():
-    db.create_all()
-
 
 # @app.route('/api/test')
 # def test():
 #     return {'test': 'Success'}
 
 # context 생성
-app.app_context().push()
+# app.app_context().push()
 
 # 유저 추가 (create)
 # user = UserDto(userid='tom', password='1', name='tom', addr="서울시 서초구", lat=37.1234, lng=128.1234)

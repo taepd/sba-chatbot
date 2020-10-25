@@ -21,11 +21,12 @@ class FoodDto(db.Model):
 
     reviews = db.relationship('ReviewDto', backref='food', lazy=True)
 
-    def __init__(self, food_id, food_name, price, food_rev_avg,
+    def __init__(self, food_id, food_name, price, food_img, food_rev_avg,
                  food_rev_cnt, shop_id):
         self.food_id = food_id
         self.food_name = food_name
         self.price = price
+        self.food_img = food_img
         self.food_rev_avg = food_rev_avg
         self.food_rev_cnt = food_rev_cnt
         self.shop_id = shop_id
@@ -34,6 +35,7 @@ class FoodDto(db.Model):
         return f'Food(food_id={self.food_id}, ' \
                f'food_name={self.food_name}, ' \
                f'price={self.price}, ' \
+               f'food_img={self.food_img}, ' \
                f'food_rev_avg={self.food_rev_avg}, ' \
                f'food_rev_cnt={self.food_rev_cnt}, ' \
                f'shop_id="{self.shop_id}"'
@@ -44,7 +46,18 @@ class FoodDto(db.Model):
             'food_id': self.food_id,
             'food_name': self.food_name,
             'price': self.price,
+            'food_img': self.food_img,
             'food_rev_avg': self.food_rev_avg,
             'food_rev_cnt': self.food_rev_cnt,
             'shop_id': self.shop_id
         }
+
+class FoodVo:
+    food_id: int = 0
+    food_name: str = ''
+    price: int = 0
+    food_img: str = ''
+    food_rev_avg: float = 0.0
+    food_rev_cnt: float = 0.0
+
+    shop_id: int = 0

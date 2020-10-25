@@ -5,6 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 db = SQLAlchemy()
 
+# aws rds 일때
 config = {
     'user': 'mychatbot',
     'password': 'mychatbot',
@@ -12,6 +13,15 @@ config = {
     'port': '3306',
     'database': 'mychatbot'
 }
+
+# local mariadb 일 때
+# config = {
+#     'user': 'root',
+#     'password': 1004,
+#     'host': '127.0.0.1',
+#     'port': '3306',
+#     'database': 'mariadb'
+# }
 
 charset = {'utf8': 'utf8'}
 url = f"mysql+mysqlconnector://{config['user']}:{config['password']}@{config['host']}:{config['port']}/" \
