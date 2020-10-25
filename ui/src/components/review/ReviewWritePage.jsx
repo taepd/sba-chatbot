@@ -3,11 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import Header from '../common/Header';
-import Footer from '../common/Footer';
 import ReviewWriteSub from './ReviewWriteSub';
-import NewHeader from '../NewHeader';
-import Navigation from '../Navigation';
+import Navigation from '../MainPage/Navigation';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -16,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  
+
 }));
 
 const sections = [
@@ -33,16 +30,13 @@ const sections = [
 
 
 
- const ReviewWritePage = () => 
+const ReviewWritePage = () =>
 
-<React.Fragment>
-      <CssBaseline />
-        <Header title="Blog" sections={sections} />
-        <NewHeader/>
-          <Grid container justify="center" spacing={5} className={useStyles.mainGrid}>
-            <ReviewWriteSub/>
-          </Grid>
-      <Footer title="Footer" description="Something here to give the footer a purpose!" />
-    </React.Fragment>
+  <React.Fragment>
+    <CssBaseline />
+    <Grid container justify="center" spacing={5} className={useStyles.mainGrid}>
+      <ReviewWriteSub />
+    </Grid>
+  </React.Fragment>
 
 export default ReviewWritePage

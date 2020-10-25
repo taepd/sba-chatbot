@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import Header from '../common/Header';
-import Footer from '../common/Footer';
-import NewHeader from '../NewHeader';
+// import Header from '../common/Header';
+// import Footer from '../common/Footer';
+import Nav from '../common/Nav';
 import MainNavigation from './MainNavigation';
 import Paper from '@material-ui/core/Paper';
 import MainList from './MainList';
@@ -106,8 +106,7 @@ const Main = () => {
     return (
         <React.Fragment>
             <CssBaseline />
-            <Header title="Blog" sections={sections} />
-            <NewHeader />
+            <Nav title="Blog" sections={sections} />
             <MainNavigation />
             <Grid container justify="center" className={classes.wd}>
                 <Grid container justify="center" className={classes.title}>
@@ -137,8 +136,6 @@ const Main = () => {
 
                 </Grid>
             </Grid>
-
-            <Footer title="Footer" description="Something here to give the footer a purpose!" />
         </React.Fragment>
     );
 }

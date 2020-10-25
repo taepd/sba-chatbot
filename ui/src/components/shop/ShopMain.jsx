@@ -3,12 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import Header from '../common/Header';
-import Footer from '../common/Footer';
 import ShopInfo from '../Review/ShopInfo';
 import MenuAndReviewArea from '../Review/MenuAndReviewArea';
-import NewHeader from '../NewHeader';
-import Navigation from '../Navigation';
+import Navigation from '../MainPage/Navigation';
 import Paper from '@material-ui/core/Paper';
 import ShopList from './ShopList';
 import Pagination from '@material-ui/lab/Pagination';
@@ -151,8 +148,6 @@ const ShopMain = () => {
     return (
         <React.Fragment>
             <CssBaseline />
-            <Header title="Blog" sections={sections} />
-            <NewHeader />
             <Navigation />
                 <Grid container  className={classes.wd} >
                         {shoplistl.map((post) => (
@@ -164,7 +159,6 @@ const ShopMain = () => {
                 <Grid container justify="center" alignItems="flex-end" className={classes.pagi}>
                     <Pagination count={10} color="primary" shape="rounded" size="large"/>
                 </Grid>
-            <Footer title="Footer" description="Something here to give the footer a purpose!" />
         </React.Fragment>
     );
 }

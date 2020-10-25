@@ -3,11 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import Header from '../common/Header';
-import Footer from '../common/Footer';
 import Usernav from './Usernav';
-import NewHeader from '../NewHeader';
-import Navigation from '../Navigation';
+import Navigation from '../MainPage/Navigation';
 
 
 
@@ -40,13 +37,9 @@ const classes = useStyles();
   return(
     <React.Fragment>
         <CssBaseline />
-        <Header title="Blog" sections={sections} />
-            <NewHeader/>
         <Grid container justify="center"className={classes.mainGrid}>
             <Usernav/>
         </Grid>
-
-        <Footer title="Footer" description="Something here to give the footer a purpose!" />
     </React.Fragment>
   )
 }

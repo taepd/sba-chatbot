@@ -3,12 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import Header from '../common/Header';
-import Footer from '../common/Footer';
 import ShopInfo from './ShopInfo';
 import MenuAndReviewArea from './MenuAndReviewArea';
-import NewHeader from '../NewHeader';
-import Navigation from '../Navigation';
+import Navigation from '../MainPage/Navigation';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,8 +54,6 @@ const Review = () =>
 
 <React.Fragment>
       <CssBaseline />
-        <Header title="Blog" sections={sections} />
-        <NewHeader/>
         <Navigation/>
           <Grid container justify="center" >
             {shopinfo.map((post) => (
@@ -68,7 +63,6 @@ const Review = () =>
             <Grid container justify="center" spacing={5} className={useStyles.mainGrid}>
                   <MenuAndReviewArea />
             </Grid>
-      <Footer title="Footer" description="Something here to give the footer a purpose!" />
     </React.Fragment>
 
 export default Review
