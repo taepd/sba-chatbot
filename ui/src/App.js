@@ -1,18 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import { SignIn, Review, SignUp, Main, ReviewWritePage, UserInfo, UserPage, ShopMain, Order } from './components'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
-import {BrowserRouter, Route, Switch, Redicrect} from 'react-router-dom'
-import MainPage from './pages/MainPage'
+// import ReduxThunk from 'redux-thunk'
 
-import store from './store'    // /index를 붙이든 안붙이든 정상작동한다 그 이유는??
+// 아직 의미 모름
+// const rootReducer = combineReducers({
+//     itemReducer
+// })
 
+const App = () => {
+    const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('sessionUser'))
+    return (<>
+        {/* <div style={{ width: "1000px", margin: "0 auto" }}> */}
+        <Router>
+            {/* <Nav isAuth = {loggedIn}/> */}
+            <main>
+            <Switch>
+                <Route exact path="/" component={Main} />
+                <Route path="/main" component={Main} />
+                <Route path="/signin" component={SignIn} />
+                <Route path="/signup" component={SignUp} />
+                <Route path="/review" component={Review} />
+                <Route path="/reviewwrite" component={ReviewWritePage} />
+                <Route path="/userinfo" component={UserInfo} />
+                <Route path="/userpage" component={UserPage} />
+                <Route path="/shopmain" component={ShopMain} />
+                <Route path="/order" component={Order} />
+                {/* <Redirect from={"/history"} to ={"/about/history"}/>
+                    <Redirect from={"/services"} to ={"/about/services"}/>
+                    <Redirect from={"/location"} to ={"/about/location"}/>
+                    <Route path="/contact" component={Contact}/>
+                    <Route path="/events" component={Events}/>
+                    <Route path="/products" component={Products}/>
+                    <Route component={Error}/> */}
+            </Switch>
+            </main>
+        </Router>
+        {/* </div> */}
+    </>)
+}
 
-const App = () => 
-  <>
-  <Provider store = {store}>
-    <div style={{width: "1000px",margin: "0 auto"}}>
-     <MainPage/>
-    </div>
-  </Provider>
-  </>
-
-export default App;
+export default App

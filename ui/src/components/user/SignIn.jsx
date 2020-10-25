@@ -14,7 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-// https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-in
 
 
 
@@ -23,7 +22,7 @@ const Copyright = () =>{
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
         <Link color="inherit" href="https://material-ui.com/">
-          Your Website
+          챗봇
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
@@ -47,7 +46,8 @@ const Copyright = () =>{
       marginTop: theme.spacing(1),
     },
     submit: {
-      margin: theme.spacing(3, 0, 2),
+      margin: theme.spacing(1, 0, 2),
+      height:45
     },
   }));
 
@@ -62,7 +62,7 @@ const SignIn = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            로그인
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -71,7 +71,7 @@ const SignIn = () => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="이메일 주소"
               name="email"
               autoComplete="email"
               autoFocus
@@ -82,14 +82,14 @@ const SignIn = () => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="비밀번호"
               type="password"
               id="password"
               autoComplete="current-password"
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              control={<Checkbox value="remember" color="textSecondary" />}
+              label="자동 로그인"
             />
             <Button
               type="submit"
@@ -98,17 +98,17 @@ const SignIn = () => {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              로그인
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  패스워드 찾기
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/signup" variant="body2">
+                  {"아직 회원이 아니신가요?"}
                 </Link>
               </Grid>
             </Grid>

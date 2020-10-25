@@ -21,12 +21,12 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
-    // marginTop: theme.spacing(8),
+    marginTop: theme.spacing(8),
     padding: theme.spacing(6, 0),
   },
 }));
 
-export default function Footer(props) {
+const Footer = (props) => {
   const classes = useStyles();
   const { description, title } = props;
 
@@ -39,7 +39,7 @@ export default function Footer(props) {
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
           {description}
         </Typography>
-        <Copyright />
+        <Copyright/>
       </Container>
     </footer>
   );
@@ -49,3 +49,5 @@ Footer.propTypes = {
   description: PropTypes.string,
   title: PropTypes.string,
 };
+
+export default Footer

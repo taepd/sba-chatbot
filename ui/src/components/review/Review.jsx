@@ -3,107 +3,72 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
 import Header from '../common/Header';
-// import MainFeaturedPost from './MainFeaturedPost';
-// import FeaturedPost from './FeaturedPost';
-// import MainPost from './MainPost';
-// import Sidebar from './Sidebar';
 import Footer from '../common/Footer';
-// import post1 from './blog-post.1.md';
-// import post2 from './blog-post.2.md';
-// import post3 from './blog-post.3.md';
-import ReviewImage from './ReviewImage'
+import ShopInfo from './ShopInfo';
+import MenuAndReviewArea from './MenuAndReviewArea';
+import NewHeader from '../NewHeader';
+import Navigation from '../Navigation';
+
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
     marginTop: theme.spacing(3),
   },
+  root: {
+    flexGrow: 1,
+  },
+  // maxwidth:{
+  //   maxWidth: 912,
+  // },
+  bg:{
+    backgroundColor: theme.palette.background.paper,
+  },
+  
+  
 }));
 
 const sections = [
-  { title: '매장', url: '/shop' },
-  { title: '메뉴', url: '#' },
-  { title: '주문', url: '#' },
-  { title: '리뷰', url: '/review' },
-  { title: '관리자', url: '#' },
+  { title: '메인', url: '/main' },
+  { title: '리뷰보기', url: '/review' },
+  { title: '리뷰쓰기', url: '/reviewwrite' },
+  { title: '마이페이지', url: '/userpage' },
+  { title: 'Opinion', url: '#' },
   { title: 'Science', url: '#' },
   { title: 'Health', url: '#' },
   { title: 'Style', url: '#' },
   { title: 'Travel', url: '#' },
 ];
 
-const mainFeaturedPost = {
-  title: 'Title of a longer featured blog post',
-  description:
-    "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-  image: 'https://source.unsplash.com/random',
-  imgText: 'main image description',
-  linkText: 'Continue reading…',
-};
-
-const featuredPosts = [
+const shopinfo = [
   {
-    title: 'Featured post',
-    date: 'Nov 12',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
-  },
-  {
-    title: 'Post title',
-    date: 'Nov 11',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
+    shop_img: 'https://www.yogiyo.co.kr/media/restaurant_logos/베이컨포테이토골드피자02_20131128_FoodAD_crop_200x200_I47tFRa.jpg',
+    shop_name: '헐피자',
+    shop_addr: '서울 성동구 용답동 81-11 1층',
+    shop_rev_avg:
+      '결제 신용카드, 현금',
+    opentime:
+      '12:00 - 00:30',
   },
 ];
 
-// const posts = [post1, post2, post3];
 
-const sidebar = {
-  title: 'About',
-  description:
-    'Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.',
-  archives: [
-    { title: 'March 2020', url: '#' },
-    { title: 'February 2020', url: '#' },
-    { title: 'January 2020', url: '#' },
-    { title: 'November 1999', url: '#' },
-    { title: 'October 1999', url: '#' },
-    { title: 'September 1999', url: '#' },
-    { title: 'August 1999', url: '#' },
-    { title: 'July 1999', url: '#' },
-    { title: 'June 1999', url: '#' },
-    { title: 'May 1999', url: '#' },
-    { title: 'April 1999', url: '#' },
-  ],
-  social: [
-    { name: 'GitHub', icon: GitHubIcon },
-    { name: 'Twitter', icon: TwitterIcon },
-    { name: 'Facebook', icon: FacebookIcon },
-  ],
-};
+const Review = () => 
 
-const Shop = () => {
-  const classes = useStyles();
-
-  return (
-      <>
+<React.Fragment>
       <CssBaseline />
-      <Container maxWidth="lg">
         <Header title="Blog" sections={sections} />
-        <main>
-          <ReviewImage/>
-        </main>
-      </Container>
+        <NewHeader/>
+        <Navigation/>
+          <Grid container justify="center" >
+            {shopinfo.map((post) => (
+              <ShopInfo key={post.shop_name} post={post} />
+            ))}
+          </Grid>
+            <Grid container justify="center" spacing={5} className={useStyles.mainGrid}>
+                  <MenuAndReviewArea />
+            </Grid>
       <Footer title="Footer" description="Something here to give the footer a purpose!" />
-    </>
-  );
-}
+    </React.Fragment>
 
-export default Shop
+export default Review
