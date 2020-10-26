@@ -32,7 +32,7 @@ file_path3 = r'./../../data/csv/important/food.csv'
 food_df = pd.read_csv(file_path3, sep=',', encoding='utf-8-sig')
 print('메뉴 로딩완료')
 
-file_path4 = r'./../../data/csv/위경도(강남_서초).csv'
+file_path4 = r'./../../data/csv/important/위경도(강남_서초).csv'
 point_df = pd.read_csv(file_path4, sep=',', encoding='utf-8-sig')
 
 # vscode 방식
@@ -103,8 +103,8 @@ point_df = pd.read_csv(file_path4, sep=',', encoding='utf-8-sig')
 # map.save('map.html')
 ###############################
 
-count = 2389
-for idx in range(3, len(point_df)):
+count = 5145
+for idx in range(6, len(point_df)):
 
     # 기준점 위경도
     target_lat, target_lng = target_geo_list = (point_df.loc[idx]['lat'], point_df.loc[idx]['lng'])
