@@ -30,7 +30,7 @@ class FoodDto(db.Model):
     __table_args__ = {'mysql_collate': 'utf8_general_ci'}  # 한글 인코딩
 
     food_id: int = db.Column(db.Integer, primary_key=True, index=True)
-    food_name: str = db.Column(db.String(30))
+    food_name: str = db.Column(db.String(200))
     price: int = db.Column(db.Integer)
     food_img: str = db.Column(db.String(1000))  # 최대 길이가 634정도였음
     food_rev_avg: float = db.Column(db.Float)

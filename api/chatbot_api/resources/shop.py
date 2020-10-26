@@ -34,7 +34,7 @@ class ShopDto(db.Model):
     shop_name: str = db.Column(db.String(30))
     shop_addr: str = db.Column(db.String(100))
     shop_img: str = db.Column(db.String(200), default='shop_default.png')
-    cat: str = db.Column(db.String(20))
+    cat: str = db.Column(db.String(100))
     shop_lat: float = db.Column(db.Float)
     shop_lng: float = db.Column(db.Float)
     shop_rev_avg: float = db.Column(db.Float)
