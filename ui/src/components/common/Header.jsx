@@ -17,7 +17,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 // import Link from '@material-ui/core/Link';
 import { Link } from 'react-router-dom'
-import Navigation from '../MainPage/Navigation'
+import Navigation from '../mainPage/Navigation'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -111,13 +111,13 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary,
     },
     toolbarLink: {
-        padding: theme.spacing(1),
+        // padding: theme.spacing(1),
         flexShrink: 0,
         textDecoration: 'none',
         color: 'inherit',
-        "&:hover": {
-            textDecoration: 'underline'
-        },
+        // "&:hover": {
+        //     textDecoration: 'underline'
+        // },
 
     },
 
@@ -152,12 +152,16 @@ const Header = () => {
                                 inputProps={{ 'aria-label': 'search' }}
                             />
                         </div>
-                        <Button href="/signin" color="primary" variant="outlined" className={classes.link}>
-                            로그인
-                    </Button>
-                        <Button href="/signup" color="primary" variant="outlined" className={classes.link}>
-                            회원가입
-                    </Button>
+                        <Link to="/signin" className={classes.toolbarLink}>
+                            <Button color="primary" variant="outlined" className={classes.link}>
+                                로그인
+                            </Button>
+                        </Link>
+                        <Link to="/signup" className={classes.toolbarLink}>
+                            <Button color="primary" variant="outlined" className={classes.link}>
+                                회원가입
+                            </Button>
+                        </Link>
                     </Toolbar>
                 </Grid>
             </AppBar>

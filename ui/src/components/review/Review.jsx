@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import ShopInfo from './ShopInfo';
 import MenuAndReviewArea from './MenuAndReviewArea';
-import Navigation from '../MainPage/Navigation';
+import Navigation from '../mainPage/Navigation';
 
 
 const useStyles = makeStyles((theme) => ({
