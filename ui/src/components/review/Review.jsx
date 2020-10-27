@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useEffect, useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import ShopInfo from './ShopInfo';
 import MenuAndReviewArea from './MenuAndReviewArea';
 import Navigation from '../mainPage/Navigation';
+import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -15,27 +16,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  // maxwidth:{
-  //   maxWidth: 912,
-  // },
-  bg:{
+
+  bg: {
     backgroundColor: theme.palette.background.paper,
   },
-  
-  
-}));
 
-const sections = [
-  { title: '메인', url: '/main' },
-  { title: '리뷰보기', url: '/review' },
-  { title: '리뷰쓰기', url: '/reviewwrite' },
-  { title: '마이페이지', url: '/userpage' },
-  { title: 'Opinion', url: '#' },
-  { title: 'Science', url: '#' },
-  { title: 'Health', url: '#' },
-  { title: 'Style', url: '#' },
-  { title: 'Travel', url: '#' },
-];
+
+}));
 
 const shopinfo = [
   {
@@ -50,19 +37,39 @@ const shopinfo = [
 ];
 
 
-const Review = () => 
+const Review = ({match}) => {
 
-<React.Fragment>
+  console.log(match.params.shopid)
+  const [data, setData] = useState([])
+  useEffect(() => {
+      alert(match.params.shopid)
+      axios.get(`http://localhost:8080/shop/${match.params.shopid}`)
+      .then(res=>{
+          // alert(`List Success`)
+          setData(res.data)
+      })
+      .catch(e=>{
+          alert(`List Failure`)
+          throw(e)
+      })
+
+  },[])
+
+  console.log(data)
+  return (
+    <React.Fragment>
       <CssBaseline />
-        <Navigation/>
-          <Grid container justify="center" >
-            {shopinfo.map((post) => (
-              <ShopInfo key={post.shop_name} post={post} />
-            ))}
-          </Grid>
-            <Grid container justify="center" spacing={5} className={useStyles.mainGrid}>
-                  <MenuAndReviewArea />
-            </Grid>
+      <Navigation />
+      <Grid container justify="center" >
+        {shopinfo.map((post) => (
+          <ShopInfo key={post.shop_id} post={post} />
+        ))}
+      </Grid>
+      <Grid container justify="center" spacing={5} className={useStyles.mainGrid}>
+        <MenuAndReviewArea />
+      </Grid>
     </React.Fragment>
+  )
+}
 
 export default Review

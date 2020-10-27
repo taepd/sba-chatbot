@@ -43,26 +43,28 @@ const useStyles = makeStyles({
   },
 });
 
-function HalfRating() {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(2);
-  return (
-    <div className={classes.rating}>
-      <Rating name="halfrationg" defaultValue={4.5} precision={0.5} size="large" readOnly />
-    </div>
-  );
-}
+
 
 
 const ShopInfo = (props) => {
   const classes = useStyles();
   const { post } = props;
 
+  function HalfRating() {
+    const classes = useStyles();
+    const [value, setValue] = React.useState(2);
+    return (
+      <div className={classes.rating}>
+        <Rating name="halfrationg" defaultValue={post.shop_rev_avg} precision={0.5} size="large" readOnly />
+      </div>
+    );
+  }
+
   return (
       <Grid className={classes.shopMain}>
         <Grid className={classes.card}>
           <Hidden xsDown>
-            <CardMedia className={classes.cardMedia} image={post.shop_img}/>
+            <CardMedia className={classes.cardMedia} image={'https://www.yogiyo.co.kr'+post.shop_img}/>
           </Hidden>
           <div className={classes.cardDetails}>
             <CardContent>
