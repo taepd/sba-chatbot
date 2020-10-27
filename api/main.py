@@ -61,25 +61,25 @@ initialize_routes(api)
 # print(user_list[0])
 # print(type(user_list[0]))
 
-
+# ###################################
 # # 데이터 일괄 입력
 
-import pdb
+# import pdb
 # food 테이블 데이터 일괄 입력
-def insert_at_all(fila_name, dto):
-    chunksize = 10 ** 4
-    for cnt, chunk in enumerate(pd.read_csv(f'./data/csv/important/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)):
-        df = chunk.replace(np.nan, 1, regex=True)
-        print(df.head())
-        # pdb.set_trace()
-        Session = openSession()
-        session = Session()
-        session.bulk_insert_mappings(dto, df.to_dict(orient="records"))
-        session.commit()
-        session.close()
-        print(f'{cnt*chunksize}건 입력 완료')
+# def insert_at_all(fila_name, dto):
+#     chunksize = 10 ** 4
+#     for cnt, chunk in enumerate(pd.read_csv(f'./data/csv/important/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)):
+#         df = chunk.replace(np.nan, 1, regex=True)
+#         print(df.head())
+#         # pdb.set_trace()
+#         Session = openSession()
+#         session = Session()
+#         session.bulk_insert_mappings(dto, df.to_dict(orient="records"))
+#         session.commit()
+#         session.close()
+#         print(f'{cnt*chunksize}건 입력 완료')
 
-insert_at_all('order_review(37.520775, 127.022767)', OrderReviewDto)        
+# insert_at_all('order_review(37.520775, 127.022767)', OrderReviewDto)        
 # insert_at_all('order_review_test', OrderReviewDto)        
 
 # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]
@@ -88,7 +88,7 @@ insert_at_all('order_review(37.520775, 127.022767)', OrderReviewDto)
 # shop_seoul.to_csv('./data/csv/important/shop(seoul).csv', sep=',', encoding='utf-8-sig', index=False)
 
 # pdb.set_trace()
-
+# ####################################
 
 
 

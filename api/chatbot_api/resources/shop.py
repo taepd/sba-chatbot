@@ -94,6 +94,69 @@ class ShopVo:
     opentime: str = ''
 
 
+class ShopDao(ShopDto):
+    
+
+    @classmethod
+    def find_all(cls):
+        sql = cls.query
+        df = pd.read_sql(sql.statement, sql.session.bind)
+        return json.loads(df.to_json(orient='records'))
+
+    @classmethod
+    def find_by_name(cls, name):
+        return cls.query.filer_by(name == name).all()
+
+    @classmethod
+    def find_by_id(cls, userid):
+        return cls.query.filter_by(userid == userid).first()
+
+    @classmethod
+    def find_limit(cls):
+        # sql = cls.query.join(FoodDto).filter(FoodDto.shop_id == cls.shop_id).all()
+        sql = cls.query.filter_by()
+        df = pd.read_sql(sql.statement, sql.session.bind)
+        df = df.head(10)
+        return json.loads(df.to_json(orient='records'))
+
+    @classmethod
+    def login(cls, user):
+        sql = cls.query\
+            .filter(cls.userid.like(user.userid))\
+            .filter(cls.password.like(user.password))
+        df = pd.read_sql(sql.statement, sql.session.bind)
+        print('==================================')
+        print(json.loads(df.to_json(orient='records')))
+        return json.loads(df.to_json(orient='records'))
+
+
+    @staticmethod
+    def save(user):
+        db.session.add(user)
+        db.session.commit()
+
+    @staticmethod
+    def insert_many():
+        service = UserService()
+        Session = openSession()
+        session = Session()
+        df = service.hook()
+        print(df.head())
+        session.bulk_insert_mappings(UserDto, df.to_dict(orient="records"))
+        session.commit()
+        session.close()
+
+    @staticmethod
+    def modify_user(user):
+        db.session.add(user)
+        db.session.commit()
+
+    @classmethod
+    def delete_user(cls,id):
+        data = cls.query.get(id)
+        db.session.delete(data)
+        db.session.commit()
+
 
 
 # ------------ 실행 영역 --------------
@@ -101,19 +164,21 @@ if __name__ == '__main__':
 
     # import pdb
     # # 데이터 일괄 입력
-    df = pd.read_csv('./data/csv/important/shop.csv', sep=',', encoding='utf-8-sig')
-    df = df.replace(np.nan, '', regex=True)
+    # df = pd.read_csv('./data/csv/important/shop.csv', sep=',', encoding='utf-8-sig')
+    # df = df.replace(np.nan, '', regex=True)
 
-    # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]
-    # print(shop_seoul['shop_addr'])
+    # # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]
+    # # print(shop_seoul['shop_addr'])
 
-    # shop_seoul.to_csv('./data/csv/important/shop(seoul).csv', sep=',', encoding='utf-8-sig', index=False)
+    # # shop_seoul.to_csv('./data/csv/important/shop(seoul).csv', sep=',', encoding='utf-8-sig', index=False)
 
-    # pdb.set_trace()
+    # # pdb.set_trace()
 
 
-    Session = openSession()
-    session = Session()
-    session.bulk_insert_mappings(ShopDto, df.to_dict(orient="records"))
-    session.commit()
-    session.close()
+    # Session = openSession()
+    # session = Session()
+    # session.bulk_insert_mappings(ShopDto, df.to_dict(orient="records"))
+    # session.commit()
+    # session.close()
+
+    ShopDao.find_limit()

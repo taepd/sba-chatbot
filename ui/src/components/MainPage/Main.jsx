@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-// import Header from '../common/Header';
-// import Footer from '../common/Footer';
 import Nav from '../common/Nav';
 import MainNavigation from './MainNavigation';
 import Paper from '@material-ui/core/Paper';

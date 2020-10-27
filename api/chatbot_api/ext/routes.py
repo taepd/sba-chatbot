@@ -2,7 +2,7 @@ import logging
 from flask import Blueprint
 from flask_restful import Api
 # from chatbot_api.resources.home import Home
-from chatbot_api.resources.user import User
+from chatbot_api.resources.user import User, Users, Auth, Access
 
 home = Blueprint('home', __name__, url_prefix='/api')
 user = Blueprint('user', __name__, url_prefix='/api/user')
@@ -29,7 +29,7 @@ def initialize_routes(api):
     api.add_resource(User, '/api/user/<string:id>')
     # api.add_resource(Users, '/api/users')
     # api.add_resource(Auth, '/api/auth')
-    # api.add_resource(Access, '/api/access')
+    api.add_resource(Access, '/api/access')
     # api.add_resource(Article, '/api/article')
     # api.add_resource(Articles, '/api/articles/')
 

@@ -16,7 +16,7 @@ import InputBase from '@material-ui/core/InputBase';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 // import Link from '@material-ui/core/Link';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Navigation from '../mainPage/Navigation'
 
 
@@ -124,9 +124,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Header = () => {
+const Header = props => {
     const classes = useStyles();
+    
     const [value, setValue] = React.useState(0);
+    
+    const history  = useHistory()
+    const logout = e => {
+        alert('logout')
+        e.preventDefault();
+        sessionStorage.removeItem("sessionUser")
+        history.push('/')
+        window.location.reload()
+    }   
 
     return (
         <React.Fragment>
@@ -152,20 +162,29 @@ const Header = () => {
                                 inputProps={{ 'aria-label': 'search' }}
                             />
                         </div>
-                        <Link to="/signin" className={classes.toolbarLink}>
-                            <Button color="primary" variant="outlined" className={classes.link}>
-                                로그인
-                            </Button>
-                        </Link>
-                        <Link to="/signup" className={classes.toolbarLink}>
-                            <Button color="primary" variant="outlined" className={classes.link}>
-                                회원가입
-                            </Button>
-                        </Link>
+                        { props.isAuth === null
+                        ?   
+                            <>                         
+                            <Link to="/signIn" className={classes.toolbarLink}>
+                                <Button color="primary" variant="outlined" className={classes.link}>
+                                    로그인
+                                </Button>
+                            </Link>
+                            <Link to="/signUp" className={classes.toolbarLink}>
+                                <Button color="primary" variant="outlined" className={classes.link}>
+                                    회원가입
+                                </Button>
+                            </Link>
+                            </>:
+                            <Link to="/signIn" className={classes.toolbarLink}>
+                                <Button onClick={logout} color="primary" variant="outlined" className={classes.link}>
+                                    로그아웃
+                                </Button>
+                            </Link>
+                        }
                     </Toolbar>
                 </Grid>
             </AppBar>
-
         </React.Fragment>
     );
 }

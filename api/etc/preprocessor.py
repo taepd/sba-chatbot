@@ -103,11 +103,13 @@ point_df = pd.read_csv(file_path4, sep=',', encoding='utf-8-sig')
 # map.save('map.html')
 ###############################
 
-count = 5145
-for idx in range(6, len(point_df)):
+count = 3978
+for idx in range(5, 6):
+# for idx in range(5, len(point_df)):
 
     # 기준점 위경도
     target_lat, target_lng = target_geo_list = (point_df.loc[idx]['lat'], point_df.loc[idx]['lng'])
+    print(f'위도: {target_lat}, 경도: {target_lng}')
 
     # user DataFrame
     user_columns = ['userid', 'pwd', 'name', 'age', "gender", 'addr', 'lat', 'lng']
