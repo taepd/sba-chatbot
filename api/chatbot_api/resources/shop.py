@@ -9,6 +9,7 @@ import os
 import numpy as np
 import pandas as pd
 
+
 from sklearn.ensemble import RandomForestClassifier  # rforest
 from sklearn.tree import DecisionTreeClassifier  # dtree
 from sklearn.ensemble import RandomForestClassifier  # rforest
@@ -24,7 +25,10 @@ from chatbot_api.ext.db import db, openSession
 from chatbot_api.util.file_handler import FileReader
 
 from chatbot_api.resources.food import FoodDto
-from chatbot_api.resources.order_review import OrderReviewDto
+# from chatbot_api.resources.order_review import OrderReviewDto
+
+parser = reqparse.RequestParser()
+parser.add_argument('shopid', type=str, required=True)
 
 class ShopDto(db.Model):
     __tablename__ = "shop"
@@ -96,7 +100,6 @@ class ShopVo:
 
 class ShopDao(ShopDto):
     
-
     @classmethod
     def find_all(cls):
         sql = cls.query
@@ -104,75 +107,76 @@ class ShopDao(ShopDto):
         return json.loads(df.to_json(orient='records'))
 
     @classmethod
-    def find_by_name(cls, name):
-        return cls.query.filer_by(name == name).all()
-
-    @classmethod
-    def find_by_id(cls, userid):
-        return cls.query.filter_by(userid == userid).first()
+    def find_by_shopid(cls,shopid):
+        # sql = cls.query.filter(cls.shop_id == shopid).all()
+        # df = pd.read_sql(sql.statement, sql.session.bind)
+        # return json.loads(df.to_json(orient='records'))
+        return cls.query.filter_by(shop_id == shopid).all()
 
     @classmethod
     def find_limit(cls):
         # sql = cls.query.join(FoodDto).filter(FoodDto.shop_id == cls.shop_id).all()
-        sql = cls.query.filter_by()
+        sql = cls.query
+        # print(type(sql))
+        print('**************test******************')
         df = pd.read_sql(sql.statement, sql.session.bind)
         df = df.head(10)
         return json.loads(df.to_json(orient='records'))
 
     @classmethod
-    def login(cls, user):
-        sql = cls.query\
-            .filter(cls.userid.like(user.userid))\
-            .filter(cls.password.like(user.password))
-        df = pd.read_sql(sql.statement, sql.session.bind)
-        print('==================================')
-        print(json.loads(df.to_json(orient='records')))
-        return json.loads(df.to_json(orient='records'))
+    def find_cat(cls):
+        catlist = cls.query(cls.cat).all()
+        print(catlist)
+        # return json.loads(df.to_json(orient='recoeds'))
 
 
-    @staticmethod
-    def save(user):
-        db.session.add(user)
-        db.session.commit()
 
-    @staticmethod
-    def insert_many():
-        service = UserService()
-        Session = openSession()
-        session = Session()
-        df = service.hook()
-        print(df.head())
-        session.bulk_insert_mappings(UserDto, df.to_dict(orient="records"))
-        session.commit()
-        session.close()
+class Shops(Resource):
+
+    # @staticmethod
+    # def get():
+    #     print('select all')
+    #     shop = ShopDao.find_all()
+    #     return shop, 200
 
     @staticmethod
-    def modify_user(user):
-        db.session.add(user)
-        db.session.commit()
-
-    @classmethod
-    def delete_user(cls,id):
-        data = cls.query.get(id)
-        db.session.delete(data)
-        db.session.commit()
+    def get():
+        print('select 10')
+        shops = ShopDao.find_limit()
+        print('shops: ', shops)
+        # test = ShopDao.find_cat()
+        return shops, 200
 
 
+class Shop(Resource):
+
+    # @staticmethod
+    # def get(shopid):
+    #     print('?????????????????????????????')
+    #     print(f'{shopid} 셀렉트')
+    #     shop = ShopDao.find_by_shopid(shopid)
+    #     return shop.json(), 200
+    @staticmethod
+    def get(shopid : str):
+        print('?????????????????????????????')
+        print(f'{shopid} 셀렉트')
+        shop = ShopDao.find_by_shopid(shopid)
+        return shop.json(), 200
 
 # ------------ 실행 영역 --------------
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
     # import pdb
     # # 데이터 일괄 입력
     # df = pd.read_csv('./data/csv/important/shop.csv', sep=',', encoding='utf-8-sig')
     # df = df.replace(np.nan, '', regex=True)
 
-    # # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]
-    # # print(shop_seoul['shop_addr'])
+    # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]
+    # print(shop_seoul['shop_addr'])
 
-    # # shop_seoul.to_csv('./data/csv/important/shop(seoul).csv', sep=',', encoding='utf-8-sig', index=False)
+    # shop_seoul.to_csv('./data/csv/important/shop(seoul).csv', sep=',', encoding='utf-8-sig', index=False)
 
-    # # pdb.set_trace()
+    # pdb.set_trace()
 
 
     # Session = openSession()
@@ -180,5 +184,3 @@ if __name__ == '__main__':
     # session.bulk_insert_mappings(ShopDto, df.to_dict(orient="records"))
     # session.commit()
     # session.close()
-
-    ShopDao.find_limit()
