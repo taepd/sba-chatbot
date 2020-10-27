@@ -108,10 +108,14 @@ class ShopDao(ShopDto):
 
     @classmethod
     def find_by_shopid(cls,shopid):
+  
         # sql = cls.query.filter(cls.shop_id == shopid).all()
         # df = pd.read_sql(sql.statement, sql.session.bind)
         # return json.loads(df.to_json(orient='records'))
-        return cls.query.filter_by(shop_id == shopid).all()
+        return cls.query.filter_by(shop_id = shopid).first()
+        # sql = cls.query.filter(cls.shop_id.like(shopid))
+        # df = pd.read_sql(sql.statement, sql.session.bind)
+        # return json.loads(df.to_json(orient='records'))
 
     @classmethod
     def find_limit(cls):
@@ -158,10 +162,12 @@ class Shop(Resource):
     #     return shop.json(), 200
     @staticmethod
     def get(shopid : str):
-        print('?????????????????????????????')
-        print(f'{shopid} 셀렉트')
         shop = ShopDao.find_by_shopid(shopid)
-        return shop.json(), 200
+        print('*'*40)
+        # shop = shop.json()
+        print(shop)
+        print(type(shop))    
+        return shop.json, 200
 
 # ------------ 실행 영역 --------------
 # if __name__ == '__main__':
