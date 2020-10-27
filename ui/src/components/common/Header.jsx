@@ -176,11 +176,18 @@ const Header = props => {
                                 </Button>
                             </Link>
                             </>:
+                            <>
+                             <Link to="/myPage" className={classes.toolbarLink}>
+                                <Button color="primary" variant="outlined" className={classes.link}>
+                                    마이페이지
+                                </Button>
+                             </Link>
                             <Link to="/signIn" className={classes.toolbarLink}>
                                 <Button onClick={logout} color="primary" variant="outlined" className={classes.link}>
                                     로그아웃
                                 </Button>
                             </Link>
+                            </>
                         }
                     </Toolbar>
                 </Grid>
