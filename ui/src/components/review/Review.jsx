@@ -47,6 +47,7 @@ const Review = ({match}) => {
       .then(res=>{
           // alert(`List Success`)
           setData(res.data)
+          console.log(res.data)
       })
       .catch(e=>{
           alert(`List Failure`)
