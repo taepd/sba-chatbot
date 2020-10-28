@@ -15,9 +15,12 @@ print(url)
 
 app = Flask(__name__)
 CORS(app, resources={r'/*': {"origins": "*"}})
+# CORS(app, resources={r"/api/*": {"origins": "*"}})
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.config [ 'CORS_HEADERS' ]  =  'Content-Type'
 db.init_app(app)
 api = Api(app)
 
