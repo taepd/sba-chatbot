@@ -30,8 +30,8 @@ with app.app_context():
 '''
 
 # 테이블 일괄 생성
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
 
 
 # with app.app_context():
@@ -64,14 +64,15 @@ initialize_routes(api)
 # ###################################
 # # 데이터 일괄 입력
 
-import pdb
-# food 테이블 데이터 일괄 입력
+# import pdb
+# food/order_review 테이블 데이터 일괄 입력
 def insert_at_all(fila_name, dto):
     chunksize = 10 ** 4
-    for cnt, chunk in enumerate(pd.read_csv(f'./data/db/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)):
+    for cnt, chunk in enumerate(pd.read_csv(f'./data/csv/important/db/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)):
         df = chunk.replace(np.nan, 1, regex=True)
-        print(df.head())
-        # pdb.set_trace()
+        # print(df.head())
+
+
         Session = openSession()
         session = Session()
         session.bulk_insert_mappings(dto, df.to_dict(orient="records"))
@@ -79,8 +80,12 @@ def insert_at_all(fila_name, dto):
         session.close()
         print(f'{cnt*chunksize}건 입력 완료')
 
-# insert_at_all('order_review(37.520775, 127.022767)', OrderReviewDto)        
-# insert_at_all('order_review_test', OrderReviewDto)        
+
+# food 테이블 입력
+# insert_at_all('food', FoodDto)        
+# order_review 테이블 입력
+# insert_at_all('order_review(remove_userid_nan)', OrderReviewDto)        
+
 
 # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]
 # print(shop_seoul['shop_addr'])
@@ -90,8 +95,13 @@ def insert_at_all(fila_name, dto):
 # pdb.set_trace()
 # ####################################
 
-
-
+# 캐스케이딩 삭제 테스트
+# with app.app_context():
+#     # db.session.query(ShopDto).filter(ShopDto.shop_id==117).delete()
+#     user = db.session.query(ShopDto).filter(ShopDto.shop_id==117).first()
+#     db.session.delete(user)
+#     db.session.commit()
+#     db.session.close()
 
 
 
