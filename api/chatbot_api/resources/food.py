@@ -101,19 +101,18 @@ class FoodDao(FoodDto):
 class Food(Resource):
     @staticmethod
     def get(shopid : str):
-        print("오나아아아ㅏ--------------------")
         food = FoodDao.food_find_by_shopid(shopid)
         print(shop)
         print(type(shop))
         return food.json, 200
 
 # ------------ 실행 영역 --------------
-# if __name__ == '__main__':
+if __name__ == '__main__':
 
-    # import pdb
-    # # 데이터 일괄 입력
-    # df = pd.read_csv('./data/csv/important/food.csv', sep=',', encoding='utf-8-sig')
-    # df = df.replace(np.nan, '', regex=True)
+    import pdb
+    # 데이터 일괄 입력
+    df = pd.read_csv('./data/db/food.csv', sep=',', encoding='utf-8-sig')
+    df = df.replace(np.nan, '', regex=True)
 
     # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]
     # print(shop_seoul['shop_addr'])

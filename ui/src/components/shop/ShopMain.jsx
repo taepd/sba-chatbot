@@ -2,11 +2,7 @@ import React , {useEffect, useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import ShopInfo from '../review/ShopInfo';
-import MenuAndReviewArea from '../review/MenuAndReviewArea';
 import Navigation from '../mainPage/Navigation';
-import Paper from '@material-ui/core/Paper';
 import ShopList from './ShopList';
 import Pagination from '@material-ui/lab/Pagination';
 import axios from 'axios'

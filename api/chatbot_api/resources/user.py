@@ -577,7 +577,7 @@ class Access(Resource):
 if __name__ == '__main__':
      
     # 데이터 일괄 입력
-    df = pd.read_csv('./data/csv/important/user_df.csv', sep=',', encoding='utf-8-sig')
+    df = pd.read_csv('./data/db/user.csv', sep=',', encoding='utf-8-sig')
     df = df.replace(np.nan, '', regex=True)
     Session = openSession()
     session = Session()
