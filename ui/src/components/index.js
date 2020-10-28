@@ -1,6 +1,5 @@
 // export {default as Chart} from './Chart'
 export {default as Main} from './mainPage/Main'
-export {default as SignUp} from './user/SignUp'
 export {default as Review} from './review/Review'
 export {default as ReviewWritePage} from './review/ReviewWritePage'
 export {default as UserInfo} from './user/UserInfo'

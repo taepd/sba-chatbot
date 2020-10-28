@@ -158,14 +158,14 @@ const Header = props => {
                         { props.isAuth === null
                         ?   
                             <>                         
-                            <Link to="/signIn" className={classes.toolbarLink}>
-                                <Button color="primary" variant="outlined" className={classes.link}>
-                                    로그인
-                                </Button>
-                            </Link>
                             <Link to="/signUp" className={classes.toolbarLink}>
                                 <Button color="primary" variant="outlined" className={classes.link}>
                                     회원가입
+                                </Button>
+                            </Link>
+                            <Link to="/signIn" className={classes.toolbarLink}>
+                                <Button color="primary" variant="outlined" className={classes.link}>
+                                    로그인
                                 </Button>
                             </Link>
                             </>:

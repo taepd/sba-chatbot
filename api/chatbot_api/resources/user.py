@@ -495,21 +495,25 @@ parser.add_argument('userid', type=str, required=True,
                                         help='This field should be a userid')
 parser.add_argument('password', type=str, required=True,
                                         help='This field should be a password')
+parser.add_argument('name', type=str, required=False,
+                                        help='This field should be a password')
 
 class User(Resource):
     @staticmethod
     def post():
+        print('================user post 요청받음 =================')
         args = parser.parse_args()
         print(f'User {args["id"]} added ')
         params = json.loads(request.get_data(), encoding='utf-8')
         if len(params) == 0:
-
             return 'No parameter'
 
+        print('test')
         params_str = ''
         for key in params.keys():
             params_str += 'key: {}, value: {}<br>'.format(key, params[key])
         return {'code':0, 'message': 'SUCCESS'}, 200
+    
     @staticmethod
     def get(id):
         print(f'User {id} added ')
@@ -557,10 +561,9 @@ class Auth(Resource):
 
 
 class Access(Resource):
-    def __init__(self):
-        print('========== 5 ==========')
+
     def post(self):
-        print('========== 6 ==========')
+        print('========== access post 요청 받음 ==========')
         args = parser.parse_args()
         user = UserVo()
         user.userid = args.userid
