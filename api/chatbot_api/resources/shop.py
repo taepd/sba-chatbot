@@ -153,7 +153,7 @@ class Shops(Resource):
 
 
 class Shop(Resource):
-
+    
     # @staticmethod
 #     def get(shopid : str):
 #         shop = ShopDao.find_by_shopid(shopid)
@@ -195,8 +195,8 @@ if __name__ == '__main__':
 
     # import pdb
     # 데이터 일괄 입력
-    df = pd.read_csv('./data/csv/important/db/shop.csv', sep=',', encoding='utf-8-sig')
-    df = df.replace(np.nan, '', regex=True)
+    df = pd.read_csv('./data/db/shop.csv', sep=',', encoding='utf-8-sig')
+    df = df.replace(np.nan, 0, regex=True)
 
     # ------------------
     # 서울만 임시로 넣었을 때 사용
