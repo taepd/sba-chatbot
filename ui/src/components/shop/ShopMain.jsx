@@ -65,7 +65,7 @@ const ShopMain = () => {
                     ))}
                 </Grid>
                 <Grid container justify="center" alignItems="flex-end" className={classes.pagi}>
-                    <Paginate postsPerPage={postsPerPage} totalPosts={data.length} paginate={paginate}/>
+                    <Paginate page={currentPosts} postsPerPage={postsPerPage} totalPosts={data.length} paginate={paginate} first={indexOfFirstPost}/>
                 </Grid>
             </React.Fragment>
         );

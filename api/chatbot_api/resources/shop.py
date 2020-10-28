@@ -121,7 +121,7 @@ class ShopDao(ShopDto):
         # print(type(sql))
         # print('**************test******************')
         df = pd.read_sql(sql.statement, sql.session.bind)
-        df = df.head(30)
+        df = df.head(50)
         return json.loads(df.to_json(orient='records'))
 
     @classmethod
