@@ -108,10 +108,10 @@ class ShopDao(ShopDto):
     @classmethod
     def find_by_shopid(cls,shopid):
   
-        # sql = cls.query.filter(cls.shop_id.like(shopid))
-        # df = pd.read_sql(sql.statement, sql.session.bind)
-        # return json.loads(df.to_json(orient='records'))
-        return cls.query.filter_by(shop_id = shopid).first()
+        sql = cls.query.filter_by(shop_id = shopid)
+        df = pd.read_sql(sql.statement, sql.session.bind)
+        return json.loads(df.to_json(orient='records'))
+        # return cls.query.filter_by(shop_id = shopid)
 
 
     @classmethod
@@ -162,14 +162,31 @@ class Shop(Resource):
     #     return shop.json(), 200
     @staticmethod
     def get(shopid : str):
-        shop = ShopDao.find_by_shopid(shopid)
-        food = FoodDao.food_find_by_shopid(shopid)
+        test = FoodDao.food_find_by_shopid(shopid)
+        print("==============으아아아아=================")
+        print(test)
+        shopAfood = []
+        shop = {'Shop' : ShopDao.find_by_shopid(shopid)}
+        food = {'Food' : FoodDao.food_find_by_shopid(shopid)}
+        shopAfood.append(shop)
+        shopAfood.append(food)
         print('*'*40)
         # shop = shop.json()
         # print(shop)
-        print(type(food))    
-        print(food)
-        return shop.json, food, 200
+        # print(type(shopAfood))    
+        print(shopAfood)
+        return shopAfood, 200
+
+
+    # @staticmethod
+    # def get(shopid : str):
+    #     food = FoodDao.food_find_by_shopid(shopid)
+    #     print('*'*40)
+    #     # shop = shop.json()
+    #     # print(shop)
+    #     print(type(food))    
+    #     print(food)
+    #     return food, 200
 
 # ------------ 실행 영역 --------------
 # if __name__ == '__main__':

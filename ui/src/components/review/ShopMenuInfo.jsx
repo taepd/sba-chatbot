@@ -71,10 +71,10 @@ const useStyles = makeStyles((theme) => ({
 
 const ShopMenuInfo = (props) => {
   const classes = useStyles();
+
   const { post } = props;
   const [open, setOpen] = React.useState(false);
 
-  console.log("sssss"+post.shop_addr)
   
   const handleClickOpen = () => {
     setOpen(true);
@@ -85,6 +85,7 @@ const ShopMenuInfo = (props) => {
   };
 
   return (
+
     <div className={classes.divroot}>
       <Dialog className={classes.modalsize}
         maxWidth="xs"
@@ -95,16 +96,15 @@ const ShopMenuInfo = (props) => {
       >
         <CardMedia
           className={classes.modalcover}
-          image={post.shop_img}
+          image={post.food_img !== 'no_image' ? '{post.food_img}' : 'https://lh3.googleusercontent.com/proxy/50XHf1N1XycTYoKaJNGaw9flAWko2BkLaBndKKKvC_i0oMkVsklpGMcI4embUG0b6PYnUakKsNViFiam8a59E2-0WjxeSjDazBs4gQaWUGZ4zY35ZGw4JsGfeeCsaGU66A'}
         />
         <Grid container justify="center" direction="row">
           <Typography>
-            <DialogTitle id="alert-dialog-title" >{post.shop_name}</DialogTitle>
+            <DialogTitle id="alert-dialog-title" >{post.food_name}</DialogTitle>
           </Typography>
         </Grid>
         <DialogContent>
           <Grid container justify="space-between" direction="row">
-
             <DialogContentText id="alert-dialog-description">
               <Typography variant="h6">
                 주문 금액
@@ -112,7 +112,7 @@ const ShopMenuInfo = (props) => {
             </DialogContentText>
             <DialogContentText id="alert-dialog-description">
               <Typography variant="h6" color="secondary">
-                가격 : {post.shop_addr}
+                가격 : {post.price}
               </Typography>
             </DialogContentText>
           </Grid>
@@ -135,13 +135,13 @@ const ShopMenuInfo = (props) => {
                   {post.food_name}
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                  {post.food_price}
+                  {post.price} 원
                 </Typography>
               </CardContent>
             </Grid>
             <CardMedia
               className={classes.cover}
-              image={post.food_img}
+              image={post.food_img !== 'no_image' ? `{post.food_img}` : 'https://lh3.googleusercontent.com/proxy/50XHf1N1XycTYoKaJNGaw9flAWko2BkLaBndKKKvC_i0oMkVsklpGMcI4embUG0b6PYnUakKsNViFiam8a59E2-0WjxeSjDazBs4gQaWUGZ4zY35ZGw4JsGfeeCsaGU66A'}
             />
           </Card>
           <Divider />

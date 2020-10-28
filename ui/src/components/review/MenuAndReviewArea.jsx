@@ -136,7 +136,6 @@ const MenuAndReviewArea = (props) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  console.log("shopasflkjf"+post.shop_name)
   
   return (
     <div className={classes.root}>
@@ -151,7 +150,9 @@ const MenuAndReviewArea = (props) => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
+        {post.map((post) => (
             <ShopMenuInfo post={post}/>
+          ))}
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Grid container spacing={4} justify="center" >

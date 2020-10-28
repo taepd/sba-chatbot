@@ -48,7 +48,7 @@ const ShopMain = () => {
 
     },[])
 
-    console.log(data)
+    // console.log(data)
 
     const classes = useStyles();
 

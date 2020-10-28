@@ -49,7 +49,7 @@ const useStyles = makeStyles({
 const ShopInfo = (props) => {
   const classes = useStyles();
   const { post } = props;
-
+  // console.log("===========test========"+post)
 
   function HalfRating() {
     const classes = useStyles();

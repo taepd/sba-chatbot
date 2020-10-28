@@ -89,9 +89,10 @@ class FoodDao(FoodDto):
         print("==============test=====================")
         print(shopid)
         # print(cls.query.filter_by(shop_id = shopid))
-        shopid = 775
+        shopid = 10366
         sql = cls.query.filter_by(shop_id = shopid)
         df = pd.read_sql(sql.statement, sql.session.bind)
+        # print(df)
         return json.loads(df.to_json(orient='records'))
         # return cls.query.filter_by(shop_id = shopid).all()
 

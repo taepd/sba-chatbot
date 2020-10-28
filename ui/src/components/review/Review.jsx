@@ -27,14 +27,16 @@ const useStyles = makeStyles((theme) => ({
 const Review = ({match}) => {
 
   // console.log(match.params.shopid)
-  const [data, setData] = useState([])
+  const [shopdata, setDataShop] = useState([])
+  const [fooddata, setDataFood] = useState([])
   useEffect(() => {
       // alert(match.params.shopid)
       axios.get(`http://localhost:8080/shop/${match.params.shopid}`)
       .then(res=>{
           // alert(`List Success`)
-          setData(res.data)
-          console.log(res.data)
+          setDataShop(res.data[0].Shop[0])
+          setDataFood(res.data[1].Food)
+          console.log(res.data[1].Food)
       })
       .catch(e=>{
           alert(`List Failure`)
@@ -43,17 +45,16 @@ const Review = ({match}) => {
 
   },[])
 
-  console.log("하하하ㅏ핳"+data.shop_name)
 
   return (
     <React.Fragment>
       <CssBaseline />
       <Navigation />
       <Grid container justify="center" >
-          <ShopInfo post={data}/>
+          <ShopInfo  post={shopdata}/>
       </Grid>
       <Grid container justify="center" spacing={5} className={useStyles.mainGrid}>
-        <MenuAndReviewArea post={data}/>
+         <MenuAndReviewArea  post={fooddata}/>
       </Grid>
     </React.Fragment>
   )
