@@ -36,9 +36,9 @@ class FoodDto(db.Model):
     food_rev_avg: float = db.Column(db.Float)
     food_rev_cnt: float = db.Column(db.Integer)
 
-    shop_id: int = db.Column(db.Integer, db.ForeignKey('shop.shop_id'))
+    shop_id: int = db.Column(db.Integer, db.ForeignKey('shop.shop_id', ondelete="CASCADE"))
 
-    order_reviews = db.relationship('OrderReviewDto', backref='food', lazy=True)
+    order_reviews = db.relationship('OrderReviewDto', backref='food', lazy='dynamic', cascade="all, delete, delete-orphan")
 
     def __init__(self, food_id, food_name, price, food_img, food_rev_avg,
                  food_rev_cnt, shop_id):
@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
     # import pdb
     # # 데이터 일괄 입력
-    df = pd.read_csv('./data/csv/important/food.csv', sep=',', encoding='utf-8-sig')
+    df = pd.read_csv('./data/csv/important/db/food.csv', sep=',', encoding='utf-8-sig')
     df = df.replace(np.nan, '', regex=True)
 
     # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]

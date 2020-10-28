@@ -35,33 +35,67 @@ from util.file_helper import FileReader
 #
 # df.to_csv(f'./../../data/csv/store/shop.csv', sep=',', encoding='utf-8-sig', index=False)
 
-# ###############################
+# ------------
+# 클러스터 포인트에 해당하는 상점들만 필터링
+# file_path = r'./../../data/csv/important/shop(seoul).csv'
+# shop_df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
+# print('샵 로딩완료')
+#
+# file_path = r'./../../data/csv/important/review_df.csv'
+# review_df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
+# print('오더리뷰 로딩완료')
+#
+# # 리뷰에 있는 shop_id만 중복제거하여 필터링
+# shop_list = review_df['shop_id'].drop_duplicates().tolist()
+# print('매장 갯수: ', len(shop_list))
+#
+# filtered_shop_df = pd.DataFrame()
+# for shop_id in shop_list:
+#     if (review_df['shop_id'] == shop_id).any():
+#         filtered_shop_df = filtered_shop_df.append(shop_df[shop_df['shop_id'] == shop_id])
+#
+# # print(shop_df[shop_df['shop_id'] == 67])
+#
+# print('필터링 된 매장 df 행 수:', len(filtered_shop_df))
+# filtered_shop_df.to_csv(f'./../../data/csv/important/shop.csv', sep=',', encoding='utf-8-sig', index=False)
+# --------------
+# ##################################
 
 # ##################################
 # review 정리
-file_path = r'./../../data/csv/important/review_df(37.520775, 127.022767).csv'
+# file_path = r'./../../data/csv/important/review_df.csv'
+# df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
+#
+# # 리뷰시간을 오더시간으로도 복제
+# # col = df['time']
+# # df['order_time'] = col
+#
+#
+# # 컬럼명 변경
+# df = df.rename({'orderid': 'or_id', 'comment': 'review_cmnt', 'rating_taste': 'taste_rate',
+#                 'rating_quantity': 'quantity_rate', 'rating_delivery': 'delivery_rate',
+#                 'time': 'review_time', 'owner_comment': 'owner_cmnt', 'id': 'shop_id'}, axis='columns')
+#
+# # 컬럼 순서 조정
+# df = df[['or_id', 'order_time', 'review_cmnt', 'taste_rate', 'quantity_rate',
+#          'delivery_rate', 'review_time', 'owner_cmnt', 'userid', 'shop_id', 'food_id']]
+#
+#
+# # print(df.columns)
+# # print(df.head())
+# #
+# df.to_csv(f'./../../data/csv/important/order_review.csv', sep=',', encoding='utf-8-sig', index=False)
+
+
+# ----------------
+# user_id가 손님인 경우 제외
+file_path = r'./../../data/csv/important/order_review.csv'
 df = pd.read_csv(file_path, sep=',', encoding='utf-8-sig')
 
-# 리뷰시간을 오더시간으로도 복제
-col = df['time']
-df['order_time'] = col
+df1 = df.dropna(subset=['userid'])
 
-
-# 컬럼명 변경
-df = df.rename({'orderid': 'or_id', 'comment': 'review_cmnt', 'rating_taste': 'taste_rate',
-                'rating_quantity': 'quantity_rate', 'rating_delivery': 'delivery_rate',
-                'time': 'review_time', 'owner_comment': 'owner_cmnt', 'id': 'shop_id'}, axis='columns')
-
-# 컬럼 순서 조정
-df = df[['or_id', 'order_time', 'review_cmnt', 'taste_rate', 'quantity_rate',
-         'delivery_rate', 'review_time', 'owner_cmnt', 'userid', 'shop_id', 'food_id']]
-
-
-
-# print(df.columns)
-# print(df.head())
-#
-df.to_csv(f'./../../data/csv/reviewxxx.csv', sep=',', encoding='utf-8-sig', index=False)
+df1.to_csv(f'./../../data/csv/important/order_review(remove_userid_nan).csv', sep=',', encoding='utf-8-sig', index=False)
+# -----------------
 
 # ###############################
 

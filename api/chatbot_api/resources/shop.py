@@ -45,8 +45,8 @@ class ShopDto(db.Model):
     shop_rev_cnt: int = db.Column(db.Integer)
     opentime: str = db.Column(db.Date)
 
-    foods = db.relationship('FoodDto', backref='shop', lazy=True)
-    order_reviews = db.relationship('OrderReviewDto', backref='shop', lazy=True)
+    foods = db.relationship('FoodDto', backref='shop', lazy='dynamic', cascade="all, delete, delete-orphan")
+    order_reviews = db.relationship('OrderReviewDto', backref='shop', lazy='dynamic', cascade="all, delete, delete-orphan")
     
 
     def __init__(self, shop_id, shop_name, shop_addr, shop_img, cat,
@@ -108,14 +108,8 @@ class ShopDao(ShopDto):
 
     @classmethod
     def find_by_shopid(cls,shopid):
-  
-        # sql = cls.query.filter(cls.shop_id == shopid).all()
-        # df = pd.read_sql(sql.statement, sql.session.bind)
-        # return json.loads(df.to_json(orient='records'))
-        return cls.query.filter_by(shop_id = shopid).first()
-        # sql = cls.query.filter(cls.shop_id.like(shopid))
-        # df = pd.read_sql(sql.statement, sql.session.bind)
-        # return json.loads(df.to_json(orient='records'))
+        return cls.query.filter_by(shop_id = shopid).all()
+
 
     @classmethod
     def find_limit(cls):
@@ -163,30 +157,29 @@ class Shop(Resource):
     @staticmethod
     def get(shopid : str):
         shop = ShopDao.find_by_shopid(shopid)
-        print('*'*40)
-        # shop = shop.json()
-        print(shop)
-        print(type(shop))    
-        return shop.json, 200
+        return shop[0].json, 200
 
 # ------------ 실행 영역 --------------
-# if __name__ == '__main__':
+if __name__ == '__main__':
 
     # import pdb
-    # # 데이터 일괄 입력
-    # df = pd.read_csv('./data/csv/important/shop.csv', sep=',', encoding='utf-8-sig')
-    # df = df.replace(np.nan, '', regex=True)
+    # 데이터 일괄 입력
+    df = pd.read_csv('./data/csv/important/db/shop.csv', sep=',', encoding='utf-8-sig')
+    df = df.replace(np.nan, '', regex=True)
 
+    # ------------------
+    # 서울만 임시로 넣었을 때 사용
     # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]
     # print(shop_seoul['shop_addr'])
 
     # shop_seoul.to_csv('./data/csv/important/shop(seoul).csv', sep=',', encoding='utf-8-sig', index=False)
 
     # pdb.set_trace()
+    # -------------------
 
 
-    # Session = openSession()
-    # session = Session()
-    # session.bulk_insert_mappings(ShopDto, df.to_dict(orient="records"))
-    # session.commit()
-    # session.close()
+    Session = openSession()
+    session = Session()
+    session.bulk_insert_mappings(ShopDto, df.to_dict(orient="records"))
+    session.commit()
+    session.close()
