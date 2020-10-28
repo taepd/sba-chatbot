@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ShopMain = () => {
     const [data, setData] = useState([])
+    
     useEffect(() => {
         axios.get(`http://localhost:8080/shops`)
         .then(res=>{

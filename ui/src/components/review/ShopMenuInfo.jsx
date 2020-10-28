@@ -74,6 +74,8 @@ const ShopMenuInfo = (props) => {
   const { post } = props;
   const [open, setOpen] = React.useState(false);
 
+  console.log("sssss"+post.shop_addr)
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -93,11 +95,11 @@ const ShopMenuInfo = (props) => {
       >
         <CardMedia
           className={classes.modalcover}
-          image={post.food_img}
+          image={post.shop_img}
         />
         <Grid container justify="center" direction="row">
           <Typography>
-            <DialogTitle id="alert-dialog-title" >{post.food_name}</DialogTitle>
+            <DialogTitle id="alert-dialog-title" >{post.shop_name}</DialogTitle>
           </Typography>
         </Grid>
         <DialogContent>
@@ -110,7 +112,7 @@ const ShopMenuInfo = (props) => {
             </DialogContentText>
             <DialogContentText id="alert-dialog-description">
               <Typography variant="h6" color="secondary">
-                가격 : {post.food_price}
+                가격 : {post.shop_addr}
               </Typography>
             </DialogContentText>
           </Grid>

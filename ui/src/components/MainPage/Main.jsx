@@ -93,7 +93,6 @@ const Main = () => {
     return (
         <React.Fragment>
             <CssBaseline />
-            <Nav title="Blog" sections={sections} />
             <MainNavigation />
             <Grid container justify="center" className={classes.wd}>
                 <Grid container justify="center" className={classes.title}>

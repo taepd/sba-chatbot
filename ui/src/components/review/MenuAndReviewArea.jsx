@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useEffect, useState} from 'react'
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -9,6 +9,8 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import ReviewDescription from './ReviewDescription';
 import ShopMenuInfo from './ShopMenuInfo';
+import axios from 'axios'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -127,14 +129,15 @@ function LinkTab(props) {
 }
 
 const MenuAndReviewArea = (props) => {
+  const {post} = props;
   const classes = useStyles();
-
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  console.log("shopasflkjf"+post.shop_name)
+  
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -148,11 +151,7 @@ const MenuAndReviewArea = (props) => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        {/* <Grid container className={classes.nonepadding} > */}
-          {shopmenu.map((post) => (
-            <ShopMenuInfo key={post.food_name} post={post} className={classes.nonepadding} />
-          ))}
-        {/* </Grid> */}
+            <ShopMenuInfo post={post}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Grid container spacing={4} justify="center" >

@@ -24,7 +24,7 @@ from pathlib import Path
 from chatbot_api.ext.db import db, openSession
 from chatbot_api.util.file_handler import FileReader
 
-from chatbot_api.resources.food import FoodDto
+from chatbot_api.resources.food import FoodDto, FoodDao
 # from chatbot_api.resources.order_review import OrderReviewDto
 
 parser = reqparse.RequestParser()
@@ -97,7 +97,6 @@ class ShopVo:
     shop_rev_cnt: int = 0
     opentime: str = ''
 
-
 class ShopDao(ShopDto):
     
     @classmethod
@@ -109,20 +108,18 @@ class ShopDao(ShopDto):
     @classmethod
     def find_by_shopid(cls,shopid):
   
-        # sql = cls.query.filter(cls.shop_id == shopid).all()
-        # df = pd.read_sql(sql.statement, sql.session.bind)
-        # return json.loads(df.to_json(orient='records'))
-        return cls.query.filter_by(shop_id = shopid).first()
         # sql = cls.query.filter(cls.shop_id.like(shopid))
         # df = pd.read_sql(sql.statement, sql.session.bind)
         # return json.loads(df.to_json(orient='records'))
+        return cls.query.filter_by(shop_id = shopid).first()
+
 
     @classmethod
     def find_limit(cls):
         # sql = cls.query.join(FoodDto).filter(FoodDto.shop_id == cls.shop_id).all()
         sql = cls.query
         # print(type(sql))
-        print('**************test******************')
+        # print('**************test******************')
         df = pd.read_sql(sql.statement, sql.session.bind)
         df = df.head(10)
         return json.loads(df.to_json(orient='records'))
@@ -147,8 +144,11 @@ class Shops(Resource):
     def get():
         print('select 10')
         shops = ShopDao.find_limit()
-        print('shops: ', shops)
+        # print('shops: ', shops)
         # test = ShopDao.find_cat()
+        # print("-------------shops-----------------")
+        # print(type(shops))
+        # print(shops)
         return shops, 200
 
 
@@ -163,11 +163,13 @@ class Shop(Resource):
     @staticmethod
     def get(shopid : str):
         shop = ShopDao.find_by_shopid(shopid)
+        food = FoodDao.food_find_by_shopid(shopid)
         print('*'*40)
         # shop = shop.json()
-        print(shop)
-        print(type(shop))    
-        return shop.json, 200
+        # print(shop)
+        print(type(food))    
+        print(food)
+        return shop.json, food, 200
 
 # ------------ 실행 영역 --------------
 # if __name__ == '__main__':
