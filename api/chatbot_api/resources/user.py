@@ -578,6 +578,7 @@ if __name__ == '__main__':
      
     # 데이터 일괄 입력
     df = pd.read_csv('./data/csv/important/db/user.csv', sep=',', encoding='utf-8-sig')
+
     df = df.replace(np.nan, '', regex=True)
     Session = openSession()
     session = Session()

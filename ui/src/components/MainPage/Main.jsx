@@ -2,10 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import Nav from '../common/Nav';
 import MainNavigation from './MainNavigation';
-import Paper from '@material-ui/core/Paper';
 import MainList from './MainList';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -27,17 +24,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const sections = [
-    { title: '메인', url: '/main' },
-    { title: '리뷰보기', url: '/review' },
-    { title: '리뷰쓰기', url: '/reviewwrite' },
-    { title: '마이페이지', url: '/userpage' },
-    { title: 'Opinidddon', url: '#' },
-    { title: 'Science', url: '#' },
-    { title: 'Health', url: '#' },
-    { title: 'Style', url: '#' },
-    { title: 'Travel', url: '#' },
-];
 
 const shoplistl = [
     {
@@ -104,7 +90,6 @@ const Main = () => {
     return (
         <React.Fragment>
             <CssBaseline />
-            <Nav title="Blog" sections={sections} />
             <MainNavigation />
             <Grid container justify="center" className={classes.wd}>
                 <Grid container justify="center" className={classes.title}>

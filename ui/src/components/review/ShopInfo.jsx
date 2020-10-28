@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     marginRight :40,
   },
   shopMain : {
-    marginTop : 30,
+    marginTop : 50,
     marginBottom : 30,
   },
   root: {
@@ -49,6 +49,7 @@ const useStyles = makeStyles({
 const ShopInfo = (props) => {
   const classes = useStyles();
   const { post } = props;
+  // console.log("===========test========"+post)
 
   function HalfRating() {
     const classes = useStyles();

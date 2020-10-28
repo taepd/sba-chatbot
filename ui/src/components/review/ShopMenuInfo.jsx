@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReviewImage from './ReviewImage';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -8,11 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Hidden from '@material-ui/core/Hidden';
-import Rating from '@material-ui/lab/Rating';
 import Divider from '@material-ui/core/Divider';
-import Paper from '@material-ui/core/Paper';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -71,9 +66,11 @@ const useStyles = makeStyles((theme) => ({
 
 const ShopMenuInfo = (props) => {
   const classes = useStyles();
+
   const { post } = props;
   const [open, setOpen] = React.useState(false);
 
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -83,6 +80,7 @@ const ShopMenuInfo = (props) => {
   };
 
   return (
+
     <div className={classes.divroot}>
       <Dialog className={classes.modalsize}
         maxWidth="xs"
@@ -93,7 +91,7 @@ const ShopMenuInfo = (props) => {
       >
         <CardMedia
           className={classes.modalcover}
-          image={post.food_img}
+          image={post.food_img !== 'no_image' ? post.food_img : 'https://lh3.googleusercontent.com/proxy/50XHf1N1XycTYoKaJNGaw9flAWko2BkLaBndKKKvC_i0oMkVsklpGMcI4embUG0b6PYnUakKsNViFiam8a59E2-0WjxeSjDazBs4gQaWUGZ4zY35ZGw4JsGfeeCsaGU66A'}
         />
         <Grid container justify="center" direction="row">
           <Typography>
@@ -102,7 +100,6 @@ const ShopMenuInfo = (props) => {
         </Grid>
         <DialogContent>
           <Grid container justify="space-between" direction="row">
-
             <DialogContentText id="alert-dialog-description">
               <Typography variant="h6">
                 주문 금액
@@ -110,7 +107,7 @@ const ShopMenuInfo = (props) => {
             </DialogContentText>
             <DialogContentText id="alert-dialog-description">
               <Typography variant="h6" color="secondary">
-                가격 : {post.food_price}
+                가격 : {post.price}
               </Typography>
             </DialogContentText>
           </Grid>
@@ -133,13 +130,13 @@ const ShopMenuInfo = (props) => {
                   {post.food_name}
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                  {post.food_price}
+                  {post.price} 원
                 </Typography>
               </CardContent>
             </Grid>
             <CardMedia
               className={classes.cover}
-              image={post.food_img}
+              image={post.food_img !== 'no_image' ? post.food_img : 'https://lh3.googleusercontent.com/proxy/50XHf1N1XycTYoKaJNGaw9flAWko2BkLaBndKKKvC_i0oMkVsklpGMcI4embUG0b6PYnUakKsNViFiam8a59E2-0WjxeSjDazBs4gQaWUGZ4zY35ZGw4JsGfeeCsaGU66A'}
             />
           </Card>
           <Divider />

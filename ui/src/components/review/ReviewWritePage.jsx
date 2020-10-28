@@ -16,19 +16,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const sections = [
-  { title: '메인', url: '/main' },
-  { title: '리뷰보기', url: '/review' },
-  { title: '리뷰쓰기', url: '/reviewwrite' },
-  { title: '마이페이지', url: '/userpage' },
-  { title: 'Opinion', url: '#' },
-  { title: 'Science', url: '#' },
-  { title: 'Health', url: '#' },
-  { title: 'Style', url: '#' },
-  { title: 'Travel', url: '#' },
-];
-
-
 
 const ReviewWritePage = () =>
 

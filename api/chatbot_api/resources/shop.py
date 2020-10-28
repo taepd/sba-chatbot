@@ -24,7 +24,7 @@ from pathlib import Path
 from chatbot_api.ext.db import db, openSession
 from chatbot_api.util.file_handler import FileReader
 
-from chatbot_api.resources.food import FoodDto
+from chatbot_api.resources.food import FoodDto, FoodDao
 # from chatbot_api.resources.order_review import OrderReviewDto
 
 parser = reqparse.RequestParser()
@@ -97,7 +97,6 @@ class ShopVo:
     shop_rev_cnt: int = 0
     opentime: str = ''
 
-
 class ShopDao(ShopDto):
     
     @classmethod
@@ -108,7 +107,11 @@ class ShopDao(ShopDto):
 
     @classmethod
     def find_by_shopid(cls,shopid):
-        return cls.query.filter_by(shop_id = shopid).all()
+        sql = cls.query.filter_by(shop_id = shopid)
+        df = pd.read_sql(sql.statement, sql.session.bind)
+        return json.loads(df.to_json(orient='records'))
+        # return cls.query.filter_by(shop_id = shopid).all()
+
 
 
     @classmethod
@@ -116,7 +119,7 @@ class ShopDao(ShopDto):
         # sql = cls.query.join(FoodDto).filter(FoodDto.shop_id == cls.shop_id).all()
         sql = cls.query
         # print(type(sql))
-        print('**************test******************')
+        # print('**************test******************')
         df = pd.read_sql(sql.statement, sql.session.bind)
         df = df.head(10)
         return json.loads(df.to_json(orient='records'))
@@ -141,23 +144,51 @@ class Shops(Resource):
     def get():
         print('select 10')
         shops = ShopDao.find_limit()
-        print('shops: ', shops)
+        # print('shops: ', shops)
         # test = ShopDao.find_cat()
+        # print("-------------shops-----------------")
+        # print(type(shops))
+        # print(shops)
         return shops, 200
 
 
 class Shop(Resource):
 
     # @staticmethod
-    # def get(shopid):
-    #     print('?????????????????????????????')
-    #     print(f'{shopid} 셀렉트')
-    #     shop = ShopDao.find_by_shopid(shopid)
-    #     return shop.json(), 200
+#     def get(shopid : str):
+#         shop = ShopDao.find_by_shopid(shopid)
+#         return shop[0].json, 200
+      
+      
     @staticmethod
     def get(shopid : str):
-        shop = ShopDao.find_by_shopid(shopid)
-        return shop[0].json, 200
+
+        test = FoodDao.food_find_by_shopid(shopid)
+        print("==============으아아아아=================")
+        print(test)
+        shopAfood = []
+        shop = {'Shop' : ShopDao.find_by_shopid(shopid)}
+        food = {'Food' : FoodDao.food_find_by_shopid(shopid)}
+        shopAfood.append(shop)
+        shopAfood.append(food)
+        print('*'*40)
+        # shop = shop.json()
+        # print(shop)
+        # print(type(shopAfood))    
+        print(shopAfood)
+        return shopAfood, 200
+
+
+    # @staticmethod
+    # def get(shopid : str):
+    #     food = FoodDao.food_find_by_shopid(shopid)
+    #     print('*'*40)
+    #     # shop = shop.json()
+    #     # print(shop)
+    #     print(type(food))    
+    #     print(food)
+    #     return food, 200
+
 
 # ------------ 실행 영역 --------------
 if __name__ == '__main__':

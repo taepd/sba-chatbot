@@ -5,12 +5,14 @@ from flask_restful import Api
 from chatbot_api.resources.user import User
 from chatbot_api.resources.home import Home
 from chatbot_api.resources.shop import Shop, Shops
+from chatbot_api.resources.food import Food
 
 
 home = Blueprint('home', __name__, url_prefix='/')
 user = Blueprint('user', __name__, url_prefix='/api/user')
 shops = Blueprint('shops', __name__, url_prefix='/shops')
 shop = Blueprint('shop', __name__, url_prefix='/shop')
+food = Blueprint('food', __name__, url_prefix='/foodmenu')
 # users = Blueprint('users', __name__, url_prefix='/api/users')
 # auth = Blueprint('auth', __name__, url_prefix='/api/auth')
 # access = Blueprint('access', __name__, url_prefix='/api/access')
@@ -21,6 +23,7 @@ api = Api(home)
 api = Api(user)
 api = Api(shops)
 api = Api(shop)
+api = Api(food)
 # api = Api(users)
 # api = Api(auth)
 # api = Api(access)
@@ -34,6 +37,7 @@ def initialize_routes(api):
     api.add_resource(User, '/api/user/<string:id>')
     api.add_resource(Shops,'/shops')
     api.add_resource(Shop,'/shop/<string:shopid>')
+    api.add_resource(Food,'/foodmenu/<string:shopid>')
     # api.add_resource(Home, '/api')
     # api.add_resource(Item, '/api/item/<string:id>')
     # api.add_resource(Items,'/api/items')

@@ -72,6 +72,7 @@ def insert_at_all(fila_name, dto):
         df = chunk.replace(np.nan, 1, regex=True)
         # print(df.head())
 
+
         Session = openSession()
         session = Session()
         session.bulk_insert_mappings(dto, df.to_dict(orient="records"))
@@ -79,10 +80,12 @@ def insert_at_all(fila_name, dto):
         session.close()
         print(f'{cnt*chunksize}건 입력 완료')
 
+
 # food 테이블 입력
 # insert_at_all('food', FoodDto)        
 # order_review 테이블 입력
 # insert_at_all('order_review(remove_userid_nan)', OrderReviewDto)        
+
 
 # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]
 # print(shop_seoul['shop_addr'])

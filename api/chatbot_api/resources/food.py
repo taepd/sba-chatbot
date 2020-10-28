@@ -82,7 +82,29 @@ class FoodVo:
     shop_id: int = 0
 
 
+class FoodDao(FoodDto):
 
+    @classmethod
+    def food_find_by_shopid(cls,shopid):
+        print("==============test=====================")
+        print(shopid)
+        # print(cls.query.filter_by(shop_id = shopid))
+        shopid = 10366
+        sql = cls.query.filter_by(shop_id = shopid)
+        df = pd.read_sql(sql.statement, sql.session.bind)
+        # print(df)
+        return json.loads(df.to_json(orient='records'))
+        # return cls.query.filter_by(shop_id = shopid).all()
+
+
+
+class Food(Resource):
+    @staticmethod
+    def get(shopid : str):
+        food = FoodDao.food_find_by_shopid(shopid)
+        print(shop)
+        print(type(shop))
+        return food.json, 200
 
 # ------------ 실행 영역 --------------
 if __name__ == '__main__':
@@ -90,6 +112,7 @@ if __name__ == '__main__':
     # import pdb
     # # 데이터 일괄 입력
     df = pd.read_csv('./data/csv/important/db/food.csv', sep=',', encoding='utf-8-sig')
+
     df = df.replace(np.nan, '', regex=True)
 
     # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]
@@ -105,3 +128,6 @@ if __name__ == '__main__':
     # session.bulk_insert_mappings(FoodDto, df.to_dict(orient="records"))
     # session.commit()
     # session.close()
+
+
+
