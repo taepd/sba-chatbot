@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     marginRight :40,
   },
   shopMain : {
-    marginTop : 30,
+    marginTop : 50,
     marginBottom : 30,
   },
   root: {

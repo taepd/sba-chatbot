@@ -125,7 +125,7 @@ const Navigation = () => {
                         showLabels
                         className={classes.root}
                         >
-                            <BottomNavigationAction label="전체보기" href="/shopmain"/>
+                            <BottomNavigationAction label="전체보기" href="/shops"/>
                             <BottomNavigationAction label="프렌차이즈"/>
                             <BottomNavigationAction label="치킨"/>
                             <BottomNavigationAction label="피자/양식"/>

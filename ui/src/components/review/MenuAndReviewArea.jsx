@@ -15,7 +15,7 @@ import axios from 'axios'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(3),
     backgroundColor: theme.palette.background.paper,
     maxWidth: 1000,
     padding:0,
@@ -25,49 +25,6 @@ const useStyles = makeStyles((theme) => ({
   }
 
 }));
-
-
-
-const shopmenu = [
-  {
-    food_name: '오리지널세트1fasdflksadjfsajlkdfjalskdafjaklsdjfk（오리지널피자L 1판＋치즈오븐스파게티＋콜라 1.25L）',
-    food_price: '23,000',
-    food_img: 'https://images.deliveryhero.io/image/yogiyo/PARTNER_FR_IMG/%EB%A1%AF%EB%8D%B0%EB%A6%AC%EC%95%84/2020-06-30/%EC%A0%9C%ED%9C%B4FR_20200629_%EB%A1%AF%EB%8D%B0%EB%A6%AC%EC%95%84_%ED%8F%B4%EB%8D%94%EB%B2%84%EA%B1%B0%EB%B9%84%ED%94%84%EC%84%B8%ED%8A%B8_1080x640.jpg?width=384&height=273&quality=100',
-
-  },
-  {
-    food_name: '오리지널세트1',
-    food_price: '23,000',
-    food_img: 'https://images.deliveryhero.io/image/yogiyo/PARTNER_FR_IMG/%EB%A1%AF%EB%8D%B0%EB%A6%AC%EC%95%84/2020-09-25/%EC%A0%9C%ED%9C%B4FR_20200924_%EB%A1%AF%EB%8D%B0%EB%A6%AC%EC%95%84_%EB%B0%80%EB%A6%AC%ED%84%B0%EB%A6%AC%EB%B2%84%EA%B1%B0%EC%84%B8%ED%8A%B8_1080x640.jpg?width=384&height=273&quality=100',
-
-  },
-  {
-    food_name: '오리지널세트1（오리지널피자L 1판＋치즈오븐스파게티＋콜라 1.25L）',
-    food_price: '23,000',
-    food_img: 'https://images.deliveryhero.io/image/yogiyo/PARTNER_FR_IMG/%EB%A1%AF%EB%8D%B0%EB%A6%AC%EC%95%84/2019-05-15/%EC%A0%9C%ED%9C%B4FR_20190515_%EB%A1%AF%EB%8D%B0%EB%A6%AC%EC%95%84_%ED%99%88%ED%8C%A8%EB%B0%80%EB%A6%AC%ED%8C%A9v2_1080x640.jpg?width=384&height=273&quality=100',
-
-  },
-  {
-    food_name: '오리지널세트1（오리지널피자L 1판＋치즈오븐스파게티＋콜라 1.25L）',
-    food_price: '23,000',
-    food_img: 'https://images.deliveryhero.io/image/yogiyo/REST_OWN_IMG/%EC%84%9C%EC%9A%B8/%EC%84%9C%EC%9A%B8%EC%A4%91%EA%B5%AC/253070_%EB%AA%85%EB%8F%99%EB%8D%AE%EB%B0%A5%EB%8F%84%EC%8B%9C%EB%9D%BD/%EC%97%85%EC%B2%B4%EC%9E%90%EC%B2%B4_20191226_253070_%EB%AA%85%EB%8F%99%EB%8D%AE%EB%B0%A5%EB%8F%84%EC%8B%9C%EB%9D%BD_%EC%86%8C%EB%B6%88%EA%B3%A0%EB%8D%AE%EB%B0%A5%EB%8F%84%EC%8B%9C%EB%9D%BD_1080x640.jpg?width=384&height=273&quality=100',
-
-  },
-  {
-    food_name: '오리지널세트1（오리지널피자L 1판＋치즈오븐스파게티＋콜라 1.25L）',
-    food_price: '23,000',
-    food_img: 'https://images.deliveryhero.io/image/yogiyo/STOCK_IMG/%ED%95%9C%EC%8B%9D/%EB%A9%B4%EB%A5%98/%EC%8A%A4%ED%83%81_20170824_foodad_fad01074_%EB%AC%BC%EB%83%89%EB%A9%B401_1080x640.jpg?width=384&height=273&quality=100',
-
-  },
-  {
-    food_name: '오리지널세트1（오리지널피자L 1판＋치즈오븐스파게티＋콜라 1.25L）',
-    food_price: '23,000',
-    food_img: 'https://images.deliveryhero.io/image/yogiyo/PARTNER_FR_IMG/%EB%A1%AF%EB%8D%B0%EB%A6%AC%EC%95%84/2019-05-15/%EC%A0%9C%ED%9C%B4FR_20190515_%EB%A1%AF%EB%8D%B0%EB%A6%AC%EC%95%84_%ED%99%88%ED%8C%A8%EB%B0%80%EB%A6%AC%ED%8C%A9v2_1080x640.jpg?width=384&height=273&quality=100',
-
-  },
-
-]
-
 
 const reviewdescription = [
   {

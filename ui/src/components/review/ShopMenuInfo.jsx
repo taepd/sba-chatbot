@@ -96,7 +96,7 @@ const ShopMenuInfo = (props) => {
       >
         <CardMedia
           className={classes.modalcover}
-          image={post.food_img !== 'no_image' ? '{post.food_img}' : 'https://lh3.googleusercontent.com/proxy/50XHf1N1XycTYoKaJNGaw9flAWko2BkLaBndKKKvC_i0oMkVsklpGMcI4embUG0b6PYnUakKsNViFiam8a59E2-0WjxeSjDazBs4gQaWUGZ4zY35ZGw4JsGfeeCsaGU66A'}
+          image={post.food_img !== 'no_image' ? post.food_img : 'https://lh3.googleusercontent.com/proxy/50XHf1N1XycTYoKaJNGaw9flAWko2BkLaBndKKKvC_i0oMkVsklpGMcI4embUG0b6PYnUakKsNViFiam8a59E2-0WjxeSjDazBs4gQaWUGZ4zY35ZGw4JsGfeeCsaGU66A'}
         />
         <Grid container justify="center" direction="row">
           <Typography>
@@ -141,7 +141,7 @@ const ShopMenuInfo = (props) => {
             </Grid>
             <CardMedia
               className={classes.cover}
-              image={post.food_img !== 'no_image' ? `{post.food_img}` : 'https://lh3.googleusercontent.com/proxy/50XHf1N1XycTYoKaJNGaw9flAWko2BkLaBndKKKvC_i0oMkVsklpGMcI4embUG0b6PYnUakKsNViFiam8a59E2-0WjxeSjDazBs4gQaWUGZ4zY35ZGw4JsGfeeCsaGU66A'}
+              image={post.food_img !== 'no_image' ? post.food_img : 'https://lh3.googleusercontent.com/proxy/50XHf1N1XycTYoKaJNGaw9flAWko2BkLaBndKKKvC_i0oMkVsklpGMcI4embUG0b6PYnUakKsNViFiam8a59E2-0WjxeSjDazBs4gQaWUGZ4zY35ZGw4JsGfeeCsaGU66A'}
             />
           </Card>
           <Divider />
