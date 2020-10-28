@@ -8,11 +8,11 @@ import ShopList from './ShopList';
 import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem'
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const Paginate = ({ postsPerPage, totalPosts, paginate,first }) => {
   const pageNumber = [];
-
+  const history = useHistory()
   // Math.ceil: 올림
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumber.push(i);
@@ -25,7 +25,11 @@ const Paginate = ({ postsPerPage, totalPosts, paginate,first }) => {
         <li
           key={pageNum}
           className="pagination_item"
-          onClick={() => paginate(pageNum)}
+          onClick={() => {
+            paginate(pageNum)
+            history.push("/shops/"+ pageNum)
+          }
+         }
         >
           {pageNum}
         </li>
