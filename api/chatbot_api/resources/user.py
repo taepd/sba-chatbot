@@ -40,7 +40,7 @@ class UserDto(db.Model):
     lat: float = db.Column(db.Float)
     lng: float = db.Column(db.Float)
 
-    order_reviews = db.relationship('OrderReviewDto', backref='user', lazy=True)
+    order_reviews = db.relationship('OrderReviewDto', backref='user', lazy='dynamic', cascade="all, delete, delete-orphan")
 
     def __init__(self, userid, password, name, age, gender, addr, lat, lng):
         self.userid = userid
@@ -577,7 +577,7 @@ class Access(Resource):
 if __name__ == '__main__':
      
     # 데이터 일괄 입력
-    df = pd.read_csv('./data/csv/important/user_df.csv', sep=',', encoding='utf-8-sig')
+    df = pd.read_csv('./data/csv/important/db/user.csv', sep=',', encoding='utf-8-sig')
     df = df.replace(np.nan, '', regex=True)
     Session = openSession()
     session = Session()

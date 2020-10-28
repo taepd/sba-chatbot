@@ -18,9 +18,9 @@ class OrderReviewDto(db.Model):
     review_img: str = db.Column(db.String(300))
     owner_cmnt: str = db.Column(db.Text)
 
-    userid: str = db.Column(db.String(20), db.ForeignKey('user.userid'))
-    shop_id: int = db.Column(db.Integer, db.ForeignKey('shop.shop_id'))
-    food_id: int = db.Column(db.Integer, db.ForeignKey('food.food_id')) 
+    userid: str = db.Column(db.String(20), db.ForeignKey('user.userid', ondelete="CASCADE"))
+    shop_id: int = db.Column(db.Integer, db.ForeignKey('shop.shop_id', ondelete="CASCADE"))
+    food_id: int = db.Column(db.Integer, db.ForeignKey('food.food_id', ondelete="CASCADE")) 
 
     def __init__(self, or_id, order_time, review_cmnt, taste_rate, quantity_rate,
                  delivery_rate, review_time, review_img, owner_cmnt, userid, shop_id, food_id):
