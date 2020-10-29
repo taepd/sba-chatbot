@@ -113,9 +113,14 @@ class OrderReviewDao(OrderReviewDto):
     @classmethod
     def review_find_by_shopid(cls,shop_id):
         print("================review=================")
+        cls.review_time = ''
         sql = cls.query.filter_by(shop_id = shop_id)
-        # sql = db.session.qeury(OrderReviewDto).join(FoodDto, OrderReviewDto.food_id == FoodDto.food_id)
-        # print(sql.all())
+        # print(sql)
+        # for u, a in cls.qeury(OrderReviewDto, FoodDto).\
+        #             filter(OrderReviewDto.food_id == FoodDto.food_id).\
+        #             filter(OrderReviewDto.shop_id == shop_id).\
+        #             all():
+        #             print(u,a)
         df = pd.read_sql(sql.statement, sql.session.bind)
         return json.loads(df.to_json(orient='records'))
 

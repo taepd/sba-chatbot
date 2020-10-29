@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     '@global': {
@@ -116,7 +117,7 @@ const Navigation = () => {
                         className={classes.root}
                         >
                             <BottomNavigationAction label="전체보기" href="/shops"/>
-                            <BottomNavigationAction label="프렌차이즈"/>
+                            <BottomNavigationAction label="프렌차이즈" href="/shops/"/>
                             <BottomNavigationAction label="치킨"/>
                             <BottomNavigationAction label="피자/양식"/>
                             <BottomNavigationAction label="중국집"/>
