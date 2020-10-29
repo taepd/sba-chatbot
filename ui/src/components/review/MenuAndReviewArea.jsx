@@ -26,20 +26,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const reviewdescription = [
-  {
-    name: 'ba**',
-    review_img: 
-      'https://source.unsplash.com/random',
- 
-    food_name: '순살치킨 ＋ 순살치킨/1(순살 소스선택(후라이드),순살 소스선택(간장),기본음료선택(콜라사이즈업),추가선택(무추가))',
-    review_cmnt:
-      '으아아아아아 리엑트 너무 어려워 미친 화면단 어케 만들어야되냐 죽을거 같다 왜이렇게 왔다갔다해 복잡해 죽겠네 정신 없어 야ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ발 으아아아아아아아아아',
-  },
-
-];
-
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 

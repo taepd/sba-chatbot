@@ -10,6 +10,8 @@ import Divider from '@material-ui/core/Divider';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import { ThemeProvider } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import { Group, TheatersSharp } from '@material-ui/icons';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -17,13 +19,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   cardDetails: {
-    width: 980,
+    maxwidth: 952,
+    padding: 0,
     flex: 1,
     // padding : 20,
-  },
-  shopMain: {
-    marginBottom: 0,
-    marginTop: 0,
   },
   root: {
     display: 'flex',
@@ -36,7 +35,13 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
   },
   marginbottom: {
-    // marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(2),
+  },
+  marginr: {
+    marginRight: theme.spacing(2),
+  },
+  rating : {
+    marginBottom : theme.spacing(1),
   },
 
 }));
@@ -48,44 +53,50 @@ const ReviewDescription = (props) => {
   const taste = post.taste_rate;
   const quan = post.quantity_rate;
   const deli = post.delivery_rate;
+  const date = post.review_time;
+  const rdate = new Date(date);
 
   function HalfRating() {
     const classes = useStyles();
     const rateavg = (taste + quan + deli) / 3
     console.log("sadklfjalfdj" + rateavg)
     return (
-      <div className={classes.marginbottom}>
-        <Rating name="rating" defaultValue={rateavg} max={5}  precision={0.5} readOnly />
+      <div className={classes.rating}>
+        <Rating name="rating" defaultValue={rateavg} max={5} precision={0.5} readOnly />
       </div>
     );
   }
 
   return (
-    // <Grid item md={12} className={classes.shopMain}>
-    <div className={classes.cardDetails}>
-      <CardContent className={classes.cardDetails}>
-        <Typography component="h6" variant="h6">
-          {post.userid}
-        </Typography>
-        <Grid container direction="row">
-          {/* <Rating name="avg" defaultValue={(post.taste_rate *post.quantity_rate* post.delivery_rate)/3} max={5}  readOnly/> */}
-          <HalfRating />
+    <Grid item xs={12}>
+      <Grid container spacing={3}>
+        <Grid alignItems="center" item xs={12}>
+          <Grid container direction="row" alignItems="center">
+            <Typography component="h6" variant="h6" className={classes.marginr}>
+              {post.userid}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" >
+              {rdate.getFullYear() + "-" + rdate.getMonth() + "-" + rdate.getDate()}
+            </Typography>
+          </Grid>
+          <Typography component="h6" variant="h6">
+            {post.food_name}
+          </Typography>
+          <Grid container direction="row">
+            {/* <Rating name="avg" defaultValue={(post.taste_rate *post.quantity_rate* post.delivery_rate)/3} max={5}  readOnly/> */}
+            <HalfRating />
+          </Grid>
+          <Typography variant="subtitle1" color="textSecondary">
+            {post.food_name}
+          </Typography>
+          <Typography variant="subtitle1" paragraph className={classes.marginbottom}>
+            {post.review_cmnt}
+          </Typography>
+
         </Grid>
-        <Typography variant="subtitle1" color="textSecondary">
-          {post.food_name}
-        </Typography>
-        <Typography variant="subtitle1" paragraph className={classes.marginzero}>
-          {post.review_cmnt}
-        </Typography>
-        <Typography variant="subtitle1" >
-          {post.review_time}
-        </Typography>
-      </CardContent>
-      <Divider variant="middle"className={classes.marginzero} />
-    </div>
-    // </Grid>
-
-
+      </Grid>
+      <Divider variant="middle" className={classes.marginzero} />
+    </Grid>
   );
 }
 

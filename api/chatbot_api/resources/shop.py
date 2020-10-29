@@ -125,9 +125,9 @@ class ShopDao(ShopDto):
 
     @classmethod
     def find_cat(cls):
-        catlist = cls.query(cls.cat).all()
+        sql = cls.query.filter(ShopDto.cat)
         print(catlist)
-        # return json.loads(df.to_json(orient='recoeds'))
+        # return json.loads(df.to_json(orient='recoeds')
 
 
 
@@ -171,6 +171,7 @@ class Shop(Resource):
         shopAfoodAreview.append(food)
         shopAfoodAreview.append(review)
         print('*'*40)
+        # print(review)
         # shop = shop.json()
         # print(shop)
         # print(type(shopAfood))    
