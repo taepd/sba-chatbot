@@ -84,3 +84,9 @@ class OrderReviewVo:
     userid: str = ''
     shop_id: int = 0
     food_id: int = 0
+
+
+class OrderReviewDao(OrderReviewDto):
+
+    @classmethod
+    def review_find_by_shopud(cls,shop)

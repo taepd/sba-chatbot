@@ -163,12 +163,11 @@ class Shop(Resource):
     @staticmethod
     def get(shopid : str):
 
-        test = FoodDao.food_find_by_shopid(shopid)
         print("==============으아아아아=================")
-        print(test)
-        shopAfood = []
+        shopAfoodAreview = []
         shop = {'Shop' : ShopDao.find_by_shopid(shopid)}
         food = {'Food' : FoodDao.food_find_by_shopid(shopid)}
+        review = {'Review : '}
         shopAfood.append(shop)
         shopAfood.append(food)
         print('*'*40)
