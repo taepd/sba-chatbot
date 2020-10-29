@@ -26,7 +26,7 @@ from chatbot_api.util.file_handler import FileReader
 
 from chatbot_api.resources.food import FoodDto, FoodDao
 from chatbot_api.resources.user import UserDao, UserDto
-# from chatbot_api.resources.order_review import OrderReviewDto, OrderReviewDao
+from chatbot_api.resources.order_review import OrderReviewDto, OrderReviewDao
 
 parser = reqparse.RequestParser()
 parser.add_argument('shop_id', type=str, required=True)
@@ -108,7 +108,6 @@ class ShopDao(ShopDto):
 
     @classmethod
     def find_by_shopid(cls,shop_id):
-        print("지랄하지마라" + shopid)
         sql = cls.query.filter_by(shop_id = shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
         return json.loads(df.to_json(orient='records'))
@@ -167,15 +166,15 @@ class Shop(Resource):
         shopAfoodAreview = []
         shop = {'Shop' : ShopDao.find_by_shopid(shop_id)}
         food = {'Food' : FoodDao.food_find_by_shopid(shop_id)}
-        # review = {'Review' : OrderReviewDao.review_find_by_shopid}
+        review = {'Review' : OrderReviewDao.review_find_by_shopid(shop_id)}
         shopAfoodAreview.append(shop)
         shopAfoodAreview.append(food)
-        # shopAfoodAreview.append(review)
+        shopAfoodAreview.append(review)
         print('*'*40)
         # shop = shop.json()
         # print(shop)
         # print(type(shopAfood))    
-        print(shopAfoodAreview)
+        # print(shopAfoodAreview)
         return shopAfoodAreview, 200
 
 

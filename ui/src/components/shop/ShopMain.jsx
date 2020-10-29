@@ -60,7 +60,7 @@ const ShopMain = () => {
                 <Grid container className={classes.wd} >
                     {currentPosts.map((post) => (
                         <Grid className={classes.spacing}>
-                            <ShopList key={post.shop_id} post={post} />
+                            <ShopList post={post} />
                         </Grid>
                     ))}
                 </Grid>
