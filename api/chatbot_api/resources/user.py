@@ -42,7 +42,7 @@ class UserDto(db.Model):
 
     order_reviews = db.relationship('OrderReviewDto', backref='user', lazy='dynamic', cascade="all, delete, delete-orphan")
 
-    def __init__(self, userid, password, name, age, gender, addr, lat, lng):
+    def __init__(self, userid, password, name, age=0, gender=0, addr='', lat=0, lng=0):
         self.userid = userid
         self.password = password
         self.name = name
@@ -495,21 +495,42 @@ parser.add_argument('userid', type=str, required=True,
                                         help='This field should be a userid')
 parser.add_argument('password', type=str, required=True,
                                         help='This field should be a password')
+parser.add_argument('name', type=str, required=False,
+                                        help='This field should be a password')
 
 class User(Resource):
     @staticmethod
     def post():
+        print('================user post 요청받음 =================')
+        
+        # --------------
+        # parameter 받는 방법
+        # parser.parse_args(): <class 'flask_restful.reqparse.Namespace'>
         args = parser.parse_args()
-        print(f'User {args["id"]} added ')
-        params = json.loads(request.get_data(), encoding='utf-8')
-        if len(params) == 0:
+        print('type(args): ', type(args))
+        print('args: ', args)
+        # print(f'User {args["userid"]} added ')
 
+        # request.get_json(): <class 'dict'>
+        params = request.get_json()
+        # params = json.loads(request.get_data(), encoding='utf-8')
+        print('type(params): ', type(params))
+        print('params: ', params)
+        if len(params) == 0:
             return 'No parameter'
 
         params_str = ''
         for key in params.keys():
             params_str += 'key: {}, value: {}<br>'.format(key, params[key])
-        return {'code':0, 'message': 'SUCCESS'}, 200
+        # ---------------
+
+        # create 구현
+        user = UserDto(**params)
+        UserDao.save(user)
+        userid = user.userid
+        
+        return {'code':0, 'message': 'SUCCESS', 'userid': userid }, 200
+    
     @staticmethod
     def get(id):
         print(f'User {id} added ')
@@ -557,10 +578,9 @@ class Auth(Resource):
 
 
 class Access(Resource):
-    def __init__(self):
-        print('========== 5 ==========')
+
     def post(self):
-        print('========== 6 ==========')
+        print('========== access post 요청 받음 ==========')
         args = parser.parse_args()
         user = UserVo()
         user.userid = args.userid

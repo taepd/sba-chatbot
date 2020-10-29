@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from 'axios'
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -67,8 +69,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Signup = () => {
+const SignUp = () => {
+
   const classes = useStyles();
+
+  const [userid, setUserid] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [name, setName] = useState('')
+
+  const onSubmitHandler = (e) => {
+      e.preventDefault(); // 아무 동작 안하고 버튼만 눌러도 리프레쉬 되는 것을 막는다
+
+      if(password !== confirmPassword){
+          return alert('비밀번호와 비밀번호 확인은 같아야 합니다.')
+      }
+      axios.post(`http://localhost:8080/user`, { 
+        userid, password, name
+      })
+      .then(res => {
+       alert(`signUp SUCCESS. ${res.data["userid"]} 가입완료`)
+      })
+      .catch(error => {
+        alert(`signUp FAIL`)
+      })
+ 
+}
+
+
   return <>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -79,34 +107,40 @@ const Signup = () => {
         <Typography component="h1" variant="h5">
           회원가입
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={onSubmitHandler}>
+     
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                autoComplete="fname"
-                name="nick"
-                variant="outlined"
-                required
-                fullWidth
-                id="nick"
-                label="닉네임"
-                autoFocus
-              />
-            </Grid>
 
             <Grid item xs={12}>
-              <TextField
+              <TextField onChange={e => setUserid(e.target.value)}
                 variant="outlined"
-                required
+                required={true}
                 fullWidth
                 id="email"
                 label="이메일 주소"
                 name="email"
                 autoComplete="email"
+                autoFocus
+                // error={userid === "" ? true : false }
+                // error={false}
+                // helperText="This is Helper Text"
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <TextField  onChange={e => setName(e.target.value)}
+                autoComplete="fname"
+                name="nick"
+                variant="outlined"
+                required="true"
+                fullWidth
+                id="nick"
+                label="닉네임"
+
+               
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField onChange={e => setPassword(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
@@ -118,7 +152,7 @@ const Signup = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <TextField onChange={e => setConfirmPassword(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
@@ -143,7 +177,7 @@ const Signup = () => {
                 id="password"
                 autoComplete="current-password"
               />
-              <Button
+              {/* <Button
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -152,21 +186,20 @@ const Signup = () => {
                 startIcon={<GpsFixedIcon />}
               >
                 현재 위치로 찾기
-              </Button>
+              </Button> */}
             </Grid>
 
           </Grid>
 
-
-
-          <Button
+          <Button 
+            // onSubmit={onSubmitHandler}
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
           >
-            회원가입 온료
+            회원가입 완료
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
@@ -184,4 +217,4 @@ const Signup = () => {
   </>
 }
 
-export default Signup
+export default SignUp

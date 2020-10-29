@@ -1,4 +1,3 @@
-  
 import React, {useState} from 'react'
 import axios from 'axios'
 import { Link, useHistory } from "react-router-dom";
@@ -65,7 +64,7 @@ const SignIn = () => {
     const history = useHistory();
     const login = e => {
       e.preventDefault()
-      axios.post(`http://localhost:8080/api/access`, {userid, password})
+      axios.post(`http://localhost:8080/access`, {userid, password})
           .then(res => {
               alert(`Welcome ! ${res.data["name"]}.  ${res.data["userid"]}'s connection is successful. ! `)
               
