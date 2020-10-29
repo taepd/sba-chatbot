@@ -1,7 +1,29 @@
 # from sqlalchemy import Column, Integer, Float, String, Date, ForeignKey, create_engine
-from chatbot_api.ext.db import Base, db
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import sessionmaker
+# from sqlalchemy import Column, Integer, Float, String, ForeignKey, create_engine
+# from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
+from typing import List
+from flask import request
+from flask_restful import Resource, reqparse
+from flask import jsonify
+import json
+import os
+import numpy as np
+import pandas as pd
+
+from sklearn.ensemble import RandomForestClassifier  # rforest
+from sklearn.tree import DecisionTreeClassifier  # dtree
+from sklearn.ensemble import RandomForestClassifier  # rforest
+from sklearn.naive_bayes import GaussianNB  # nb
+from sklearn.neighbors import KNeighborsClassifier  # knn
+from sklearn.svm import SVC  # svm
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold  # k value is understood as count
+from sklearn.model_selection import cross_val_score
+from pathlib import Path
+
+from chatbot_api.ext.db import db, openSession
+from chatbot_api.util.file_handler import FileReader
+
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
 
 class OrderReviewDto(db.Model):
@@ -86,7 +108,21 @@ class OrderReviewVo:
     food_id: int = 0
 
 
-class OrderReviewDao(OrderReviewDto):
+# class OrderReviewDao(OrderReviewDto):
 
-    @classmethod
-    def review_find_by_shopud(cls,shop)
+#     @classmethod
+#     def review_find_by_shopid(cls,shopid):
+#         print("================review=================")
+#         print(shopid)
+#         sql = cls.query.filter_by(shop_id = shopid)
+#         df = pd.read_sql(sql.statement, sql.session.bind)
+#         return json.loads(df.to_json(orient='records'))
+
+# class OrderReview(Resource):
+
+#     @classmethod
+#     def get(shopid : str):
+#         review = OrderReviewDao.review_find_by_shopid(shopid)
+#         print("너는 나오면 안된다")
+#         print(review)
+#         return review.json, 200

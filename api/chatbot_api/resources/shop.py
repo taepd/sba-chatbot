@@ -25,10 +25,11 @@ from chatbot_api.ext.db import db, openSession
 from chatbot_api.util.file_handler import FileReader
 
 from chatbot_api.resources.food import FoodDto, FoodDao
-# from chatbot_api.resources.order_review import OrderReviewDto
+from chatbot_api.resources.user import UserDao, UserDto
+# from chatbot_api.resources.order_review import OrderReviewDto, OrderReviewDao
 
 parser = reqparse.RequestParser()
-parser.add_argument('shopid', type=str, required=True)
+parser.add_argument('shop_id', type=str, required=True)
 
 class ShopDto(db.Model):
     __tablename__ = "shop"
@@ -106,13 +107,12 @@ class ShopDao(ShopDto):
         return json.loads(df.to_json(orient='records'))
 
     @classmethod
-    def find_by_shopid(cls,shopid):
-        sql = cls.query.filter_by(shop_id = shopid)
+    def find_by_shopid(cls,shop_id):
+        print("지랄하지마라" + shopid)
+        sql = cls.query.filter_by(shop_id = shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
         return json.loads(df.to_json(orient='records'))
         # return cls.query.filter_by(shop_id = shopid).all()
-
-
 
     @classmethod
     def find_limit(cls):
@@ -161,21 +161,22 @@ class Shop(Resource):
       
       
     @staticmethod
-    def get(shopid : str):
+    def get(shop_id : str):
 
         print("==============으아아아아=================")
         shopAfoodAreview = []
-        shop = {'Shop' : ShopDao.find_by_shopid(shopid)}
-        food = {'Food' : FoodDao.food_find_by_shopid(shopid)}
-        review = {'Review : '}
-        shopAfood.append(shop)
-        shopAfood.append(food)
+        shop = {'Shop' : ShopDao.find_by_shopid(shop_id)}
+        food = {'Food' : FoodDao.food_find_by_shopid(shop_id)}
+        # review = {'Review' : OrderReviewDao.review_find_by_shopid}
+        shopAfoodAreview.append(shop)
+        shopAfoodAreview.append(food)
+        # shopAfoodAreview.append(review)
         print('*'*40)
         # shop = shop.json()
         # print(shop)
         # print(type(shopAfood))    
-        print(shopAfood)
-        return shopAfood, 200
+        print(shopAfoodAreview)
+        return shopAfoodAreview, 200
 
 
     # @staticmethod
