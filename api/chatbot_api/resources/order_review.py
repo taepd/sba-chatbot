@@ -24,6 +24,7 @@ from pathlib import Path
 from chatbot_api.ext.db import db, openSession
 from chatbot_api.util.file_handler import FileReader
 
+
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
 
 class OrderReviewDto(db.Model):
@@ -43,6 +44,8 @@ class OrderReviewDto(db.Model):
     userid: str = db.Column(db.String(20), db.ForeignKey('user.userid', ondelete="CASCADE"))
     shop_id: int = db.Column(db.Integer, db.ForeignKey('shop.shop_id', ondelete="CASCADE"))
     food_id: int = db.Column(db.Integer, db.ForeignKey('food.food_id', ondelete="CASCADE")) 
+
+    foods = db.relationship('FoodDto', back_populates='order_reviews')
 
     def __init__(self, or_id, order_time, review_cmnt, taste_rate, quantity_rate,
                  delivery_rate, review_time, review_img, owner_cmnt, userid, shop_id, food_id):
@@ -112,16 +115,18 @@ class OrderReviewDao(OrderReviewDto):
 
     @classmethod
     def review_find_by_shopid(cls,shop_id):
+        from chatbot_api.resources.food import FoodDto
         print("================review=================")
-        cls.review_time = ''
-        sql = cls.query.filter_by(shop_id = shop_id)
-        # print(sql)
-        # for u, a in cls.qeury(OrderReviewDto, FoodDto).\
-        #             filter(OrderReviewDto.food_id == FoodDto.food_id).\
-        #             filter(OrderReviewDto.shop_id == shop_id).\
-        #             all():
-        #             print(u,a)
-        df = pd.read_sql(sql.statement, sql.session.bind)
+
+        # sql = cls.query.filter_by(shop_id = shop_id)
+        # sql = db.session.query(cls).join(cls.foods).filter_by(shop_id = shop_id)
+        # sql = cls.query.join(OrderReviewDto.foods).filter_by(shop_id = shop_id)
+        # join 하는 법
+        sql = db.session.query(OrderReviewDto, FoodDto).filter(OrderReviewDto.food_id == FoodDto.food_id).filter_by(shop_id = shop_id)
+        df = pd.read_sql(sql.statement, sql.session.bind) 
+        df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
+        print(df)
+        
         return json.loads(df.to_json(orient='records'))
 
 class OrderReview(Resource):

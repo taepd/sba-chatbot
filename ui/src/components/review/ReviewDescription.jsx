@@ -92,6 +92,7 @@ const ReviewDescription = (props) => {
           <Typography variant="subtitle1" paragraph className={classes.marginbottom}>
             {post.review_cmnt}
           </Typography>
+
         </Grid>
       </Grid>
       <Divider variant="middle" className={classes.marginzero} />
