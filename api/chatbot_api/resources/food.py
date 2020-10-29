@@ -85,11 +85,12 @@ class FoodVo:
 class FoodDao(FoodDto):
 
     @classmethod
-    def food_find_by_shopid(cls,shopid):
+    def food_find_by_shopid(cls,shop_id):
         print("==============test=====================")
-        print(shopid)
+        # print(shop_id)
         # print(cls.query.filter_by(shop_id = shopid))
-        sql = cls.query.filter_by(shop_id = shopid)
+        # sql = cls.query.filter_by(shop_id = shopid)
+        sql = cls.query.filter_by(shop_id = shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
         # print(df)
         return json.loads(df.to_json(orient='records'))
@@ -99,8 +100,8 @@ class FoodDao(FoodDto):
 
 class Food(Resource):
     @staticmethod
-    def get(shopid : str):
-        food = FoodDao.food_find_by_shopid(shopid)
+    def get(shop_id : str):
+        food = FoodDao.food_find_by_shopid(shop_id)
         # print(shop)
         # print(type(shop))
         return food.json, 200
@@ -110,8 +111,8 @@ class Food(Resource):
 
 #     # import pdb
 #     # # 데이터 일괄 입력
-#     df = pd.read_csv('./data/db/food.csv', sep=',', encoding='utf-8-sig')
-#     df = df.replace(np.nan, '', regex=True)
+    # df = pd.read_csv('./data/db/food.csv', sep=',', encoding='utf-8-sig')
+    # df = df.replace(np.nan, '', regex=True)
 
     # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]
     # print(shop_seoul['shop_addr'])

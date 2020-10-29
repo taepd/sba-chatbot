@@ -37,8 +37,8 @@ const Review = ({match}) => {
           setDataShop(res.data[0].Shop[0])
           setDataFood(res.data[1].Food)
           setDatareview(res.data[2].Review)
-          console.log("Review" +res.data[2].Review)
-          console.log("Food" +res.data[1].Food)
+          // console.log("Review" +res.data[2].Review)
+          // console.log("Food" +res.data[1].Food)
       })
       .catch(e=>{
           alert(`List Failure`)
@@ -56,7 +56,7 @@ const Review = ({match}) => {
           <ShopInfo post={shopdata}/> {/* {} 객체만 보내줌 */}
       </Grid>
       <Grid container justify="center" spacing={5} className={useStyles.mainGrid}>
-         <MenuAndReviewArea review={reviewdata} food={fooddata}/>
+         <MenuAndReviewArea reviews={reviewdata} food={fooddata}/>
       </Grid>
     </React.Fragment>
   )

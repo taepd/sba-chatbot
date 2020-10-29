@@ -49,6 +49,7 @@ const useStyles = makeStyles({
 const ShopInfo = (props) => {
   const classes = useStyles();
   const { post } = props;
+  console.log("gl"+post.open_time)
   // console.log("===========test========"+post)
 
   function HalfRating() {
@@ -77,7 +78,7 @@ const ShopInfo = (props) => {
                 {post.shop_addr}
               </Typography>
               <Typography variant="subtitle1"  paragraph>
-                영업시간 : {post.opentime}
+                영업시간 : {post.open_time}
               </Typography>
             </CardContent>
           </div>
