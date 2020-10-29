@@ -597,9 +597,10 @@ class Access(Resource):
 if __name__ == '__main__':
      
     # 데이터 일괄 입력
-    df = pd.read_csv('./data/csv/important/db/user.csv', sep=',', encoding='utf-8-sig')
+    df = pd.read_csv('./data/db/user.csv', sep=',', encoding='utf-8-sig')
+    df = df.replace(np.nan, 0, regex=True)
 
-    df = df.replace(np.nan, '', regex=True)
+
     Session = openSession()
     session = Session()
     session.bulk_insert_mappings(UserDto, df.to_dict(orient="records"))
