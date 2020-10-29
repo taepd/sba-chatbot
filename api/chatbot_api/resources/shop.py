@@ -44,14 +44,14 @@ class ShopDto(db.Model):
     shop_lng: float = db.Column(db.Float)
     shop_rev_avg: float = db.Column(db.Float)
     shop_rev_cnt: int = db.Column(db.Integer)
-    opentime: str = db.Column(db.Date)
+    open_time: str = db.Column(db.Date)
 
     foods = db.relationship('FoodDto', backref='shop', lazy='dynamic', cascade="all, delete, delete-orphan")
     order_reviews = db.relationship('OrderReviewDto', backref='shop', lazy='dynamic', cascade="all, delete, delete-orphan")
     
 
     def __init__(self, shop_id, shop_name, shop_addr, shop_img, cat,
-                 shop_lat, shop_lng, shop_rev_avg, shop_rev_cnt, opentime):
+                 shop_lat, shop_lng, shop_rev_avg, shop_rev_cnt, open_time):
         self.shop_id = shop_id
         self.shop_name = shop_name
         self.shop_addr = shop_addr
@@ -61,14 +61,14 @@ class ShopDto(db.Model):
         self.shop_lng = shop_lng
         self.shop_rev_avg = shop_rev_avg
         self.shop_rev_cnt = shop_rev_cnt
-        self.opentime =opentime
+        self.open_time =open_time
 
     def __repr__(self):
         return f'Shop(shop_id={self.shop_id}, shop_name={self.shop_name}, ' \
                f'shop_addr={self.shop_addr}, ,shop_img={self.shop_img}, cat={self.cat},' \
                f'shop_lat={self.shop_lat}, shop_lng="{self.shop_lng}"' \
                f'shopt_rev_avg={self.shop_rev_avg}, shop_rev_cnt={self.shop_rev_cnt}' \
-               f'opentime={self.opentime}'
+               f'open_time={self.open_time}'
 
     @property
     def json(self):
@@ -82,7 +82,7 @@ class ShopDto(db.Model):
             'shop_lng': self.shop_lng,
             'shop_rev_avg': self.shop_rev_avg,
             'shop_rev_cnt': self.shop_rev_cnt,
-            'opentime': self.opentime
+            'open_time': self.open_time
         }
 
 
@@ -96,7 +96,7 @@ class ShopVo:
     shop_lng: float = 0.0
     shop_rev_avg: float = 0.0 
     shop_rev_cnt: int = 0
-    opentime: str = ''
+    open_time: str = ''
 
 class ShopDao(ShopDto):
     
@@ -174,7 +174,7 @@ class Shop(Resource):
         # shop = shop.json()
         # print(shop)
         # print(type(shopAfood))    
-        # print(shopAfoodAreview)
+        # print(shopAfoodAreview[2])
         return shopAfoodAreview, 200
 
 
@@ -195,7 +195,7 @@ if __name__ == '__main__':
     # import pdb
     # 데이터 일괄 입력
     df = pd.read_csv('./data/db/shop.csv', sep=',', encoding='utf-8-sig')
-    df = df.replace(np.nan, 0, regex=True)
+    df = df.replace(np.nan, '', regex=True)
 
     # ------------------
     # 서울만 임시로 넣었을 때 사용

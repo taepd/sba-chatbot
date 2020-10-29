@@ -111,18 +111,19 @@ class OrderReviewVo:
 class OrderReviewDao(OrderReviewDto):
 
     @classmethod
-    def review_find_by_shopid(cls,shopid):
+    def review_find_by_shopid(cls,shop_id):
         print("================review=================")
-        print(shopid)
-        sql = cls.query.filter_by(shop_id = shopid)
+        sql = cls.query.filter_by(shop_id = shop_id)
+        # sql = db.session.qeury(OrderReviewDto).join(FoodDto, OrderReviewDto.food_id == FoodDto.food_id)
+        # print(sql.all())
         df = pd.read_sql(sql.statement, sql.session.bind)
         return json.loads(df.to_json(orient='records'))
 
 class OrderReview(Resource):
 
     @classmethod
-    def get(shopid : str):
-        review = OrderReviewDao.review_find_by_shopid(shopid)
+    def get(shop_id : str):
+        review = OrderReviewDao.review_find_by_shopid(shop_id)
         print("너는 나오면 안된다")
         print(review)
         return review.json, 200

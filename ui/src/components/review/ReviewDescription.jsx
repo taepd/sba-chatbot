@@ -9,18 +9,17 @@ import Rating from '@material-ui/lab/Rating';
 import Divider from '@material-ui/core/Divider';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import { ThemeProvider } from '@material-ui/core';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
   },
   cardDetails: {
+    width: 980,
     flex: 1,
-  },
-  cardMedia: {
-    width: 150,
-    height: 150,
+    // padding : 20,
   },
   shopMain: {
     marginBottom: 0,
@@ -33,48 +32,58 @@ const useStyles = makeStyles({
 
     },
   },
+  marginzero: {
+    margin: 0,
+  },
+  marginbottom: {
+    // marginBottom: theme.spacing(1),
+  },
 
-});
-
-
-
-function HalfRating() {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(4);
-  return (
-    <div className={classes.root}>
-      <Rating name="read-only" value={value} readOnly />
-    </div>
-  );
-}
+}));
 
 
 const ReviewDescription = (props) => {
   const classes = useStyles();
   const { post } = props;
+  const taste = post.taste_rate;
+  const quan = post.quantity_rate;
+  const deli = post.delivery_rate;
+
+  function HalfRating() {
+    const classes = useStyles();
+    const rateavg = (taste + quan + deli) / 3
+    console.log("sadklfjalfdj" + rateavg)
+    return (
+      <div className={classes.marginbottom}>
+        <Rating name="rating" defaultValue={rateavg} max={5}  precision={0.5} readOnly />
+      </div>
+    );
+  }
 
   return (
-    <Grid item xs={12}>
-      <Grid item md={12} className={classes.shopMain}>
-        <Grid className={classes.card}>
-          <div className={classes.cardDetails}>
-            <CardContent>
-              <Typography component="h6" variant="h6">
-                {post.name}
-              </Typography>
-              <HalfRating />
-              <Typography variant="subtitle1" color="textSecondary">
-                {post.food_name}
-              </Typography>
-              <Typography variant="subtitle1" paragraph>
-                {post.review_cmnt}
-              </Typography>
-            </CardContent>
-          </div>
+    // <Grid item md={12} className={classes.shopMain}>
+    <div className={classes.cardDetails}>
+      <CardContent className={classes.cardDetails}>
+        <Typography component="h6" variant="h6">
+          {post.food_name}
+        </Typography>
+        <Grid container direction="row">
+          {/* <Rating name="avg" defaultValue={(post.taste_rate *post.quantity_rate* post.delivery_rate)/3} max={5}  readOnly/> */}
+          <HalfRating />
         </Grid>
-      </Grid>
-      <Divider variant="middle" />
-    </Grid>
+        <Typography variant="subtitle1" color="textSecondary">
+          {post.food_name}
+        </Typography>
+        <Typography variant="subtitle1" paragraph className={classes.marginzero}>
+          {post.review_cmnt}
+        </Typography>
+        <Typography variant="subtitle1" >
+          {post.review_time}
+        </Typography>
+      </CardContent>
+      <Divider variant="middle"className={classes.marginzero} />
+    </div>
+    // </Grid>
 
 
   );

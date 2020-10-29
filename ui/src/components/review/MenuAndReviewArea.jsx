@@ -85,17 +85,14 @@ function LinkTab(props) {
   );
 }
 
-const MenuAndReviewArea = (fooddata, reviewdata) => {
+const MenuAndReviewArea = (props) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
-  const { food } = fooddata;
-  const { review }  = reviewdata;
+  const { food, reviews } = props;
 
-  console.dir("foooooood"+fooddata)
-  console.dir("reeeeview"+reviewdata)
-  console.log("할당 fooood"+food)
-  console.log("할당 review"+review)
+  console.log("할당 fooood" + food)
+  console.log("할당 review" + reviews)
   
 
   const handleChange = (event, newValue) => {
@@ -121,7 +118,9 @@ const MenuAndReviewArea = (fooddata, reviewdata) => {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Grid container spacing={4} justify="center" >
-          {food.map((review) => (
+          {reviews.filter((review) => {
+            return review.food_id != 1 && review.taste_rage !=0.0 && review.quantity_rate != 0.0 && review.delivery_rate != 0.0
+          }).map((review) => (
             <ReviewDescription post={review} />
           ))}
         </Grid>
