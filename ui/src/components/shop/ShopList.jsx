@@ -71,7 +71,6 @@ const ShopList = (props) => {
                                     <Typography variant="h6">
                                         {post.shop_name}
                                     </Typography>
-
                                     <Grid container direction="row">
                                         <Rating name="iconstar" defaultValue={1} max={1} readOnly/>
                                         <Typography variant="subtitle1" color="textSecondary">
