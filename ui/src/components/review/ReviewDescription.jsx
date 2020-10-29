@@ -65,7 +65,7 @@ const ReviewDescription = (props) => {
     <div className={classes.cardDetails}>
       <CardContent className={classes.cardDetails}>
         <Typography component="h6" variant="h6">
-          {post.food_name}
+          {post.userid}
         </Typography>
         <Grid container direction="row">
           {/* <Rating name="avg" defaultValue={(post.taste_rate *post.quantity_rate* post.delivery_rate)/3} max={5}  readOnly/> */}
