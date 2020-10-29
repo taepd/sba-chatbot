@@ -88,7 +88,7 @@ const SignUp = () => {
         userid, password, name
       })
       .then(res => {
-        alert(`signUp SUCCESS`)
+       alert(`signUp SUCCESS. ${res.data["userid"]} 가입완료`)
       })
       .catch(error => {
         alert(`signUp FAIL`)
@@ -108,6 +108,7 @@ const SignUp = () => {
           회원가입
         </Typography>
         <form className={classes.form} noValidate onSubmit={onSubmitHandler}>
+     
           <Grid container spacing={2}>
 
             <Grid item xs={12}>
@@ -176,7 +177,7 @@ const SignUp = () => {
                 id="password"
                 autoComplete="current-password"
               />
-              <Button
+              {/* <Button
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -185,13 +186,13 @@ const SignUp = () => {
                 startIcon={<GpsFixedIcon />}
               >
                 현재 위치로 찾기
-              </Button>
+              </Button> */}
             </Grid>
 
           </Grid>
 
           <Button 
-            onSubmit={onSubmitHandler}
+            // onSubmit={onSubmitHandler}
             type="submit"
             fullWidth
             variant="contained"

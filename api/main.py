@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_restful import Api
+from flask_cors import CORS
 from chatbot_api.ext.db import url, db, openSession
 from chatbot_api.ext.routes import initialize_routes
-from flask_cors import CORS
 from chatbot_api.resources import user
 from chatbot_api.resources.user import UserDto
 from chatbot_api.resources.food import FoodDto
