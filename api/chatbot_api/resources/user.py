@@ -597,7 +597,8 @@ class Access(Resource):
 if __name__ == '__main__':
      
     # 데이터 일괄 입력
-    df = pd.read_csv('./data/db/user.csv', sep=',', encoding='utf-8-sig')
+    # df = pd.read_csv('./data/db/user.csv', sep=',', encoding='utf-8-sig') # 혜정
+    df = pd.read_csv('./data/csv/important/db/user.csv', sep=',', encoding='utf-8-sig') # 영돈
     df = df.replace(np.nan, 0, regex=True)
 
 

@@ -38,7 +38,8 @@ class FoodDto(db.Model):
 
     shop_id: int = db.Column(db.Integer, db.ForeignKey('shop.shop_id', ondelete="CASCADE"))
 
-    order_reviews = db.relationship('OrderReviewDto', backref='food', lazy='dynamic', cascade="all, delete, delete-orphan")
+    # order_reviews = db.relationship('OrderReviewDto', backref='food', lazy='dynamic', cascade="all, delete, delete-orphan")
+    order_reviews = db.relationship('OrderReviewDto', back_populates='foods', lazy='dynamic', cascade="all, delete, delete-orphan")
 
     def __init__(self, food_id, food_name, price, food_img, food_rev_avg,
                  food_rev_cnt, shop_id):
