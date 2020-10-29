@@ -10,7 +10,7 @@ import PaginationItem from '@material-ui/lab/PaginationItem'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom';
 
-const Paginate = ({ postsPerPage, totalPosts, paginate,first }) => {
+const Paginate = ({ postsPerPage, totalPosts, paginate }) => {
   const pageNumber = [];
   const history = useHistory()
   // Math.ceil: 올림

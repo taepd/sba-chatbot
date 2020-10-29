@@ -28,6 +28,7 @@ const Review = ({match}) => {
   // console.log(match.params.shopid)
   const [shopdata, setDataShop] = useState([])
   const [fooddata, setDataFood] = useState([])
+  const [reviewdata, setDatareview] = useState([])
   useEffect(() => {
       // alert(match.params.shopid)
       axios.get(`http://localhost:8080/shop/${match.params.shopid}`)
@@ -35,7 +36,9 @@ const Review = ({match}) => {
           // alert(`List Success`)
           setDataShop(res.data[0].Shop[0])
           setDataFood(res.data[1].Food)
-          console.log(res.data[1].Food)
+          setDatareview(res.data[2].Review)
+          console.log("Review" +res.data[2].Review)
+          console.log("Food" +res.data[1].Food)
       })
       .catch(e=>{
           alert(`List Failure`)
@@ -50,10 +53,10 @@ const Review = ({match}) => {
       <CssBaseline />
       <Navigation />
       <Grid container justify="center" >
-          <ShopInfo  post={shopdata}/>
+          <ShopInfo post={shopdata}/> {/* {} 객체만 보내줌 */}
       </Grid>
       <Grid container justify="center" spacing={5} className={useStyles.mainGrid}>
-         <MenuAndReviewArea  post={fooddata}/>
+         <MenuAndReviewArea review={reviewdata} food={fooddata}/>
       </Grid>
     </React.Fragment>
   )

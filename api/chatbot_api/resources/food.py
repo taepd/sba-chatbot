@@ -101,8 +101,8 @@ class Food(Resource):
     @staticmethod
     def get(shopid : str):
         food = FoodDao.food_find_by_shopid(shopid)
-        print(shop)
-        print(type(shop))
+        # print(shop)
+        # print(type(shop))
         return food.json, 200
 
 # ------------ 실행 영역 --------------
