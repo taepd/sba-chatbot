@@ -30,6 +30,7 @@ from chatbot_api.resources.order_review import OrderReviewDto, OrderReviewDao
 
 parser = reqparse.RequestParser()
 parser.add_argument('shop_id', type=str, required=True)
+parser.add_argument('cat_id', type=str, required=True)
 
 class ShopDto(db.Model):
     __tablename__ = "shop"
@@ -85,7 +86,6 @@ class ShopDto(db.Model):
             'open_time': self.open_time
         }
 
-
 class ShopVo:
     shop_id: int = 0
     shop_name: str = ''
@@ -124,20 +124,16 @@ class ShopDao(ShopDto):
         return json.loads(df.to_json(orient='records'))
 
     @classmethod
-    def find_cat(cls):
-        sql = cls.query.filter(ShopDto.cat)
-        print(catlist)
-        # return json.loads(df.to_json(orient='recoeds')
-
+    def find_by_cat(cls,cat_id):
+        # if cat_id == 'cat1' :
+        sql = cls.query.filter(ShopDto.cat.like('%피자양식%'))
+        print("오나????????????????????")
+        df = pd.read_sql(sql.statement, sql.session.bind)
+        df = df.head(50)
+        return json.loads(df.to_json(orient='recoeds'))
 
 
 class Shops(Resource):
-
-    # @staticmethod
-    # def get():
-    #     print('select all')
-    #     shop = ShopDao.find_all()
-    #     return shop, 200
 
     @staticmethod
     def get():
@@ -151,17 +147,22 @@ class Shops(Resource):
         return shops, 200
 
 
+
+
+class Shopscat(Resource):
+
+    @staticmethod
+    def get(cat_id : str):
+        print("왜ㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐ")
+        print('select catid : ' + cat_id)
+        shopscat = ShopDao.find_by_cat(cat_id)
+        return shopscat, 200
+
+
 class Shop(Resource):
     
-    # @staticmethod
-#     def get(shopid : str):
-#         shop = ShopDao.find_by_shopid(shopid)
-#         return shop[0].json, 200
-      
-      
     @staticmethod
     def get(shop_id : str):
-
         print("==============으아아아아=================")
         shopAfoodAreview = []
         shop = {'Shop' : ShopDao.find_by_shopid(shop_id)}
@@ -171,7 +172,7 @@ class Shop(Resource):
         shopAfoodAreview.append(food)
         shopAfoodAreview.append(review)
         print('*'*40)
-        # print(review)
+        print(shop)
         # shop = shop.json()
         # print(shop)
         # print(type(shopAfood))    

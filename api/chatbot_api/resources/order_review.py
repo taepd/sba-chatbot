@@ -125,7 +125,7 @@ class OrderReviewDao(OrderReviewDto):
         sql = db.session.query(OrderReviewDto, FoodDto).filter(OrderReviewDto.food_id == FoodDto.food_id).filter_by(shop_id = shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind) 
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
-        print(df)
+        # print(df)
         
         return json.loads(df.to_json(orient='records'))
 

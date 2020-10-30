@@ -49,12 +49,13 @@ const useStyles = makeStyles({
 const ShopInfo = (props) => {
   const classes = useStyles();
   const { post } = props;
-  console.log("gl"+post.open_time)
+  // console.log("gl"+post.open_time)
   // console.log("===========test========"+post)
 
   function HalfRating() {
     const classes = useStyles();
     const [value, setValue] = React.useState(2);
+    
     return (
       <div className={classes.rating}>
         <Rating name="halfrationg" defaultValue={post.shop_rev_avg} precision={0.5} size="large" readOnly />

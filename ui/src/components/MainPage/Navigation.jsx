@@ -117,7 +117,7 @@ const Navigation = () => {
                         className={classes.root}
                         >
                             <BottomNavigationAction label="전체보기" href="/shops"/>
-                            <BottomNavigationAction label="프렌차이즈" href="/shops/"/>
+                            <BottomNavigationAction label="프렌차이즈" href={"/shops/" + "cat1"}/>
                             <BottomNavigationAction label="치킨"/>
                             <BottomNavigationAction label="피자/양식"/>
                             <BottomNavigationAction label="중국집"/>

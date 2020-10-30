@@ -27,9 +27,9 @@ const App = () => {
                         <Route path="/main" component={Main} />
                         <Route path="/signIn" component={SignIn} />
                         <Route path="/signUp" component={SignUp} />
-                        <Route path="/shop/:shopid" component={Review} />
+                        <Route path="/shop/:shop_id" component={Review} />
                         <Route path="/shops" component={ShopMain} />
-                        {/* <Route path="/review" component={Review} /> */}
+                        <Route path="/shops/:cat_id" component={ShopMain} />
                         <Route path="/reviewwrite" component={ReviewWritePage} />
                         <Route path="/userinfo" component={UserInfo} />
                         <Route path="/userpage" component={UserPage} />

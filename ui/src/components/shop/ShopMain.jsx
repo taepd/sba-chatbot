@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ShopMain = () => {
+const ShopMain = ({match}) => {
     const [data, setData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
@@ -37,7 +37,7 @@ const ShopMain = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/shops`)
+        axios.get(`http://localhost:8080/shops/${match.params.cat_id}`)
             .then(res => {
                 // alert(`List Success`)
                 setData(res.data)

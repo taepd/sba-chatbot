@@ -79,9 +79,6 @@ const ReviewDescription = (props) => {
               {rdate.getFullYear() + "-" + rdate.getMonth() + "-" + rdate.getDate()}
             </Typography>
           </Grid>
-          <Typography component="h6" variant="h6">
-            {post.food_name}
-          </Typography>
           <Grid container direction="row">
             {/* <Rating name="avg" defaultValue={(post.taste_rate *post.quantity_rate* post.delivery_rate)/3} max={5}  readOnly/> */}
             <HalfRating />
