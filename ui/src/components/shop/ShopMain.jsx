@@ -35,17 +35,28 @@ const ShopMain = ({match}) => {
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const catif = match.params.cat_id;
+    const noncaturl = `http://localhost:8080/shops`;
+    const caturl = `http://localhost:8080/shops/${match.params.cat_id}`;
+    // const cat = catif == 'none' ? noncaturl : caturl
+
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/shops/${match.params.cat_id}`)
-            .then(res => {
-                setData(res.data)
-            })
-            .catch(e => {
-                alert(`List Failure`)
-                throw (e)
-            })
-
+        axios.get((function(){
+            if(catif =='전체보기'){
+                return noncaturl
+            }else{
+                return caturl
+            }
+            })())
+        .then(res => {
+            setData(res.data)
+        })
+        .catch(e => {
+            alert(`List Failure`)
+            throw (e)
+        })
+        
     }, [])
 
         // console.log(data)
