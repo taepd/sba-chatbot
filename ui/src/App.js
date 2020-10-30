@@ -33,8 +33,8 @@ const App = () => {
                             <Route path="/shops" component={ShopMain}/>
                         </Switch>
                         <Route path="/reviewwrite" component={ReviewWritePage} />
-                        <Route path="/userinfo" component={UserInfo} />
-                        <Route path="/userpage" component={UserPage} />
+                        {/* <Route path="/userinfo" component={UserInfo} /> */}
+                        <Route path="/mypage" component={UserPage} />
                         <Route path="/order" component={Order} />
                         {/* <Redirect from={"/history"} to ={"/about/history"}/>
                         <Redirect from={"/services"} to ={"/about/services"}/>

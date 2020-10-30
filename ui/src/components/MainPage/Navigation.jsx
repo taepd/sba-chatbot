@@ -116,7 +116,7 @@ const Navigation = () => {
                         showLabels
                         className={classes.root}
                         >   
-                            {/* <Link to={"/shops/" + "전체보기"}>
+                                {/* <Link to={"/shops/" + "전체보기"}>
                                 <BottomNavigationAction label="전체보기"/>
                                 </Link> */}
                                 {/* <BottomNavigationAction label="전체보기">

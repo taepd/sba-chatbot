@@ -14,7 +14,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   divroot: {
@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
     // textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  toolbarLink: {
+    textDecoration: 'none',
+  },
 
 }));
 
@@ -70,6 +73,7 @@ const ShopMenuInfo = (props) => {
   const { post } = props;
   const [open, setOpen] = React.useState(false);
 
+  console.log("유정쥬어쥬유저유저"+sessionStorage.getItem("sessionUser"))
   
   const handleClickOpen = () => {
     setOpen(true);
@@ -116,9 +120,11 @@ const ShopMenuInfo = (props) => {
           <Button onClick={handleClose} color="primary">
             취소
           </Button>
-          <Button onClick={handleClose} color="primary" autoFocus href="/order">
-            주문하기
-          </Button>
+          <Link to="/order" className={classes.toolbarLink}>
+            <Button onClick={handleClose} color="primary" autoFocus>
+              주문하기
+            </Button>
+          </Link>
         </DialogActions>
       </Dialog>
       <CardActionArea onClick={handleClickOpen}>
