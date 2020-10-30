@@ -42,7 +42,7 @@ const ShopMain = ({match}) => {
 
 
     useEffect(() => {
-        axios.get((function(){
+        axios.get((() => {
             if(catif =='전체보기'){
                 return noncaturl
             }else{

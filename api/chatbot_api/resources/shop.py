@@ -131,7 +131,6 @@ class ShopDao(ShopDto):
         print("오나????????????????????")
         df = pd.read_sql(sql.statement, sql.session.bind)
         df = df.head(50)
-        print(df)
         return json.loads(df.to_json(orient='records'))
 
 
@@ -155,7 +154,6 @@ class Shopscat(Resource):
 
     @staticmethod
     def get(cat_id : str):
-        print("왜ㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐ")
         print('select catid : ' + cat_id)
         shopscat = ShopDao.find_by_cat(cat_id)
         return shopscat, 200

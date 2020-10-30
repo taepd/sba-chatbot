@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
   marginr: {
     marginRight: theme.spacing(2),
   },
-  rating : {
-    marginBottom : theme.spacing(1),
+  rating: {
+    marginBottom: theme.spacing(1),
   },
 
 }));
@@ -59,7 +59,6 @@ const ReviewDescription = (props) => {
   function HalfRating() {
     const classes = useStyles();
     const rateavg = (taste + quan + deli) / 3
-    console.log("sadklfjalfdj" + rateavg)
     return (
       <div className={classes.rating}>
         <Rating name="rating" defaultValue={rateavg} max={5} precision={0.5} readOnly />
@@ -79,9 +78,30 @@ const ReviewDescription = (props) => {
               {rdate.getFullYear() + "-" + rdate.getMonth() + "-" + rdate.getDate()}
             </Typography>
           </Grid>
-          <Grid container direction="row">
-            {/* <Rating name="avg" defaultValue={(post.taste_rate *post.quantity_rate* post.delivery_rate)/3} max={5}  readOnly/> */}
-            <HalfRating />
+          <Grid container direction="row" alignItems="center">
+            <Rating name="avg" defaultValue={(post.taste_rate +post.quantity_rate+ post.delivery_rate)/3} max={5} className={classes.marginr} readOnly/>
+            {/* <HalfRating className={classes.marginr} /> */}
+            <Typography variant="subtitle1" color="textSecondary">
+              맛
+              </Typography>
+            <Rating name="iconstar" defaultValue={1} max={1} readOnly />
+            <Typography variant="subtitle1" color="textSecondary" className={classes.marginr}>
+              {post.taste_rate}
+            </Typography>
+            <Typography variant="subtitle1" color="textSecondary">
+            양
+              </Typography>
+            <Rating name="iconstar" defaultValue={1} max={1} readOnly />
+            <Typography variant="subtitle1" color="textSecondary" className={classes.marginr}>
+            {post.quantity_rate}
+            </Typography>
+            <Typography variant="subtitle1" color="textSecondary">
+            배달
+              </Typography>
+            <Rating name="iconstar" defaultValue={1} max={1} readOnly />
+            <Typography variant="subtitle1" color="textSecondary" className={classes.marginr}>
+            {post.delivery_rate}
+            </Typography>
           </Grid>
           <Typography variant="subtitle1" color="textSecondary">
             {post.food_name}
