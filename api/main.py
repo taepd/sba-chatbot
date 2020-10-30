@@ -71,7 +71,8 @@ initialize_routes(api)
 # food/order_review 테이블 데이터 일괄 입력
 def insert_at_all(fila_name, dto):
     chunksize = 10 ** 4
-    for cnt, chunk in enumerate(pd.read_csv(f'./data/db/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)):
+    # for cnt, chunk in enumerate(pd.read_csv(f'./data/db/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)): # 혜정
+    for cnt, chunk in enumerate(pd.read_csv(f'./data/csv/important/db/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)): # 영돈
         df = chunk.replace(np.nan, 1, regex=True)
         # print(df.head())
 
