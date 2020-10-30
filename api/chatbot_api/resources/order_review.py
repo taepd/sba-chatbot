@@ -115,7 +115,7 @@ class OrderReviewDao(OrderReviewDto):
 
     @classmethod
     def review_find_by_shopid(cls,shop_id):
-        from chatbot_api.resources.food import FoodDto
+        from chatbot_api.resources.food import FoodDto # 주의! 여기서 임포트 해야함! 
         print("================review=================")
 
         # sql = cls.query.filter_by(shop_id = shop_id)
