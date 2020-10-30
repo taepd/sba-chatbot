@@ -115,18 +115,24 @@ const Navigation = () => {
                         }}
                         showLabels
                         className={classes.root}
-                        >
-                            <BottomNavigationAction label="전체보기" href="/shops"/>
-                            <BottomNavigationAction label="프렌차이즈" href="/shops/"/>
-                            <BottomNavigationAction label="치킨"/>
-                            <BottomNavigationAction label="피자/양식"/>
-                            <BottomNavigationAction label="중국집"/>
-                            <BottomNavigationAction label="한식"/>
-                            <BottomNavigationAction label="일식/돈까스"/>
-                            <BottomNavigationAction label="족발/보쌈"/>
-                            <BottomNavigationAction label="야식"/>
-                            <BottomNavigationAction label="분식"/>
-                            <BottomNavigationAction label="카페/디저트"/>
+                        >   
+                                {/* <Link to={"/shops/" + "전체보기"}>
+                                <BottomNavigationAction label="전체보기"/>
+                                </Link> */}
+                                {/* <BottomNavigationAction label="전체보기">
+                                <Link to={"/shops/" + "전체보기"}></Link>
+                                </BottomNavigationAction> */}
+                                <BottomNavigationAction label="전체보기" href={"/shops/" + "전체보기"} />
+                                <BottomNavigationAction label="프랜차이즈" href={"/shops/" + "프랜차이즈"}/>
+                                <BottomNavigationAction label="치킨" href={"/shops/" + "치킨"}/>
+                                <BottomNavigationAction label="피자/양식" href={"/shops/" + "피자양식"}/>
+                                <BottomNavigationAction label="중국집"  href={"/shops/" + "중식"}/>
+                                <BottomNavigationAction label="한식" href={"/shops/" + "한식"} />
+                                <BottomNavigationAction label="일식/돈까스" href={"/shops/" + "일식돈까스"}/>
+                                <BottomNavigationAction label="족발/보쌈"  href={"/shops/" + "족발보쌈"}/>
+                                <BottomNavigationAction label="야식" href={"/shops/" + "야식"}/>
+                                <BottomNavigationAction label="분식" href={"/shops/" + "분식"}/>
+                                <BottomNavigationAction label="카페/디저트" href={"/shops/" + "카페디저트"}/>
                     </BottomNavigation>
                 </Grid>
         </React.Fragment>
