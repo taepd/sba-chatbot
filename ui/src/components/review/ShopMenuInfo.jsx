@@ -14,7 +14,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from "react-router-dom";
+import { useState } from 'react';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   divroot: {
@@ -68,13 +70,20 @@ const useStyles = makeStyles((theme) => ({
 
 
 const ShopMenuInfo = (props) => {
-  const classes = useStyles();
-
   const { post } = props;
+  const classes = useStyles();
+  const date = new Date();
+  const userid = sessionStorage.getItem("sessionUser");
+  const food_id = post.food_id;
+  const shop_id = post.shop_id;
+  const order_time = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+  // const [userid, setUserid] = useState();
+  // const [food_id, setFoodid] = useState();
+  // const [order_time,setOrderTime] = useState();
+  // const [shop_id,setShopid] = useState();
+  const history = useHistory();
   const [open, setOpen] = React.useState(false);
-
-  console.log("유정쥬어쥬유저유저"+sessionStorage.getItem("sessionUser"))
-  
+  // console.log(post)  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -82,7 +91,25 @@ const ShopMenuInfo = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const newOrder = () =>{
+    // setUserid(sessionStorage.getItem("sessionUser"));
+    // setFoodid(post.food_id);
+    // setOrderTime(date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+"' '" + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds())
+    // setShopid(post.shop_id)
+    // debugger
+    // alert(userid)
+    axios.post(`http://localhost:8080/order`, {userid, food_id,order_time,shop_id})
+    .then(res=>{
+      alert("성공")
+    }).then(
+      history.push("/order/"+post.food_id)
+    )
+    .catch(err =>{
+      alert("실패")
+    })
+  }
+  
+  
   return (
 
     <div className={classes.divroot}>
@@ -120,11 +147,16 @@ const ShopMenuInfo = (props) => {
           <Button onClick={handleClose} color="primary">
             취소
           </Button>
-          <Link to="/order" className={classes.toolbarLink}>
-            <Button onClick={handleClose} color="primary" autoFocus>
+          {/* <Link to={"/order/"+post.food_id} className={classes.toolbarLink}>
+            <Button onClick={newOrder}  color="primary" autoFocus>
               주문하기
             </Button>
-          </Link>
+          </Link> */}
+          {/* <Link to={"/order/"+post.food_id} className={classes.toolbarLink}> */}
+            <Button onClick={newOrder}  color="primary" autoFocus>
+              주문하기
+            </Button>
+          {/* </Link> */}
         </DialogActions>
       </Dialog>
       <CardActionArea onClick={handleClickOpen}>

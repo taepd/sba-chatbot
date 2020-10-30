@@ -55,6 +55,7 @@ const ReviewDescription = (props) => {
   const deli = post.delivery_rate;
   const date = post.review_time;
   const rdate = new Date(date);
+  
 
   function HalfRating() {
     const classes = useStyles();
@@ -75,7 +76,7 @@ const ReviewDescription = (props) => {
               {post.userid}
             </Typography>
             <Typography variant="body2" color="textSecondary" >
-              {rdate.getFullYear() + "-" + rdate.getMonth() + "-" + rdate.getDate()}
+              {rdate.getFullYear() + "-" + Number(rdate.getMonth()) + "-" + rdate.getDate()}
             </Typography>
           </Grid>
           <Grid container direction="row" alignItems="center">

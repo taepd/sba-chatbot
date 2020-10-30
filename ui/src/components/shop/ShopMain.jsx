@@ -3,7 +3,7 @@ import { MemoryRouter, Route } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Navigation from '../mainPage/Navigation';
+import Navigation from '../common/Navigation';
 import ShopList from './ShopList';
 // import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem'
@@ -35,10 +35,10 @@ const ShopMain = ({match}) => {
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    // const cat = catif == 'none' ? noncaturl : caturl
     const catif = match.params.cat_id;
     const noncaturl = `http://localhost:8080/shops`;
     const caturl = `http://localhost:8080/shops/${match.params.cat_id}`;
-    // const cat = catif == 'none' ? noncaturl : caturl
 
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const ShopMain = ({match}) => {
             throw (e)
         })
         
-    }, [])
+    }, [catif])
 
         // console.log(data)
 
@@ -66,7 +66,6 @@ const ShopMain = ({match}) => {
         return (
             <React.Fragment>
                 <CssBaseline />
-                <Navigation />
                 <Grid container className={classes.wd} >
                     {currentPosts.map((post) => (
                         <Grid className={classes.spacing}>

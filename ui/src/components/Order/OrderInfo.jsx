@@ -30,13 +30,14 @@ const useStyles = makeStyles((theme) => ({
 
 const OrderInfo = (props) => {
     const classes = useStyles();
-    const { post } = props;
+    const {post} = props;
+    
 
     return (
         <div className={classes.root} >
             <Grid item md={12} justify="center" align="center">
                 <Typography variant="h5" className={classes.title}>
-                    {post.name} 님의 주문이 완료 되었습니다.
+                    {sessionStorage.getItem("sessionUser")} 님의 주문이 완료 되었습니다.
                 </Typography>
                 <Divider variant="inset" variant="middle" />
                 <Typography variant="h6" className={classes.subtitle}>
@@ -49,7 +50,7 @@ const OrderInfo = (props) => {
                     배달 주소    {post.addr}
                 </Typography>
                 <Typography variant="subtitle1">
-                    구매 내역    {post.food_name}
+                    메뉴    {post.food_name}
                 </Typography>
                 <Typography variant="subtitle1">
                     가격    {post.price}

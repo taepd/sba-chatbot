@@ -4,7 +4,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import ShopInfo from './ShopInfo';
 import MenuAndReviewArea from './MenuAndReviewArea';
-import Navigation from '../mainPage/Navigation';
 import axios from 'axios'
 
 
@@ -37,6 +36,7 @@ const Review = ({match}) => {
           setDataShop(res.data[0].Shop[0])
           setDataFood(res.data[1].Food)
           setDatareview(res.data[2].Review)
+          
           // console.log("Review" +res.data[2].Review)
           // console.log("Food" +res.data[1].Food)
       })
@@ -51,7 +51,6 @@ const Review = ({match}) => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Navigation />
       <Grid container justify="center" >
           <ShopInfo post={shopdata}/> {/* {} 객체만 보내줌 */}
       </Grid>

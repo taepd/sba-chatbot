@@ -26,6 +26,8 @@ from chatbot_api.util.file_handler import FileReader
 
 
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
+parser = reqparse.RequestParser()
+parser.add_argument('food_id', type=str, required=True)
 
 class OrderReviewDto(db.Model):
     __tablename__ = "order_review"
@@ -47,9 +49,10 @@ class OrderReviewDto(db.Model):
 
     foods = db.relationship('FoodDto', back_populates='order_reviews')
 
-    def __init__(self, or_id, order_time, review_cmnt, taste_rate, quantity_rate,
-                 delivery_rate, review_time, review_img, owner_cmnt, userid, shop_id, food_id):
-        self.or_id = or_id
+    # self.or_id = or_id
+    def __init__(self, order_time, userid, shop_id, food_id, review_cmnt='', taste_rate=0.0, quantity_rate=0.0,
+                 delivery_rate=0.0, review_time=0.0, review_img='', owner_cmnt=''):
+        
         self.order_time = order_time
         self.review_cmnt = review_cmnt
         self.taste_rate = taste_rate
@@ -64,7 +67,7 @@ class OrderReviewDto(db.Model):
         
 
     def __repr__(self):
-        return f'Review(or_id={self.or_id}, ' \
+        return f'OrderReview(or_id={self.or_id}, ' \
                f'order_time={self.order_time}, ' \
                f'review_cmnt={self.review_cmnt}, ' \
                f'taste_rate={self.taste_rate}, ' \
@@ -75,7 +78,7 @@ class OrderReviewDto(db.Model):
                f'owner_cmnt={self.owner_cmnt}, ' \
                f'userid={self.userid}, ' \
                f'shop_id={self.shop_id} ' \
-               f'food_id={self.food_id} ' \
+               f'food_id={self.food_id}) ' \
 
 
     @property
@@ -131,11 +134,25 @@ class OrderReviewDao(OrderReviewDto):
         # print(df)
         return json.loads(df.to_json(orient='records'))
 
-class OrderReview(Resource):
+    @staticmethod
+    def save(order_review):
+        db.session.add(order_review)
+        db.session.commit()
 
     @classmethod
-    def get(shop_id : str):
-        review = OrderReviewDao.review_find_by_shopid(shop_id)
-        print("너는 나오면 안된다")
-        print(review)
-        return review.json, 200
+    def order_review_find_by_userid(cls,userid):
+        from chatbot_api.resources.food import FoodDto
+
+class OrderReview(Resource):
+
+    @staticmethod
+    def post():
+        params = request.get_json()
+        print("뭐니이이ㅣㅇ",params)
+        order_review = OrderReviewDto(**params)
+        print("diiiiiiiiiiiiiiiii",type(order_review))
+        OrderReviewDao.save(order_review)
+        return 200
+
+
+

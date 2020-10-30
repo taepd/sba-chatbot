@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import OrderInfo from './OrderInfo'
+import axios from 'axios';
 
 const orderinfo = [
     {
@@ -29,15 +30,23 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Order = () =>{
-    const classes = useStyles();
+const Order = ({match}) =>{
+    const [foodData, setFoodData] = useState([])
+    useEffect(()=>{
+        axios.get(`http://localhost:8080/order/${match.params.food_id}`)
+        .then(res =>{
+            setFoodData(res.data)
+        }).catch(error=>{
+            alert("안돼 돌아가")
+        })
+    },[])
 
+    console.log(foodData)
+    const classes = useStyles();
     return (
         <React.Fragment>
             <Grid container justify="center" className={classes.wd}>
-                {orderinfo.map((post) => (
-                    <OrderInfo key={post.name} post={post}/>
-                ))}
+                    <OrderInfo post={foodData}/>
             </Grid>
 
 

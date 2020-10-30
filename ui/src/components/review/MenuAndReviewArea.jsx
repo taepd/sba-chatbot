@@ -75,10 +75,10 @@ const MenuAndReviewArea = (props) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
-  const { food, reviews } = props;
+  const {food, reviews} = props;
 
   console.log("할당 fooood" + food)
-  console.log("할당 review" + reviews)
+  // console.log("할당 review" + reviews)
   
 
   const handleChange = (event, newValue) => {

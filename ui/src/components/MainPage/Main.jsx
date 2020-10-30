@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import MainNavigation from './MainNavigation';
 import MainList from './MainList';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -90,7 +89,6 @@ const Main = () => {
     return (
         <React.Fragment>
             <CssBaseline />
-            <MainNavigation />
             <Grid container justify="center" className={classes.wd}>
                 <Grid container justify="center" className={classes.title}>
                     <Typography variant="h5" >
