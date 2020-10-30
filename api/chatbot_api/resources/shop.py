@@ -125,12 +125,14 @@ class ShopDao(ShopDto):
 
     @classmethod
     def find_by_cat(cls,cat_id):
+        print(cat_id)
         # if cat_id == 'cat1' :
-        sql = cls.query.filter(ShopDto.cat.like('%피자양식%'))
+        sql = cls.query.filter(ShopDto.cat.like('%'+cat_id+'%'))
         print("오나????????????????????")
         df = pd.read_sql(sql.statement, sql.session.bind)
         df = df.head(50)
-        return json.loads(df.to_json(orient='recoeds'))
+        print(df)
+        return json.loads(df.to_json(orient='records'))
 
 
 class Shops(Resource):

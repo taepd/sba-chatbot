@@ -39,7 +39,6 @@ const ShopMain = ({match}) => {
     useEffect(() => {
         axios.get(`http://localhost:8080/shops/${match.params.cat_id}`)
             .then(res => {
-                // alert(`List Success`)
                 setData(res.data)
             })
             .catch(e => {
