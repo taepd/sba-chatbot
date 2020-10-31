@@ -14,7 +14,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   divroot: {
@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
     // textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  toolbarLink: {
+    textDecoration: 'none',
+  },
 
 }));
 
@@ -70,6 +73,7 @@ const ShopMenuInfo = (props) => {
   const { post } = props;
   const [open, setOpen] = React.useState(false);
 
+  console.log("유정쥬어쥬유저유저"+sessionStorage.getItem("sessionUser"))
   
   const handleClickOpen = () => {
     setOpen(true);
@@ -91,7 +95,7 @@ const ShopMenuInfo = (props) => {
       >
         <CardMedia
           className={classes.modalcover}
-          image={post.food_img !== 'no_image' ? post.food_img : 'https://lh3.googleusercontent.com/proxy/50XHf1N1XycTYoKaJNGaw9flAWko2BkLaBndKKKvC_i0oMkVsklpGMcI4embUG0b6PYnUakKsNViFiam8a59E2-0WjxeSjDazBs4gQaWUGZ4zY35ZGw4JsGfeeCsaGU66A'}
+          image={post.food_img !== 'no_image' ? post.food_img : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAD8CAMAAAAFbRsXAAAAY1BMVEX////39/eysrJjY2O5ublgYGCJiYmdnZ2mpqbt7e1nZ2ecnJz6+vqpqalpaWm/v79ycnLh4eF+fn5tbW3y8vLY2NjNzc2Dg4ORkZHo6OjFxcXZ2dm3t7dcXFyAgICWlpZUVFRdQGDEAAADyUlEQVR4nO3YW3OqOgCGYSCAEDEEApFDlf7/X7kTUEFrZ9aeNbJu3ueiTWmk+ciJNAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4M8UedX8vJpX+d/eYidFf2tq85XauVDd9UUQRF281m2+4o2v+VrYhI9vTZQOhb/DUz27T5AmS8u5kB8uw1xIna5zXw4u4VFka93+O3GElP5b8u0vFXayvu3x0d0lPyaRjzVcNvUu6U5BuiS6BUmWINfzuVamPl8nH0RugjSld1AqG3zBXwqjy9z2OXB+EPMPlf/t19mYk6+3V4904iVIn+et0GXe58VLkKAoiiCflDw1hS/OQZKvOYjcBHH1gqLUSrk+vdX7F0F8lqS+PcfnIL6NmVHGPCbO+yBBMGZa1bXpduqO4JcgrVDLVP4RxKaqtqUxU7X87ILMoQ6bII2Nzq47osbWQuvT0O+R422Qwk2Drv8RpKjiqxJ1GwSlkSqdGxhG0izWIJWSiZiT5pFJhIiDPYxneXoNYhOtxal4DdJooXQ07xT90aik+yVIUGY2vH+oKqddcgS2VnWxBFHy8u2f4yjNqdVybvLT0Oqn4dHAvpzCOYg4Dta6EfcIUoR+tocLP9X3me4nZZLqFkTXuncjXKqpcYtOkrodYhOkCN1aFIZrC8Nwmey+nZs5UqavjjvkqDqlVbYEEafWhn2XmKPf621qumYbpDq9cn32ZtWKr/VMu81o0X0+R/FlrpGWY/CYI2F2jpahUEXPG6Kt9UJJsxSu+bsgfbvIZDqMc2n8fJD2LOLmqM75OtnDpz+7CZLbYRan8rSU3JR+M7Ru3OyZ9ll4Az+wErfM9rV0i+Vm1ept9SaI/4V/j3RvVOs255p7sO6Zd+opSDMOUSrrrGz3yBLaTp7drhC4JSptmzVIrB+tn5LD5hPp1Pql9ylIov00ME89Mh6uiaivV3WppyH4uCZLrvOra9DWabUJEiWPdWZcO8dJjPWL8PcapLDHw2JYg+RnWcftOFbt0Cmzw1tKFdvbEl89DS03XN5/QGjrOzLejJcwv2nWIJHU9xv37pXmU83f2G5Vfxzkd/cgR6UfUVN1+dtW/k/bIFKvu1m3OesKc93scz9C3YO0iZnG+Rn1kRbZa7UPe5wQ/RyR4i7Rm3F0Wa8Lcfkxje8nxCC+KL1siibp9j7GuwP3/RG32zN3Ga51ns7icfXmFsMyWN1LpT/uXkTX7tH2z+r7/t/9TwUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgL/xH1ogO7FfoVLsAAAAAElFTkSuQmCC'}
         />
         <Grid container justify="center" direction="row">
           <Typography>
@@ -116,9 +120,11 @@ const ShopMenuInfo = (props) => {
           <Button onClick={handleClose} color="primary">
             취소
           </Button>
-          <Button onClick={handleClose} color="primary" autoFocus href="/order">
-            주문하기
-          </Button>
+          <Link to="/order" className={classes.toolbarLink}>
+            <Button onClick={handleClose} color="primary" autoFocus>
+              주문하기
+            </Button>
+          </Link>
         </DialogActions>
       </Dialog>
       <CardActionArea onClick={handleClickOpen}>
@@ -136,7 +142,7 @@ const ShopMenuInfo = (props) => {
             </Grid>
             <CardMedia
               className={classes.cover}
-              image={post.food_img !== 'no_image' ? post.food_img : 'https://lh3.googleusercontent.com/proxy/50XHf1N1XycTYoKaJNGaw9flAWko2BkLaBndKKKvC_i0oMkVsklpGMcI4embUG0b6PYnUakKsNViFiam8a59E2-0WjxeSjDazBs4gQaWUGZ4zY35ZGw4JsGfeeCsaGU66A'}
+              image={post.food_img !== 'no_image' ? post.food_img : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAD8CAMAAAAFbRsXAAAAY1BMVEX////39/eysrJjY2O5ublgYGCJiYmdnZ2mpqbt7e1nZ2ecnJz6+vqpqalpaWm/v79ycnLh4eF+fn5tbW3y8vLY2NjNzc2Dg4ORkZHo6OjFxcXZ2dm3t7dcXFyAgICWlpZUVFRdQGDEAAADyUlEQVR4nO3YW3OqOgCGYSCAEDEEApFDlf7/X7kTUEFrZ9aeNbJu3ueiTWmk+ciJNAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4M8UedX8vJpX+d/eYidFf2tq85XauVDd9UUQRF281m2+4o2v+VrYhI9vTZQOhb/DUz27T5AmS8u5kB8uw1xIna5zXw4u4VFka93+O3GElP5b8u0vFXayvu3x0d0lPyaRjzVcNvUu6U5BuiS6BUmWINfzuVamPl8nH0RugjSld1AqG3zBXwqjy9z2OXB+EPMPlf/t19mYk6+3V4904iVIn+et0GXe58VLkKAoiiCflDw1hS/OQZKvOYjcBHH1gqLUSrk+vdX7F0F8lqS+PcfnIL6NmVHGPCbO+yBBMGZa1bXpduqO4JcgrVDLVP4RxKaqtqUxU7X87ILMoQ6bII2Nzq47osbWQuvT0O+R422Qwk2Drv8RpKjiqxJ1GwSlkSqdGxhG0izWIJWSiZiT5pFJhIiDPYxneXoNYhOtxal4DdJooXQ07xT90aik+yVIUGY2vH+oKqddcgS2VnWxBFHy8u2f4yjNqdVybvLT0Oqn4dHAvpzCOYg4Dta6EfcIUoR+tocLP9X3me4nZZLqFkTXuncjXKqpcYtOkrodYhOkCN1aFIZrC8Nwmey+nZs5UqavjjvkqDqlVbYEEafWhn2XmKPf621qumYbpDq9cn32ZtWKr/VMu81o0X0+R/FlrpGWY/CYI2F2jpahUEXPG6Kt9UJJsxSu+bsgfbvIZDqMc2n8fJD2LOLmqM75OtnDpz+7CZLbYRan8rSU3JR+M7Ru3OyZ9ll4Az+wErfM9rV0i+Vm1ept9SaI/4V/j3RvVOs255p7sO6Zd+opSDMOUSrrrGz3yBLaTp7drhC4JSptmzVIrB+tn5LD5hPp1Pql9ylIov00ME89Mh6uiaivV3WppyH4uCZLrvOra9DWabUJEiWPdWZcO8dJjPWL8PcapLDHw2JYg+RnWcftOFbt0Cmzw1tKFdvbEl89DS03XN5/QGjrOzLejJcwv2nWIJHU9xv37pXmU83f2G5Vfxzkd/cgR6UfUVN1+dtW/k/bIFKvu1m3OesKc93scz9C3YO0iZnG+Rn1kRbZa7UPe5wQ/RyR4i7Rm3F0Wa8Lcfkxje8nxCC+KL1siibp9j7GuwP3/RG32zN3Ga51ns7icfXmFsMyWN1LpT/uXkTX7tH2z+r7/t/9TwUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgL/xH1ogO7FfoVLsAAAAAElFTkSuQmCC'}
             />
           </Card>
           <Divider />

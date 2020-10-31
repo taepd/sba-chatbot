@@ -115,17 +115,20 @@ class OrderReviewDao(OrderReviewDto):
 
     @classmethod
     def review_find_by_shopid(cls,shop_id):
-        from chatbot_api.resources.food import FoodDto
+        from chatbot_api.resources.food import FoodDto # 주의! 여기서 임포트 해야함! 
         print("================review=================")
+
         # sql = cls.query.filter_by(shop_id = shop_id)
         # sql = db.session.query(cls).join(cls.foods).filter_by(shop_id = shop_id)
         # sql = cls.query.join(OrderReviewDto.foods).filter_by(shop_id = shop_id)
         # join 하는 법
-        sql = db.session.query(OrderReviewDto, FoodDto).filter(OrderReviewDto.food_id == FoodDto.food_id).filter_by(shop_id = shop_id)
+        sql = db.session.query(OrderReviewDto, FoodDto).\
+            filter(OrderReviewDto.food_id == FoodDto.food_id).\
+            filter_by(shop_id = shop_id).\
+            order_by(OrderReviewDto.review_time.desc())
         df = pd.read_sql(sql.statement, sql.session.bind) 
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
-        print(df)
-        
+        # print(df)
         return json.loads(df.to_json(orient='records'))
 
 class OrderReview(Resource):

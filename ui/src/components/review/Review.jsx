@@ -31,7 +31,7 @@ const Review = ({match}) => {
   const [reviewdata, setDatareview] = useState([])
   useEffect(() => {
       // alert(match.params.shopid)
-      axios.get(`http://localhost:8080/shop/${match.params.shopid}`)
+      axios.get(`http://localhost:8080/shop/${match.params.shop_id}`)
       .then(res=>{
           // alert(`List Success`)
           setDataShop(res.data[0].Shop[0])
