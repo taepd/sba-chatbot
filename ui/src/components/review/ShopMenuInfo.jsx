@@ -102,7 +102,7 @@ const ShopMenuInfo = (props) => {
     .then(res=>{
       alert("성공")
     }).then(
-      history.push("/order/"+post.food_id)
+      history.push("/order/"+post.userid)
     )
     .catch(err =>{
       alert("실패")
@@ -181,12 +181,6 @@ const ShopMenuInfo = (props) => {
         </Grid>
       </CardActionArea>
     </div >
-
-
-
-
-
-
   );
 }
 

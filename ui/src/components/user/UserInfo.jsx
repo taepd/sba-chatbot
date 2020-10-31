@@ -140,7 +140,7 @@ const UserInfo = () => {
                 type="password"
                 id="password"
                 size="small"
-                autoComplete="current-password"
+                // autoComplete="current-password"
               />
               <Button
                 type="submit"

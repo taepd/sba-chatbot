@@ -5,15 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import OrderInfo from './OrderInfo'
 import axios from 'axios';
 
-const orderinfo = [
-    {
-        name :'홍길동',
-        addr:'서울시 강남구 서초동',
-        food_name :'뿌링치즈볼',
-        price: '14,000',
-        or_id :'1003455',
-    }
-]
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,22 +22,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Order = ({match}) =>{
-    const [foodData, setFoodData] = useState([])
+    const [orderData, setorderData] = useState([])
     useEffect(()=>{
-        axios.get(`http://localhost:8080/order/${match.params.food_id}`)
+        axios.get(`http://localhost:8080/order/${match.params.userid}`)
         .then(res =>{
-            setFoodData(res.data)
+            setorderData(res.data)
+            console.log(res.data)
         }).catch(error=>{
             alert("안돼 돌아가")
         })
     },[])
 
-    console.log(foodData)
+    console.log(orderData)
     const classes = useStyles();
     return (
         <React.Fragment>
             <Grid container justify="center" className={classes.wd}>
-                    <OrderInfo post={foodData}/>
+                    <OrderInfo post={orderData}/>
             </Grid>
 
 

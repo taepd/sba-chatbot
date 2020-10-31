@@ -140,8 +140,23 @@ class OrderReviewDao(OrderReviewDto):
         db.session.commit()
 
     @classmethod
-    def order_review_find_by_userid(cls,userid):
+    def order_review_join_food_for_order(cls,userid):
+        from chatbot_api.resources.user import UserDto
         from chatbot_api.resources.food import FoodDto
+        print("-------------+++++++++++--------------")
+
+        sql = db.session.query(OrderReviewDto, FoodDto, UserDto,).\
+            filter(UserDto.userid == OrderReviewDto.userid,).\
+            filter(OrderReviewDto.food_id ==  FoodDto.food_id,).\
+            filter_by(userid = userid).\
+            order_by(OrderReviewDto.userid.desc()).first()
+
+        print("시ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ바ㅏㅏㅏㅏ",sql)
+        df = pd.read_sql(sql.statement, sql.session.bind) 
+        df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
+        return json.loads(df.to_json(orient='records'))
+        
+            
 
 class OrderReview(Resource):
 
@@ -150,9 +165,14 @@ class OrderReview(Resource):
         params = request.get_json()
         print("뭐니이이ㅣㅇ",params)
         order_review = OrderReviewDto(**params)
-        print("diiiiiiiiiiiiiiiii",type(order_review))
         OrderReviewDao.save(order_review)
         return 200
 
 
+class OrderReviewPage(Resource):
 
+    @staticmethod
+    def get(userid : str):
+        order = OrderReviewDao.order_review_join_food_for_order(userid)
+        print(order)
+        return order.json(), 200

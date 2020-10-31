@@ -37,7 +37,7 @@ const App = () => {
                         <Route path="/reviewwrite" component={ReviewWritePage} />
                         {/* <Route path="/userinfo" component={UserInfo} /> */}
                         <Route path="/mypage" component={UserPage} />
-                        <Route path="/order/:food_id" component={Order} />
+                        <Route path="/order/:userid" component={Order} />
                         {/* <Redirect from={"/history"} to ={"/about/history"}/>
                         <Redirect from={"/services"} to ={"/about/services"}/>
                         <Redirect from={"/location"} to ={"/about/location"}/>
