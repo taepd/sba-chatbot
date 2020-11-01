@@ -43,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
   rating: {
     marginBottom: theme.spacing(1),
   },
+  card:{
+    marginBottom: theme.spacing(2),
+    backgroundColor : theme.palette.secondary,
+  },
 
 }));
 
@@ -50,12 +54,13 @@ const useStyles = makeStyles((theme) => ({
 const ReviewDescription = (props) => {
   const classes = useStyles();
   const { post } = props;
+  console.log(post)
   const taste = post.taste_rate;
   const quan = post.quantity_rate;
   const deli = post.delivery_rate;
   const date = post.review_time;
   const rdate = new Date(date);
-  
+
 
   function HalfRating() {
     const classes = useStyles();
@@ -80,7 +85,7 @@ const ReviewDescription = (props) => {
             </Typography>
           </Grid>
           <Grid container direction="row" alignItems="center">
-            <Rating name="avg" defaultValue={(post.taste_rate +post.quantity_rate+ post.delivery_rate)/3} max={5} className={classes.marginr} readOnly/>
+            <Rating name="avg" defaultValue={(post.taste_rate + post.quantity_rate + post.delivery_rate) / 3} max={5} className={classes.marginr} readOnly />
             {/* <HalfRating className={classes.marginr} /> */}
             <Typography variant="subtitle1" color="textSecondary">
               맛
@@ -90,18 +95,18 @@ const ReviewDescription = (props) => {
               {post.taste_rate}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-            양
+              양
               </Typography>
             <Rating name="iconstar" defaultValue={1} max={1} readOnly />
             <Typography variant="subtitle1" color="textSecondary" className={classes.marginr}>
-            {post.quantity_rate}
+              {post.quantity_rate}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-            배달
+              배달
               </Typography>
             <Rating name="iconstar" defaultValue={1} max={1} readOnly />
             <Typography variant="subtitle1" color="textSecondary" className={classes.marginr}>
-            {post.delivery_rate}
+              {post.delivery_rate}
             </Typography>
           </Grid>
           <Typography variant="subtitle1" color="textSecondary">
@@ -110,6 +115,20 @@ const ReviewDescription = (props) => {
           <Typography variant="subtitle1" paragraph className={classes.marginbottom}>
             {post.review_cmnt}
           </Typography>
+          {post.owner_cmnt !== null
+          ?
+          <Card variant="outlined" className={classes.card}>
+            <CardContent>
+              <Typography  component="h6"  variant="subtitle1">
+                사장님 
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+               {post.owner_cmnt}
+              </Typography>
+            </CardContent>
+          </Card>:
+          <></>
+          }
 
         </Grid>
       </Grid>

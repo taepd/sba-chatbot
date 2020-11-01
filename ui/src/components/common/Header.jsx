@@ -119,9 +119,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = props => {
     const classes = useStyles();
-    
     const [value, setValue] = React.useState(0);
-    
     const history  = useHistory()
     const logout = e => {
         alert('logout')

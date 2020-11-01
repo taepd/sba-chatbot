@@ -175,7 +175,6 @@ class OrderReviewPage(Resource):
     def get(userid : str):
         print("asd;f;asdjf;lasjdl;f")
         order = OrderReviewDao.order_review_join_food_for_order(userid)
-        
         print(order)
         print(type(order))
         return order, 200

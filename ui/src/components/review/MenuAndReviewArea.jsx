@@ -77,7 +77,7 @@ const MenuAndReviewArea = (props) => {
 
   const {food, reviews} = props;
 
-  console.log("할당 fooood" + food)
+  // console.log("할당 fooood" + food)
   // console.log("할당 review" + reviews)
   
 

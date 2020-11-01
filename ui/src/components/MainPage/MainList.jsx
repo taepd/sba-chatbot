@@ -63,7 +63,6 @@ const MainList = (props) => {
     return (
         
         <div className={classes.divroot} spacing={2}>
-
             <Grid container justify="flex-start"  >
                 <Grid>
                     <Card className={classes.root} square elevation={0} variant="outlined" >

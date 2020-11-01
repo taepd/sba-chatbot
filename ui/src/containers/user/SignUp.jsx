@@ -108,9 +108,7 @@ const SignUp = () => {
           회원가입
         </Typography>
         <form className={classes.form} noValidate onSubmit={onSubmitHandler}>
-     
           <Grid container spacing={2}>
-
             <Grid item xs={12}>
               <TextField onChange={e => setUserid(e.target.value)}
                 variant="outlined"
