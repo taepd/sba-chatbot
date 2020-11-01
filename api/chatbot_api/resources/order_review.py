@@ -160,8 +160,7 @@ class OrderReviewDao(OrderReviewDto):
     def order_review_join_food(cls,userid):
         from chatbot_api.resources.food import FoodDto
         from chatbot_api.resources.shop import ShopDto
-        
-        sql = db.session.query(OrderReviewDto, FoodDto,).\
+        sql = db.session.query(OrderReviewDto, FoodDto, ShopDto).\
             filter(OrderReviewDto.food_id == FoodDto.food_id,).\
             filter(OrderReviewDto.shop_id == ShopDto.shop_id,).\
             filter_by(userid = userid,).\
@@ -172,7 +171,7 @@ class OrderReviewDao(OrderReviewDto):
         print(df)
         return json.loads(df.to_json(orient='records'))
             
-
+            
 class OrderReview(Resource):
 
     @staticmethod

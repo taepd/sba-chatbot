@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Rating from '@material-ui/lab/Rating';
 import Divider from '@material-ui/core/Divider';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,9 +67,24 @@ const useStyles = makeStyles((theme) => ({
 
 
 const ReviewWriteSub = (props) => {
+  const {post} = props;
+  console.log(post)
   const classes = useStyles();
   const { archives, description, social, title } = props;
   const [value, setValue] = React.useState(0);
+  const orid = '';
+
+  const reviewWrite = () => {
+
+    axios.post(`http://localhost:8080/mypage`,{orid})
+    .then(res =>{
+        // setorderData(res.data)
+        console.log(res.data)
+    }).catch(error=>{
+        alert("안돼 돌아가")
+    })
+ 
+  }
 
   return (
    
@@ -77,7 +93,7 @@ const ReviewWriteSub = (props) => {
          <Grid item xs={12} md={12} justify="center">
         <Grid container justify="center" item xs={12} md={12} className={classes.margin}>
           <Typography variant="h4">
-            네네치킨
+            {/* {post.shop_name} */}
           </Typography>
         </Grid>
         <Grid container justify="center" item xs={12} md={12} className={classes.marginmenu}>
@@ -142,7 +158,7 @@ const ReviewWriteSub = (props) => {
           </form>
         </Grid>
         <Grid container className={classes.button} justify="flex-end">
-          <Button className={classes.smallbutton} variant="contained" color="primary" disableElevation>
+          <Button onClick={reviewWrite} className={classes.smallbutton} variant="contained" color="primary" disableElevation>
             등록 완료
           </Button>
           <Button variant="contained" color="primary" disableElevation>

@@ -1,6 +1,5 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,6 +14,8 @@ import InputBase from '@material-ui/core/InputBase';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -115,6 +116,13 @@ const useStyles = makeStyles((theme) => ({
       },
       margintop:{
           marginTop : theme.spacing(3)
+      },
+      button:{
+        border: "0px",
+        background: fade(theme.palette.common.white, 0.0),
+      },
+      marginbottom:{
+          marginBottom:theme.spacing(2)
       }
 
 }));
@@ -128,20 +136,95 @@ const Navigation = () => {
         <React.Fragment>
             <CssBaseline />
                 <Grid container item md={12} justify="center" className={classes.margintop}>
-                    <Avatar alt="Remy Sharp" src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" className={classes.large} />
-                    <Avatar alt="Remy Sharp" src="https://img.khan.co.kr/news/2020/06/26/l_2020062701003314900262081.jpg" className={classes.large} />
-                    <Avatar alt="Remy Sharp" src="https://img2.quasarzone.co.kr/img/data/editor/1603/3e4a95bdfd6fc36718d2fdaf26baa43a_1457610150_9401.jpg" className={classes.large} />
-                    <Avatar alt="Remy Sharp" src="https://cdn.dominos.co.kr/admin/upload/goods/20200311_5MGKbxlW.jpg" className={classes.large} />
-                    <Avatar alt="Remy Sharp" src="https://imagescdn.gettyimagesbank.com/500/201708/jv10946106.jpg" className={classes.large} />
-                    <Avatar alt="Remy Sharp" src="https://t1.daumcdn.net/liveboard/SNUH/ae46c5665dd94ba4b124dd27365b45e3.JPG" className={classes.large} />
-                    <Avatar alt="Remy Sharp" src="https://funshop.akamaized.net/products/0000076768/vs_image800.jpg" className={classes.large} />
-                    <Avatar alt="Remy Sharp" src="https://post-phinf.pstatic.net/MjAxOTA4MTlfMjgy/MDAxNTY2MTkzNDgyMDU5.k8dyis-tMy0GSiPkQDLveNQ8WEnpDpUg6fzAd-SAmXsg.LqfuUotXOPuObkao5cMb1Iqczzu2osIILHcjP3Vgf78g.JPEG/image_2219871881566193468342.jpg?type=w1200" className={classes.large} />
-                    <Avatar alt="Remy Sharp" src="https://recipe1.ezmember.co.kr/cache/recipe/2018/03/28/df63b2bf13484654a8267381ffa86e7a1.jpg" className={classes.large} />
-                    <Avatar alt="Remy Sharp" src="https://m.donggangmaru.com/file_data/ywnh/2016/10/10/e1bd25f75242c1b493bf49a650179217.jpg" className={classes.large} />
-                    <Avatar alt="Remy Sharp" src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F992A713D5CAA224409" className={classes.large} />
-                </Grid>
-                <Grid container item md={12} justify="center">
-                    <BottomNavigation
+                    <Grid direction="column" alignItems="center" justify="center" className={classes.marginbottom}>
+                        <Button className={classes.button} component={Link} to="/shops/전체보기" >
+                        <Avatar alt="전체보기" src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" className={classes.large}/>
+                        <Typography color="textPrimary" variant="body2">
+                            전체보기
+                        </Typography>
+                        </Button>
+                    </Grid>
+                    <Grid direction="column" alignItems="center" justify="center">
+                        <Button component={Link} to="/shops/프랜차이즈" className={classes.button}>
+                        <Avatar alt="프렌차이즈" src="https://img.khan.co.kr/news/2020/06/26/l_2020062701003314900262081.jpg" className={classes.large}/>
+                        <Typography color="textPrimary" variant="body2">
+                            프렌차이즈
+                        </Typography>
+                        </Button>
+                    </Grid>
+                    <Grid direction="column" alignItems="center" justify="center">
+                        <button className={classes.button} component={Link} to="/shops/치킨">
+                        <Avatar alt="치킨" src="https://img2.quasarzone.co.kr/img/data/editor/1603/3e4a95bdfd6fc36718d2fdaf26baa43a_1457610150_9401.jpg" className={classes.large}/>
+                        <Typography color="textPrimary" variant="body2">
+                            치킨
+                        </Typography>
+                        </button>
+                    </Grid>
+                    <Grid direction="column" alignItems="center" justify="center">
+                        <button className={classes.button}>
+                        <Avatar alt="피자/양식"src="https://cdn.dominos.co.kr/admin/upload/goods/20200311_5MGKbxlW.jpg" className={classes.large}/>
+                        <Typography color="textPrimary" variant="body2">
+                            피자/양식
+                        </Typography>
+                        </button>
+                    </Grid>
+                    <Grid direction="column" alignItems="center" justify="center">
+                        <button className={classes.button}>
+                        <Avatar alt="중국집" src="https://imagescdn.gettyimagesbank.com/500/201708/jv10946106.jpg" className={classes.large}/>
+                        <Typography color="textPrimary" variant="body2">
+                            중국집
+                        </Typography>
+                        </button>
+                    </Grid>
+                    <Grid direction="column" alignItems="center" justify="center">
+                        <button className={classes.button}>
+                        <Avatar alt="한식" src="https://t1.daumcdn.net/liveboard/SNUH/ae46c5665dd94ba4b124dd27365b45e3.JPG" className={classes.large}/>
+                        <Typography color="textPrimary" variant="body2">
+                            한식
+                        </Typography>
+                        </button>
+                    </Grid>
+                    <Grid direction="column" alignItems="center" justify="center">
+                        <button className={classes.button}>
+                        <Avatar alt="일식/돈까스" src="https://funshop.akamaized.net/products/0000076768/vs_image800.jpg" className={classes.large}/>
+                        <Typography color="textPrimary" variant="body2">
+                            일식/돈까스
+                        </Typography>
+                        </button>
+                    </Grid>
+                    <Grid direction="column" alignItems="center" justify="center">
+                        <button className={classes.button}>
+                        <Avatar alt="족발/보쌈" src="https://post-phinf.pstatic.net/MjAxOTA4MTlfMjgy/MDAxNTY2MTkzNDgyMDU5.k8dyis-tMy0GSiPkQDLveNQ8WEnpDpUg6fzAd-SAmXsg.LqfuUotXOPuObkao5cMb1Iqczzu2osIILHcjP3Vgf78g.JPEG/image_2219871881566193468342.jpg?type=w1200" className={classes.large}/>
+                        <Typography color="textPrimary" variant="body2">
+                            족발/보쌈
+                        </Typography>
+                        </button>
+                    </Grid>
+                    <Grid direction="column" alignItems="center" justify="center">
+                        <button className={classes.button}>
+                        <Avatar alt="야식" src="https://recipe1.ezmember.co.kr/cache/recipe/2018/03/28/df63b2bf13484654a8267381ffa86e7a1.jpg" className={classes.large}/>
+                        <Typography color="textPrimary" variant="body2">
+                            야식
+                        </Typography>
+                        </button>
+                    </Grid>
+                    <Grid direction="column" alignItems="center" justify="center">
+                        <button className={classes.button}>
+                        <Avatar alt="분식" src="https://m.donggangmaru.com/file_data/ywnh/2016/10/10/e1bd25f75242c1b493bf49a650179217.jpg" className={classes.large}/>
+                        <Typography color="textPrimary" variant="body2">
+                            분식
+                        </Typography>
+                        </button>
+                    </Grid>
+                    <Grid direction="column" alignItems="center" justify="center">
+                        <button className={classes.button}>
+                        <Avatar alt="카페/디저트" src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F992A713D5CAA224409" className={classes.large}/>
+                        <Typography color="textPrimary" variant="body2">
+                            카페/디저트
+                        </Typography>
+                        </button>
+                    </Grid>
+                    {/* <BottomNavigation
                         value={value}
                         onChange={(event, newValue) => {
                             setValue(newValue);
@@ -160,7 +243,7 @@ const Navigation = () => {
                             <BottomNavigationAction label="야식"/>
                             <BottomNavigationAction label="분식"/>
                             <BottomNavigationAction label="카페/디저트"/>
-                    </BottomNavigation>
+                    </BottomNavigation> */}
                 </Grid>
         </React.Fragment>
     );

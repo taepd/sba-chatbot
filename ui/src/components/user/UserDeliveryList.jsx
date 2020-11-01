@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -48,7 +49,7 @@ const UserDeliveryList = (props) => {
     const { post } = props;
     const date = post.order_time;
     const rdate = new Date(date);
-    const rday ='';
+
     const day =() =>{
         if (rdate.getDay() == 0) {
             return ' (일)'
@@ -72,13 +73,16 @@ const UserDeliveryList = (props) => {
             return ' (토)'
         }
     }
+
+
+
     return (
             <Grid item xs={12}>
                 <List className={classes.root}>
                     <ListItem alignItems="flex-start">
                         <ListItemText 
                             primary={post.shop_name}
-                            variant="h6"
+                            variant="h5"
                             secondary={
                                 <React.Fragment>
                                     <Typography 
@@ -87,14 +91,14 @@ const UserDeliveryList = (props) => {
                                         className={classes.inline}
                                         color="textPrimary"
                                     >
-                                        {rdate.getFullYear() + "-" + Number(rdate.getMonth()) + "-" + rdate.getDate()+" "+ rdate.getHours()+ day()}
+                                        {rdate.getFullYear() + "-" + Number(rdate.getMonth()) + "-" + rdate.getDate()+" "+ rdate.getHours()+":"+rdate.getMinutes()+ day()}
                                     </Typography>
                                     <Typography color="textSecondary" className={classes.listtext}>{post.food_name}</Typography>
                                 </React.Fragment>
                             }
                         />
                         <ListItemSecondaryAction>
-                            <Button variant="outlined" color="primary" href={"/reviewwrite/"+post.or_id} >
+                            <Button variant="outlined" color="primary" href={"/reviewwrite/"+post.or_id}>
                                 리뷰쓰기
                             </Button>
                         </ListItemSecondaryAction>

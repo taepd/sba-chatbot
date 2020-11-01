@@ -12,6 +12,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import { ThemeProvider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import { Group, TheatersSharp } from '@material-ui/icons';
+import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card:{
     marginBottom: theme.spacing(2),
-    backgroundColor : theme.palette.secondary,
+    backgroundColor: theme.palette.grey[200]
   },
 
 }));
@@ -117,10 +118,10 @@ const ReviewDescription = (props) => {
           </Typography>
           {post.owner_cmnt !== 1
           ?
-          <Card variant="outlined" className={classes.card}>
+          <Card className={classes.card} square elevation={0}>
             <CardContent>
               <Typography  component="h6"  variant="subtitle1">
-                사장님 
+                <SubdirectoryArrowRightIcon fontSize="inherit"/>사장님 
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
                {post.owner_cmnt}

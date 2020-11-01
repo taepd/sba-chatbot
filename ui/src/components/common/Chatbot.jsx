@@ -5,7 +5,7 @@ import ChatBot from 'react-simple-chatbot';
 
 export const ItemSearch = () => {
         return (
-                <p>정보가 없습니다.</p>
+                <p>짜장면 메뉴 서치</p>
 
         )
     
@@ -24,22 +24,21 @@ const ItemChatBot = () => (
         headerTitle = {'서비스'}
         enableSmoothScroll = {true}
         steps={[
-            //서비스선택
             {
                 id: '1',
-                message: '원하시는 서비스를 선택해주세요.',
+                message: '안녕하세요 메추리 입니다. 원하는 서비스를 선택해 주세요',
                 trigger: '2',
             },
             {
                 id: '2',
                 options: [
-                    { value: 1, label: '아이템 정보 보기', trigger: 'item' },
-                    { value: 2, label: '아이템 가격', trigger: 'fare' },
+                    { value: 1, label: '메뉴 추천', trigger: 'item' },
+                    { value: 2, label: '가게 추천', trigger: 'fare' },
                 ],
             },
             {
                 id: 'item',
-                message: '제품명을 입력하세요',
+                message: '원하는 메뉴를 말씀해 주세요',
                 trigger: 'itemSearch',
             },
             {
@@ -54,7 +53,7 @@ const ItemChatBot = () => (
             },
             {
                 id: 'fare',
-                message: '주문사항을 입력해주세요.',
+                message: '원하는 가게를 말씀해 주세요',
                 trigger: 'startName',
             },
             {
