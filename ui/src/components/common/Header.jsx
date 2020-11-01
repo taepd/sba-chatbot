@@ -119,6 +119,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = props => {
     const classes = useStyles();
+    const userid = sessionStorage.getItem("sessionUser");
     const [value, setValue] = React.useState(0);
     const history  = useHistory()
     const logout = e => {
@@ -168,7 +169,7 @@ const Header = props => {
                             </Link>
                             </>:
                             <>
-                             <Link to="/myPage" className={classes.toolbarLink}>
+                             <Link to={"/myPage/"+userid} className={classes.toolbarLink}>
                                 <Button color="primary" variant="outlined" className={classes.link}>
                                     마이페이지
                                 </Button>

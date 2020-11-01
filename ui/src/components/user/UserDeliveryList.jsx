@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        maxWidth: 1000,
     },
 
     img: {
@@ -51,14 +52,14 @@ const useStyles = makeStyles((theme) => ({
 const UserDeliveryList = (props) => {
     const classes = useStyles();
     const { post } = props;
-
+    const date = post.order_time;
+    const rdate = new Date(date);
     return (
-        <div className={classes.paper}>
-            <Grid container item xs={12}>
+            <Grid item xs={12}>
                 <List className={classes.root}>
                     <ListItem alignItems="flex-start">
                         <ListItemText 
-                            primary={post.shop}
+                            primary={post.shop_name}
                             variant="h6"
                             secondary={
                                 <React.Fragment>
@@ -68,14 +69,14 @@ const UserDeliveryList = (props) => {
                                         className={classes.inline}
                                         color="textPrimary"
                                     >
-                                        {post.date}
+                                        {post.order_time}
                                     </Typography>
-                                    <Typography color="textSecondary" className={classes.listtext}>{post.menu}</Typography>
+                                    <Typography color="textSecondary" className={classes.listtext}>{post.food_name}</Typography>
                                 </React.Fragment>
                             }
                         />
                         <ListItemSecondaryAction>
-                            <Button variant="outlined" color="primary" href="/reviewwrite" >
+                            <Button variant="outlined" color="primary" href={"/reviewwrite/"+post.or_id} >
                                 리뷰쓰기
                             </Button>
                         </ListItemSecondaryAction>
@@ -83,7 +84,6 @@ const UserDeliveryList = (props) => {
                     <Divider variant="inset" component="li" variant="middle" />
                 </List>
             </Grid>
-        </div>
 
     );
 }

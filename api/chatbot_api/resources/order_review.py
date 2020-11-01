@@ -155,7 +155,22 @@ class OrderReviewDao(OrderReviewDto):
         # df = pd.read_sql(sql.statement, sql.session.bind) 
         # df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         # return json.loads(df.to_json(orient='records'))
+    
+    @classmethod
+    def order_review_join_food(cls,userid):
+        from chatbot_api.resources.food import FoodDto
+        from chatbot_api.resources.shop import ShopDto
         
+        sql = db.session.query(OrderReviewDto, FoodDto,).\
+            filter(OrderReviewDto.food_id == FoodDto.food_id,).\
+            filter(OrderReviewDto.shop_id == ShopDto.shop_id,).\
+            filter_by(userid = userid,).\
+            order_by(OrderReviewDto.order_time.desc())
+
+        df = pd.read_sql(sql.statement, sql.session.bind) 
+        df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
+        print(df)
+        return json.loads(df.to_json(orient='records'))
             
 
 class OrderReview(Resource):
@@ -178,3 +193,9 @@ class OrderReviewPage(Resource):
         print(order)
         print(type(order))
         return order, 200
+
+class OrderReviewUser(Resource):
+    @staticmethod
+    def get(userid : str):
+        orderlist = OrderReviewDao.order_review_join_food(userid)
+        return orderlist, 200

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -9,7 +9,7 @@ import UserInfo from './UserInfo'
 import { Grid } from '@material-ui/core';
 import UserDeliveryList from './UserDeliveryList'
 import Pagination from '@material-ui/lab/Pagination';
-import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 
 
@@ -112,8 +112,21 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Usernav = () => {
+
+    const userid = sessionStorage.getItem("sessionUser");
+    const [userOderData , setuserOrderData] = useState([])
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
+
+    useEffect(()=>{
+        axios.get(`http://localhost:8080/mypage/${userid}`)
+        .then(res =>{
+            setuserOrderData(res.data)
+            console.log(res.data)
+        }).catch(error=>{
+            alert("안돼 돌아가")
+        })
+    },[])
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -150,7 +163,7 @@ const Usernav = () => {
                         </Typography>
                     </Grid>
                     <Grid container justify="center"  className={classes.maxwidthlist}>
-                        {review.map((post) => (
+                        {userOderData.map((post) => (
                             <UserDeliveryList key={post.shop} post={post} />
                         ))}
                     </Grid>

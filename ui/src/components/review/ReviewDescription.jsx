@@ -115,7 +115,7 @@ const ReviewDescription = (props) => {
           <Typography variant="subtitle1" paragraph className={classes.marginbottom}>
             {post.review_cmnt}
           </Typography>
-          {post.owner_cmnt !== null
+          {post.owner_cmnt !== 1
           ?
           <Card variant="outlined" className={classes.card}>
             <CardContent>
@@ -126,8 +126,9 @@ const ReviewDescription = (props) => {
                {post.owner_cmnt}
               </Typography>
             </CardContent>
-          </Card>:
-          <></>
+          </Card>
+          :
+          <div></div>
           }
 
         </Grid>

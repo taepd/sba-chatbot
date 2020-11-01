@@ -6,7 +6,7 @@ from chatbot_api.resources.user import User, Access
 from chatbot_api.resources.home import Home
 from chatbot_api.resources.shop import Shop, Shops, Shopscat
 from chatbot_api.resources.food import Food
-from chatbot_api.resources.order_review import OrderReview, OrderReviewPage
+from chatbot_api.resources.order_review import OrderReview, OrderReviewPage, OrderReviewUser
 
 
 home = Blueprint('home', __name__, url_prefix='/')
@@ -41,6 +41,7 @@ def initialize_routes(api):
     api.add_resource(Shop, '/shop/<string:shop_id>')
     api.add_resource(OrderReview, '/order')
     api.add_resource(OrderReviewPage, '/order/<string:userid>')
+    api.add_resource(OrderReviewUser, '/mypage/<string:userid>')
     # api.add_resource(Home, '/api')
     # api.add_resource(Item, '/api/item/<string:id>')
     # api.add_resource(Items,'/api/items')
