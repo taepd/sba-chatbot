@@ -22,12 +22,6 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 1000,
     },
 
-    img: {
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
-    },
     avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
@@ -54,6 +48,30 @@ const UserDeliveryList = (props) => {
     const { post } = props;
     const date = post.order_time;
     const rdate = new Date(date);
+    const rday ='';
+    const day =() =>{
+        if (rdate.getDay() == 0) {
+            return ' (일)'
+        }
+        else if (rdate.getDay() == 1) {
+            return ' (월)'
+        }
+        else if (rdate.getDay() == 2) {
+            return ' (화)'
+        }
+        else if (rdate.getDay() == 3) {
+            return ' (수)'
+        }
+        else if (rdate.getDay() == 4) {
+            return ' (목)'
+        }
+        else if (rdate.getDay() == 5) {
+            return ' (금)'
+        }
+        else if (rdate.getDay() == 6) {
+            return ' (토)'
+        }
+    }
     return (
             <Grid item xs={12}>
                 <List className={classes.root}>
@@ -69,7 +87,7 @@ const UserDeliveryList = (props) => {
                                         className={classes.inline}
                                         color="textPrimary"
                                     >
-                                        {post.order_time}
+                                        {rdate.getFullYear() + "-" + Number(rdate.getMonth()) + "-" + rdate.getDate()+" "+ rdate.getHours()+ day()}
                                     </Typography>
                                     <Typography color="textSecondary" className={classes.listtext}>{post.food_name}</Typography>
                                 </React.Fragment>

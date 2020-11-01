@@ -59,7 +59,7 @@ const OrderInfo = (props) => {
                 <Typography variant="subtitle1" className={classes.subtitle}>
                 주문하신 음식은 약 40분 뒤에 배달이 될 예정입니다.
                 </Typography>
-                <Button variant="contained" color="primary" disableElevation href="/userpage">
+                <Button variant="contained" color="primary" disableElevation href="/mypage">
                     주문내역
                 </Button>
             </Grid>
