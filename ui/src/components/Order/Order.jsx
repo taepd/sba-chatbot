@@ -21,10 +21,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Order = ({match}) =>{
+const Order = () =>{
     const [orderData, setorderData] = useState([])
+    const userid = sessionStorage.getItem("sessionUser");
     useEffect(()=>{
-        axios.get(`http://localhost:8080/order/${match.params.userid}`)
+        axios.get(`http://localhost:8080/order/${userid}`)
         .then(res =>{
             setorderData(res.data)
             console.log(res.data)
@@ -40,8 +41,6 @@ const Order = ({match}) =>{
             <Grid container justify="center" className={classes.wd}>
                     <OrderInfo post={orderData}/>
             </Grid>
-
-
         </React.Fragment>
 
     );

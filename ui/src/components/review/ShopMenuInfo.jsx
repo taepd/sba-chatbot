@@ -102,7 +102,7 @@ const ShopMenuInfo = (props) => {
     .then(res=>{
       alert("성공")
     }).then(
-      history.push("/order/"+post.userid)
+      history.push("/order/"+userid)
     )
     .catch(err =>{
       alert("실패")

@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const OrderInfo = (props) => {
     const classes = useStyles();
     const {post} = props;
-    
+    console.log(post)
 
     return (
         <div className={classes.root} >
