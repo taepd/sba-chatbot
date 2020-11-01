@@ -8,6 +8,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import ReduxThunk from 'redux-thunk'
 
+
 // 아직 의미 모름
 const rootReducer = combineReducers({
     // itemReducer
