@@ -28,6 +28,7 @@ from chatbot_api.util.file_handler import FileReader
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
 parser = reqparse.RequestParser()
 parser.add_argument('food_id', type=str, required=True)
+parser.add_argument('or_id', type=str, required=True)
 
 class OrderReviewDto(db.Model):
     __tablename__ = "order_review"
@@ -170,8 +171,23 @@ class OrderReviewDao(OrderReviewDto):
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         print(df)
         return json.loads(df.to_json(orient='records'))
+
+    @classmethod
+    def order_review_join_shop_for_review(cls,or_id):
+        from chatbot_api.resources.food import FoodDto
+        from chatbot_api.resources.shop import ShopDto
+        sql = db.session.query(OrderReviewDto, FoodDto, ShopDto).\
+            filter(OrderReviewDto.food_id == FoodDto.food_id,).\
+            filter(OrderReviewDto.shop_id == ShopDto.shop_id,).\
+            filter_by(or_id = or_id,).\
+            order_by(OrderReviewDto.order_time.desc())
+
+        df = pd.read_sql(sql.statement, sql.session.bind) 
+        df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
+        print(df)
+        return json.loads(df.to_json(orient='records'))
             
-            
+
 class OrderReview(Resource):
 
     @staticmethod
@@ -187,10 +203,9 @@ class OrderReviewPage(Resource):
 
     @staticmethod
     def get(userid : str):
-        print("asd;f;asdjf;lasjdl;f")
         order = OrderReviewDao.order_review_join_food_for_order(userid)
-        print(order)
-        print(type(order))
+        # print(order)
+        # print(type(order))
         return order, 200
 
 class OrderReviewUser(Resource):
@@ -198,3 +213,11 @@ class OrderReviewUser(Resource):
     def get(userid : str):
         orderlist = OrderReviewDao.order_review_join_food(userid)
         return orderlist, 200
+
+class OrderReviewSelect(Resource):
+    @staticmethod
+    def get(or_id : str):
+        print("오니오니오니오니왼왼외?")
+        orderselect = OrderReviewDao.order_review_join_shop_for_review(or_id)
+        print(orderselect)
+        return orderselect,200

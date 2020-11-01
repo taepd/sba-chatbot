@@ -35,7 +35,7 @@ const App = () => {
                             <Route path="/shops/:cat_id" component={ShopMain}/>
                             <Route path="/shops" component={ShopMain}/>
                         </Switch>
-                        <Route path="/reviewwrite" component={ReviewWritePage} />
+                        <Route path="/reviewwrite/:or_id" component={ReviewWritePage} />
                         {/* <Route path="/userinfo" component={UserInfo} /> */}
                         <Switch>
                             <Route path="/mypage/:userid" component={UserPage} />

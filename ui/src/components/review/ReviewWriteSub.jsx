@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   margin: {
     marginTop: theme.spacing(5),
-    marginBottom: theme.spacing(5),
+    marginBottom: theme.spacing(2),
   },
   marginzero: {
     margin: theme.spacing(0),
@@ -68,15 +68,13 @@ const useStyles = makeStyles((theme) => ({
 
 const ReviewWriteSub = (props) => {
   const {post} = props;
-  console.log(post)
   const classes = useStyles();
-  const { archives, description, social, title } = props;
   const [value, setValue] = React.useState(0);
-  const orid = '';
+  const or_id = '';
 
   const reviewWrite = () => {
 
-    axios.post(`http://localhost:8080/mypage`,{orid})
+    axios.post(`http://localhost:8080/mypage`,{or_id,})
     .then(res =>{
         // setorderData(res.data)
         console.log(res.data)
@@ -93,12 +91,12 @@ const ReviewWriteSub = (props) => {
          <Grid item xs={12} md={12} justify="center">
         <Grid container justify="center" item xs={12} md={12} className={classes.margin}>
           <Typography variant="h4">
-            {/* {post.shop_name} */}
+            {post.shop_name}
           </Typography>
         </Grid>
         <Grid container justify="center" item xs={12} md={12} className={classes.marginmenu}>
-          <Typography color="textSecondary" variant="body2">
-            순살치킨 ＋ 순살치킨/1(순살 소스선택(후라이드),순살 소스선택(간장),기본음료선택(콜라사이즈업),추가선택(무추가))
+          <Typography color="textSecondary" variant="h6">
+            {post.food_name}
           </Typography>
         </Grid>
         <Divider variant="middle" className={classes.marginzero} />
@@ -143,8 +141,6 @@ const ReviewWriteSub = (props) => {
             </Grid>
           </Grid>
         </Grid>
-          {/* <ReviewImageUpload/> */}
-
         <Grid container>
           <form className={classes.root} noValidate autoComplete="off">
             <TextField className={classes.textfield}
