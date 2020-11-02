@@ -1,4 +1,4 @@
-import React , {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import ReviewDescription from './ReviewDescription';
 import ShopMenuInfo from './ShopMenuInfo';
 import axios from 'axios';
+import Pagination from "@material-ui/lab/Pagination";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,10 +19,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     backgroundColor: theme.palette.background.paper,
     maxWidth: 1000,
-    padding:0,
+    padding: 0,
   },
-  nonepadding :{
-    padding:0,
+  nonepadding: {
+    padding: 0,
+  },
+  pagi:{
+    marginTop : theme.spacing(5),
+    marginBottom : theme.spacing(3),
   }
 
 }));
@@ -74,12 +79,21 @@ function LinkTab(props) {
 const MenuAndReviewArea = (props) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const {food, reviews} = props;
+  const { food, reviews } = props;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  
+
+  const itemsPerPage = 10;
+  const [page, setPage] = React.useState(1);
+  const noOfPages = Math.ceil(reviews.length / itemsPerPage) /*Math.ceil 소수점 이하를 올림 한다. */
+
+  const handleChangePagi = (event, value) => {
+    setPage(value);
+  };
+
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -93,17 +107,31 @@ const MenuAndReviewArea = (props) => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-          {food.map((food) => (
-            <ShopMenuInfo post={food}/>
-          ))}
+        {food.map((food) => (
+          <ShopMenuInfo post={food} />
+        ))}
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Grid container spacing={4} justify="center" >
-          {reviews.filter((review) => {
-            return review.food_id != 1 && review.taste_rage !=0.0 && review.quantity_rate != 0.0 && review.delivery_rate != 0.0
+          {reviews.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+          .filter((review) => {
+            return review.food_id != 1 && review.taste_rage != 0.0 && review.quantity_rate != 0.0 && review.delivery_rate != 0.0
           }).map((review) => (
             <ReviewDescription post={review} />
           ))}
+        </Grid>
+        <Grid container justify="center" alignItems="flex-end" className={classes.pagi}>
+          {/* <Paginate page={currentPosts} postsPerPage={postsPerPage} totalPosts={data.length} paginate={paginate} first={indexOfFirstPost}/> */}
+          <Pagination
+            count={noOfPages}
+            page={page}
+            onChange={handleChangePagi}
+            defaultPage={2}
+            color="primary"
+            showFirstButton
+            showLastButton
+            shape="rounded"
+          />
         </Grid>
       </TabPanel>
     </div>

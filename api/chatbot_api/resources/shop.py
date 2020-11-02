@@ -130,7 +130,7 @@ class ShopDao(ShopDto):
         sql = cls.query.filter(ShopDto.cat.like('%'+cat_id+'%'))
         print("오나????????????????????")
         df = pd.read_sql(sql.statement, sql.session.bind)
-        df = df.head(50)
+        # df = df.head(50)
         return json.loads(df.to_json(orient='records'))
 
 
@@ -138,8 +138,8 @@ class Shops(Resource):
 
     @staticmethod
     def get():
-        print('select 10')
-        shops = ShopDao.find_limit()
+        print('select all')
+        shops = ShopDao.find_all()
         # print('shops: ', shops)
         # test = ShopDao.find_cat()
         # print("-------------shops-----------------")
