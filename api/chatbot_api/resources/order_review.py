@@ -146,16 +146,16 @@ class OrderReviewDao(OrderReviewDto):
         from chatbot_api.resources.food import FoodDto
         print("-------------+++++++++++--------------")
 
-        return db.session.query(OrderReviewDto, FoodDto, UserDto).\
+        sql = db.session.query(OrderReviewDto, FoodDto, UserDto).\
             filter(UserDto.userid == OrderReviewDto.userid).\
             filter(OrderReviewDto.food_id ==  FoodDto.food_id).\
             filter_by(userid = userid).\
-            order_by(OrderReviewDto.userid.desc()).first()
+            order_by(OrderReviewDto.or_id.desc())
 
         # print("시ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ바ㅏㅏㅏㅏ",sql)
-        # df = pd.read_sql(sql.statement, sql.session.bind) 
-        # df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
-        # return json.loads(df.to_json(orient='records'))
+        df = pd.read_sql(sql.statement, sql.session.bind) 
+        df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
+        return json.loads(df.loc[[0]].to_json(orient='records'))
     
     @classmethod
     def order_review_join_food(cls,userid):
@@ -165,7 +165,7 @@ class OrderReviewDao(OrderReviewDto):
             filter(OrderReviewDto.food_id == FoodDto.food_id,).\
             filter(OrderReviewDto.shop_id == ShopDto.shop_id,).\
             filter_by(userid = userid,).\
-            order_by(OrderReviewDto.order_time.desc())
+            order_by(OrderReviewDto.or_id.desc())
 
         df = pd.read_sql(sql.statement, sql.session.bind) 
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
@@ -213,7 +213,7 @@ class OrderReviewPage(Resource):
         order = OrderReviewDao.order_review_join_food_for_order(userid)
         print(order)
         print(type(order))
-        return order, 200
+        return order[0], 200
 
 class OrderReviewUser(Resource):
     @staticmethod

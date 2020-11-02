@@ -28,7 +28,7 @@ const Order = () =>{
         axios.get(`http://localhost:8080/order/${userid}`)
         .then(res =>{
             setorderData(res.data)
-            console.log(res.data)
+            // console.log(res.data)
         }).catch(error=>{
             alert("안돼 돌아가")
         })
