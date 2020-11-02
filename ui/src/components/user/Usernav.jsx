@@ -12,27 +12,6 @@ import Pagination from '@material-ui/lab/Pagination';
 import axios from 'axios';
 
 
-
-const review = [
-    {
-        shop: "네네치킨",
-        date: "09/05 (금)",
-        menu: " 순살치킨 ＋ 순살치킨/1(순살 소스선택(후라이드),순살 소스선택(간장),기본음료선택(콜라사이즈업),추가선택(무추가))",
-    },
-    {
-        shop: "네네치킨",
-        date: "09/05 (금)",
-        menu: " 순살치킨 ＋ 순살치킨/1(순살 소스선택(후라이드),순살 소스선택(간장),기본음료선택(콜라사이즈업),추가선택(무추가))",
-    },
-    {
-        shop: "네네치킨",
-        date: "09/05 (금)",
-        menu: " 순살치킨 ＋ 순살치킨/1(순살 소스선택(후라이드),순살 소스선택(간장),기본음료선택(콜라사이즈업),추가선택(무추가))",
-    },
-
-]
-
-
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
