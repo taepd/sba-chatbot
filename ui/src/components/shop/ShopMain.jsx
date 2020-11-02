@@ -83,7 +83,6 @@ const ShopMain = ({ match }) => {
                     ))}
             </Grid>
             <Grid container justify="center" alignItems="flex-end" className={classes.pagi}>
-                {/* <Paginate page={currentPosts} postsPerPage={postsPerPage} totalPosts={data.length} paginate={paginate} first={indexOfFirstPost}/> */}
                 <Pagination
                     count={noOfPages}
                     page={page}
