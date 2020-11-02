@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -80,7 +81,7 @@ const UserDeliveryList = (props) => {
             <Grid item xs={12}>
                 <List className={classes.root}>
                     <ListItem alignItems="flex-start">
-                        <ListItemText 
+                        <ListItemText component= {Link} to={"/shop/"+post.shop_id}
                             primary={post.shop_name}
                             variant="h5"
                             secondary={

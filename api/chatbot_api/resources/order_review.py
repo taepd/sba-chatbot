@@ -51,8 +51,8 @@ class OrderReviewDto(db.Model):
     foods = db.relationship('FoodDto', back_populates='order_reviews')
 
     # self.or_id = or_id
-    def __init__(self, order_time, userid, shop_id, food_id, review_cmnt='', taste_rate=0.0, quantity_rate=0.0,
-                 delivery_rate=0.0, review_time=0.0, review_img='', owner_cmnt=''):
+    def __init__(self, order_time=-1, userid='', shop_id=-1, food_id=-1, review_cmnt='', taste_rate=0.0, quantity_rate=0.0,
+                 delivery_rate=0.0, review_time=0.0, review_img='', owner_cmnt=1):
         
         self.order_time = order_time
         self.review_cmnt = review_cmnt
@@ -169,7 +169,7 @@ class OrderReviewDao(OrderReviewDto):
 
         df = pd.read_sql(sql.statement, sql.session.bind) 
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
-        print(df)
+        # print(df)
         return json.loads(df.to_json(orient='records'))
 
     @classmethod
@@ -184,28 +184,35 @@ class OrderReviewDao(OrderReviewDto):
 
         df = pd.read_sql(sql.statement, sql.session.bind) 
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
-        print(df)
+        # print(df)
         return json.loads(df.to_json(orient='records'))
-            
+    
+    @classmethod
+    def order_review_writer(cls, params):
+        or_id = params.pop("or_id")
+        print("리뷰 쓰고싶다아아아아아" , params)
+        db.session.query(OrderReviewDto).\
+            filter(cls.or_id == or_id).\
+            update(params,synchronize_session=False);
+        db.session.commit()
 
 class OrderReview(Resource):
 
     @staticmethod
     def post():
         params = request.get_json()
-        print("뭐니이이ㅣㅇ",params)
+        # print("뭐니이이ㅣㅇ",params)
         order_review = OrderReviewDto(**params)
         OrderReviewDao.save(order_review)
         return 200
-
 
 class OrderReviewPage(Resource):
 
     @staticmethod
     def get(userid : str):
         order = OrderReviewDao.order_review_join_food_for_order(userid)
-        # print(order)
-        # print(type(order))
+        print(order)
+        print(type(order))
         return order, 200
 
 class OrderReviewUser(Resource):
@@ -217,7 +224,19 @@ class OrderReviewUser(Resource):
 class OrderReviewSelect(Resource):
     @staticmethod
     def get(or_id : str):
-        print("오니오니오니오니왼왼외?")
         orderselect = OrderReviewDao.order_review_join_shop_for_review(or_id)
-        print(orderselect)
+        # print(orderselect)
         return orderselect,200
+
+class OrderReviewInsert(Resource):
+
+    @staticmethod
+    def post():
+        params = request.get_json()
+        # or_id = params.pop("or_id")
+        # print(or_id)
+        # print("리뷰쓰자아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ" , params)
+        # order_revew = OrderReviewDto(**params)
+        # print(order_revew)
+        OrderReviewDao.order_review_writer(params)
+        return 200

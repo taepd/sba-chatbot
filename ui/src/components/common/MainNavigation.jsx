@@ -166,7 +166,7 @@ const Navigation = () => {
                         </Typography>
                     </Grid>
                 </Button>
-                <Button>
+                <Button component={Link} to="/shops/피자양식">
                     <Grid direction="column" alignItems="center" justify="center">
                         <Avatar alt="피자/양식" src="https://cdn.dominos.co.kr/admin/upload/goods/20200311_5MGKbxlW.jpg" className={classes.large} />
                         <Typography color="textPrimary" variant="body2">
@@ -174,7 +174,7 @@ const Navigation = () => {
                         </Typography>
                     </Grid>
                 </Button>
-                <Button>
+                <Button component={Link} to="/shops/중식">
                     <Grid direction="column" alignItems="center" justify="center">
                         <Avatar alt="중국집" src="https://imagescdn.gettyimagesbank.com/500/201708/jv10946106.jpg" className={classes.large} />
                         <Typography color="textPrimary" variant="body2">

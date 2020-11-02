@@ -72,11 +72,10 @@ const useStyles = makeStyles((theme) => ({
 const ShopMenuInfo = (props) => {
   const { post } = props;
   const classes = useStyles();
-  const date = new Date();
+  const order_time = new Date();
   const userid = sessionStorage.getItem("sessionUser");
   const food_id = post.food_id;
   const shop_id = post.shop_id;
-  const order_time = date
   // const order_time = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
   // const [userid, setUserid] = useState();
   // const [food_id, setFoodid] = useState();

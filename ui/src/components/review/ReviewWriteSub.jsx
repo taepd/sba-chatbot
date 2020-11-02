@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Rating from '@material-ui/lab/Rating';
 import Divider from '@material-ui/core/Divider';
 import axios from 'axios';
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,19 +70,29 @@ const useStyles = makeStyles((theme) => ({
 const ReviewWriteSub = (props) => {
   const {post} = props;
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-  const or_id = '';
+  // const [value, setValue] = React.useState(0);
+  const or_id = post.or_id;
+  const order_time = post.order_time;
+  const userid =  sessionStorage.getItem("sessionUser");
+  const shop_id = post.shop_id;
+  const food_id = post.food_id;
+  const [quantity_rate, setQuantity] = React.useState(5);
+  const [taste_rate, setTeste] = React.useState(5);
+  const [delivery_rate, setDelivery] = React.useState(5);
+  const review_time = new Date();
+  const [review_cmnt,setReviewCmnt] = useState();
+  const history = useHistory();
 
   const reviewWrite = () => {
-
-    axios.post(`http://localhost:8080/mypage`,{or_id,})
+    axios.post(`http://localhost:8080/reviewwrite`,
+                {or_id,quantity_rate,taste_rate,delivery_rate,review_time,review_cmnt})
     .then(res =>{
-        // setorderData(res.data)
-        console.log(res.data)
-    }).catch(error=>{
+      alert("리뷰작성완료")
+    }).then(
+      history.push("/mypage")
+    ).catch(error=>{
         alert("안돼 돌아가")
     })
- 
   }
 
   return (
@@ -114,7 +125,11 @@ const ReviewWriteSub = (props) => {
               </Typography>
               </Grid>
               <Grid item>
-                <Rating name="teste" defaultValue={2.5} precision={0.5} size="large" />
+                <Rating name="teste" defaultValue={2.5} precision={0.5} size="large"
+                 value={taste_rate}
+                 onChange={(event, newValue) => {
+                   setTeste(newValue);
+                 }}/>
               </Grid>
             </Grid>
 
@@ -125,7 +140,11 @@ const ReviewWriteSub = (props) => {
               </Typography>
               </Grid>
               <Grid item>
-                <Rating name="yarng" defaultValue={2.5} precision={0.5} size="large" />
+                <Rating name="quantity" defaultValue={2.5} precision={0.5} size="large" 
+                value={quantity_rate}
+                onChange={(event, newValue) => {
+                  setQuantity(newValue);
+                }}/>
               </Grid>
             </Grid>
 
@@ -136,14 +155,19 @@ const ReviewWriteSub = (props) => {
               </Typography>
               </Grid>
               <Grid item>
-                <Rating name="delivery" defaultValue={2.5} precision={0.5} size="large" />
+                <Rating name="delivery" defaultValue={2.5} precision={0.5} size="large" 
+                 value={delivery_rate}
+                 onChange={(event, newValue) => {
+                   setDelivery(newValue);
+                 }}/>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
         <Grid container>
           <form className={classes.root} noValidate autoComplete="off">
-            <TextField className={classes.textfield}
+            <TextField className={classes.textfield} 
+              onChange={e => setReviewCmnt(e.target.value)}
               id="outlined-multiline-static"
               fullWidth
               multiline

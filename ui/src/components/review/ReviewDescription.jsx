@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 const ReviewDescription = (props) => {
   const classes = useStyles();
   const { post } = props;
-  console.log(post)
+  // console.log(post)
   const taste = post.taste_rate;
   const quan = post.quantity_rate;
   const deli = post.delivery_rate;

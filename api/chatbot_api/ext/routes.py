@@ -6,7 +6,7 @@ from chatbot_api.resources.user import User, Access
 from chatbot_api.resources.home import Home
 from chatbot_api.resources.shop import Shop, Shops, Shopscat
 from chatbot_api.resources.food import Food
-from chatbot_api.resources.order_review import OrderReview, OrderReviewPage, OrderReviewUser, OrderReviewSelect
+from chatbot_api.resources.order_review import OrderReview, OrderReviewPage, OrderReviewUser, OrderReviewSelect,OrderReviewInsert
 
 
 home = Blueprint('home', __name__, url_prefix='/')
@@ -15,6 +15,7 @@ user = Blueprint('user', __name__, url_prefix='/user')
 shop = Blueprint('shop', __name__, url_prefix='/shop')
 shops = Blueprint('shops', __name__, url_prefix='/shops')
 order = Blueprint('order', __name__, url_prefix='/order')
+order = Blueprint('reviewwrite', __name__, url_prefix='/reviewwrite')
 # auth = Blueprint('auth', __name__, url_prefix='/api/auth')
 access = Blueprint('access', __name__, url_prefix='/access')
 # article = Blueprint('article', __name__, url_prefix='/api/article')
@@ -43,6 +44,7 @@ def initialize_routes(api):
     api.add_resource(OrderReviewPage, '/order/<string:userid>')
     api.add_resource(OrderReviewUser, '/mypage/<string:userid>')
     api.add_resource(OrderReviewSelect, '/reviewwrite/<string:or_id>')
+    api.add_resource(OrderReviewInsert, '/reviewwrite')
     # api.add_resource(Home, '/api')
     # api.add_resource(Item, '/api/item/<string:id>')
     # api.add_resource(Items,'/api/items')
