@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        // minWidth:600,
     },
 
     paper: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        maxWidth: 1000,
+        // maxWidth: 1000,
     },
 
     avatar: {
@@ -81,7 +82,7 @@ const UserDeliveryList = (props) => {
             <Grid item xs={12}>
                 <List className={classes.root}>
                     <ListItem alignItems="flex-start">
-                        <ListItemText component= {Link} to={"/shop/"+post.shop_id}
+                        <ListItemText
                             primary={post.shop_name}
                             variant="h5"
                             secondary={
