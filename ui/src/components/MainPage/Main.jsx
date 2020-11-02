@@ -6,11 +6,7 @@ import MainList from './MainList';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Chatbot from '../common/Chatbot';
-
-
-
-
-
+import MainNavigation from '../common/MainNavigation';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -93,6 +89,7 @@ const Main = () => {
     return (
         <React.Fragment>
             <CssBaseline />
+            <MainNavigation />
             <Grid container justify="center" className={classes.wd}>
                 <Grid container justify="center" className={classes.title}>
                     <Typography variant="h5" >

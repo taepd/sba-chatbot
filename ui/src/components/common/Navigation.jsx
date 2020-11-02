@@ -114,13 +114,6 @@ const Navigation = () => {
                         showLabels
                         className={classes.root}
                         >   
-                                {/* <Link to={"/shops/" + "전체보기"}>
-                                <BottomNavigationAction label="전체보기"/>
-                                </Link> */}
-                                {/* <BottomNavigationAction label="전체보기">
-                                <Link to={"/shops/" + "전체보기"}></Link>
-                                </BottomNavigationAction> */}
-                                {/* <BottomNavigationAction label="전체보기" component={Link} to="/shops/전체보기" /> */}
                                 <BottomNavigationAction label="전체보기" component={Link} to="/shops/전체보기" />
                                 <BottomNavigationAction label="프랜차이즈" component={Link} to="/shops/프랜차이즈"/>
                                 <BottomNavigationAction label="치킨"  component={Link} to="/shops/치킨"/>

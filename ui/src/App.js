@@ -21,8 +21,6 @@ const App = () => {
 
         <Router>
             <Header isAuth = {loggedIn}/>
-            <Navigation/>
-            <MainNavigation />
             <main>
                 <Switch>
                     <Provider store={createStore(rootReducer, applyMiddleware(ReduxThunk))}>

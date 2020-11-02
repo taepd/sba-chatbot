@@ -66,6 +66,7 @@ const ShopMain = ({match}) => {
         return (
             <React.Fragment>
                 <CssBaseline />
+                <Navigation/>
                 <Grid container className={classes.wd} >
                     {currentPosts.map((post) => (
                         <Grid className={classes.spacing}>
