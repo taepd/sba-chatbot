@@ -1,4 +1,4 @@
-import React , {useEffect, useState} from 'react'
+import React , {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -9,7 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import ReviewDescription from './ReviewDescription';
 import ShopMenuInfo from './ShopMenuInfo';
-import axios from 'axios'
+import axios from 'axios';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -74,12 +74,7 @@ function LinkTab(props) {
 const MenuAndReviewArea = (props) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
-  const { food, reviews } = props;
-
-  console.log("할당 fooood" + food)
-  console.log("할당 review" + reviews)
-  
+  const {food, reviews} = props;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

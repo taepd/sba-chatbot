@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -9,7 +9,7 @@ import UserInfo from './UserInfo'
 import { Grid } from '@material-ui/core';
 import UserDeliveryList from './UserDeliveryList'
 import Pagination from '@material-ui/lab/Pagination';
-import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 
 
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         // backgroundColor: theme.palette.background.paper,
         display: 'flex',
-        height: 800,
+        minheight: 800,
         marginTop: theme.spacing(3),
         maxWidth: 912,
 
@@ -112,8 +112,21 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Usernav = () => {
+
+    const userid = sessionStorage.getItem("sessionUser");
+    const [userOderData , setuserOrderData] = useState([])
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
+
+    useEffect(()=>{
+        axios.get(`http://localhost:8080/mypage/${userid}`)
+        .then(res =>{
+            setuserOrderData(res.data)
+            console.log(res.data)
+        }).catch(error=>{
+            alert("안돼 돌아가")
+        })
+    },[])
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -129,34 +142,34 @@ const Usernav = () => {
                 aria-label="Vertical tabs example"
                 className={classes.tabs}
             >
-                <Tab label="정보수정" {...a11yProps(0)} />
-                <Tab label="주문내역" {...a11yProps(1)} />
+                <Tab label="주문내역" {...a11yProps(0)} />
+                <Tab label="정보수정" {...a11yProps(1)} />
 
             </Tabs>
             <TabPanel value={value} index={0} >
-                    <Grid container className={classes.topmargin} justify="center">
-                        <Typography component="h1" variant="h5" >
-                            정보수정
-                        </Typography>
-                    </Grid>
-                <Grid container justify="center" className={classes.maxwidthmypage}>
-                    <UserInfo />
-                </Grid>
-            </TabPanel>
-            <TabPanel value={value} index={1}>
                     <Grid container className={classes.topmargin} justify="center">
                         <Typography component="h1" variant="h5" >
                             주문내역
                         </Typography>
                     </Grid>
                     <Grid container justify="center"  className={classes.maxwidthlist}>
-                        {review.map((post) => (
+                        {userOderData.map((post) => (
                             <UserDeliveryList key={post.shop} post={post} />
                         ))}
                     </Grid>
                     <Grid container justify="center" alignItems="flex-end">
                             <Pagination count={10} color="secondary" className={classes.pagi} />
                     </Grid>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+                <Grid container className={classes.topmargin} justify="center">
+                    <Typography component="h1" variant="h5" >
+                        정보수정
+                    </Typography>
+                </Grid>
+                <Grid container justify="center" className={classes.maxwidthmypage}>
+                    <UserInfo />
+                </Grid>
             </TabPanel>
 
 

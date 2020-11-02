@@ -2,12 +2,11 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import MainNavigation from './MainNavigation';
 import MainList from './MainList';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-
-
+import Chatbot from '../common/Chatbot';
+import MainNavigation from '../common/MainNavigation';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
     wd: {
         width: 1050,
         margin: "auto",
-        marginTop : theme.spacing(3),
-        marginBottom : theme.spacing(6)
+        marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(6)
     },
-    title:{
+    title: {
         marginBottom: theme.spacing(1),
     }
 }));
@@ -108,7 +107,7 @@ const Main = () => {
             <Grid container justify="center" className={classes.wd}>
                 <Grid container justify="center" className={classes.title}>
                     <Typography variant="h5" >
-                    인기 맛집 리스트
+                        인기 맛집 리스트
                     </Typography>
                 </Grid>
                 <Divider variant="middle" />
@@ -119,6 +118,7 @@ const Main = () => {
 
                 </Grid>
             </Grid>
+            <Chatbot/>
         </React.Fragment>
     );
 }

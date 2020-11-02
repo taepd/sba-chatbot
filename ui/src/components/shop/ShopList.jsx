@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Rating from '@material-ui/lab/Rating';
 import { Link } from 'react-router-dom'
+import Navigation from '../common/Navigation'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
 const ShopList = (props) => {
     const classes = useStyles();
     const { post } = props;
-
     return (
         <div className={classes.divroot} spacing={2}>
             <Link to={"/shop/" + post.shop_id} className={classes.toolbarLink}>

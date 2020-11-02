@@ -96,14 +96,21 @@ class FoodDao(FoodDto):
         # print(df)
         return json.loads(df.to_json(orient='records'))
         # return cls.query.filter_by(shop_id = shopid).all()
+    
+    @classmethod
+    def food_find_by_foodid(cls,food_id):
+        print("메뉴찾자ㅏ아아아아" + food_id)
+        # sql = cls.query.filter_by(food_id = food_id)
+        # df = pd.read_sql(sql.statement, sql.session.bind)
+        return cls.query.filter_by(food_id = food_id).first()
 
 
 
 class Food(Resource):
     @staticmethod
-    def get(shop_id : str):
-        food = FoodDao.food_find_by_shopid(shop_id)
-        # print(shop)
+    def get(food_id : int):
+        food = FoodDao.food_find_by_foodid(food_id)
+        print(food)
         # print(type(shop))
         return food.json, 200
 

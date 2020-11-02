@@ -1,10 +1,11 @@
-import React from 'react';
+import React , {useEffect, useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import ReviewWriteSub from './ReviewWriteSub';
-import Navigation from '../mainPage/Navigation';
+import Navigation from '../common/Navigation';
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -17,13 +18,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ReviewWritePage = () =>
+const ReviewWritePage = ({match}) =>{
+
+const [orderData , setOrderData] = useState([]) 
+useEffect(() => {
+  axios.get(`http://localhost:8080/reviewwrite/${match.params.or_id}`)
+  .then(res=>{
+      // alert(`List Success`)
+      setOrderData(res.data[0])
+      console.log(res.data[0])
+  })
+  .catch(e=>{
+      alert(`List Failure`)
+      throw(e)
+  })
+},[])
+
+
+
+
+return(
 
   <React.Fragment>
     <CssBaseline />
     <Grid container justify="center" spacing={5} className={useStyles.mainGrid}>
-      <ReviewWriteSub />
+      <ReviewWriteSub post={orderData}/>
     </Grid>
   </React.Fragment>
+)
+}
+
 
 export default ReviewWritePage

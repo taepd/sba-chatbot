@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import { Header, Footer } from './components/common'
+import { Header, Footer, Navigation , MainNavigation} from './components/common'
 import { Review, Main, ReviewWritePage, UserInfo, UserPage, ShopMain, Order } from './components'
 import { SignIn, SignUp } from './containers/user'  
 // import {Home, User, Article, Item} from './templates'  
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import ReduxThunk from 'redux-thunk'
+
 
 // 아직 의미 모름
 const rootReducer = combineReducers({
@@ -32,10 +33,13 @@ const App = () => {
                             <Route path="/shops/:cat_id" component={ShopMain}/>
                             <Route path="/shops" component={ShopMain}/>
                         </Switch>
-                        <Route path="/reviewwrite" component={ReviewWritePage} />
+                        <Route path="/reviewwrite/:or_id" component={ReviewWritePage} />
                         {/* <Route path="/userinfo" component={UserInfo} /> */}
-                        <Route path="/mypage" component={UserPage} />
-                        <Route path="/order" component={Order} />
+                        <Switch>
+                            <Route path="/mypage/:userid" component={UserPage} />
+                            <Route path="/mypage" component={UserPage} />
+                        </Switch>
+                        <Route path="/order/:userid" component={Order} />
                         {/* <Redirect from={"/history"} to ={"/about/history"}/>
                         <Redirect from={"/services"} to ={"/about/services"}/>
                         <Redirect from={"/location"} to ={"/about/location"}/>

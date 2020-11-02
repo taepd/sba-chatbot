@@ -26,6 +26,9 @@ from chatbot_api.util.file_handler import FileReader
 
 
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
+parser = reqparse.RequestParser()
+parser.add_argument('food_id', type=str, required=True)
+parser.add_argument('or_id', type=str, required=True)
 
 class OrderReviewDto(db.Model):
     __tablename__ = "order_review"
@@ -47,9 +50,10 @@ class OrderReviewDto(db.Model):
 
     foods = db.relationship('FoodDto', back_populates='order_reviews')
 
-    def __init__(self, or_id, order_time, review_cmnt, taste_rate, quantity_rate,
-                 delivery_rate, review_time, review_img, owner_cmnt, userid, shop_id, food_id):
-        self.or_id = or_id
+    # self.or_id = or_id
+    def __init__(self, order_time=-1, userid='', shop_id=-1, food_id=-1, review_cmnt='', taste_rate=0.0, quantity_rate=0.0,
+                 delivery_rate=0.0, review_time=0.0, review_img='', owner_cmnt=1):
+        
         self.order_time = order_time
         self.review_cmnt = review_cmnt
         self.taste_rate = taste_rate
@@ -64,7 +68,7 @@ class OrderReviewDto(db.Model):
         
 
     def __repr__(self):
-        return f'Review(or_id={self.or_id}, ' \
+        return f'OrderReview(or_id={self.or_id}, ' \
                f'order_time={self.order_time}, ' \
                f'review_cmnt={self.review_cmnt}, ' \
                f'taste_rate={self.taste_rate}, ' \
@@ -75,7 +79,7 @@ class OrderReviewDto(db.Model):
                f'owner_cmnt={self.owner_cmnt}, ' \
                f'userid={self.userid}, ' \
                f'shop_id={self.shop_id} ' \
-               f'food_id={self.food_id} ' \
+               f'food_id={self.food_id}) ' \
 
 
     @property
@@ -131,11 +135,108 @@ class OrderReviewDao(OrderReviewDto):
         # print(df)
         return json.loads(df.to_json(orient='records'))
 
-class OrderReview(Resource):
+    @staticmethod
+    def save(order_review):
+        db.session.add(order_review)
+        db.session.commit()
 
     @classmethod
-    def get(shop_id : str):
-        review = OrderReviewDao.review_find_by_shopid(shop_id)
-        print("너는 나오면 안된다")
-        print(review)
-        return review.json, 200
+    def order_review_join_food_for_order(cls,userid):
+        from chatbot_api.resources.user import UserDto
+        from chatbot_api.resources.food import FoodDto
+        print("-------------+++++++++++--------------")
+
+        return db.session.query(OrderReviewDto, FoodDto, UserDto).\
+            filter(UserDto.userid == OrderReviewDto.userid).\
+            filter(OrderReviewDto.food_id ==  FoodDto.food_id).\
+            filter_by(userid = userid).\
+            order_by(OrderReviewDto.userid.desc()).first()
+
+        # print("시ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ바ㅏㅏㅏㅏ",sql)
+        # df = pd.read_sql(sql.statement, sql.session.bind) 
+        # df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
+        # return json.loads(df.to_json(orient='records'))
+    
+    @classmethod
+    def order_review_join_food(cls,userid):
+        from chatbot_api.resources.food import FoodDto
+        from chatbot_api.resources.shop import ShopDto
+        sql = db.session.query(OrderReviewDto, FoodDto, ShopDto).\
+            filter(OrderReviewDto.food_id == FoodDto.food_id,).\
+            filter(OrderReviewDto.shop_id == ShopDto.shop_id,).\
+            filter_by(userid = userid,).\
+            order_by(OrderReviewDto.order_time.desc())
+
+        df = pd.read_sql(sql.statement, sql.session.bind) 
+        df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
+        # print(df)
+        return json.loads(df.to_json(orient='records'))
+
+    @classmethod
+    def order_review_join_shop_for_review(cls,or_id):
+        from chatbot_api.resources.food import FoodDto
+        from chatbot_api.resources.shop import ShopDto
+        sql = db.session.query(OrderReviewDto, FoodDto, ShopDto).\
+            filter(OrderReviewDto.food_id == FoodDto.food_id,).\
+            filter(OrderReviewDto.shop_id == ShopDto.shop_id,).\
+            filter_by(or_id = or_id,).\
+            order_by(OrderReviewDto.order_time.desc())
+
+        df = pd.read_sql(sql.statement, sql.session.bind) 
+        df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
+        # print(df)
+        return json.loads(df.to_json(orient='records'))
+    
+    @classmethod
+    def order_review_writer(cls, params):
+        or_id = params.pop("or_id")
+        print("리뷰 쓰고싶다아아아아아" , params)
+        db.session.query(OrderReviewDto).\
+            filter(cls.or_id == or_id).\
+            update(params,synchronize_session=False);
+        db.session.commit()
+
+class OrderReview(Resource):
+
+    @staticmethod
+    def post():
+        params = request.get_json()
+        # print("뭐니이이ㅣㅇ",params)
+        order_review = OrderReviewDto(**params)
+        OrderReviewDao.save(order_review)
+        return 200
+
+class OrderReviewPage(Resource):
+
+    @staticmethod
+    def get(userid : str):
+        order = OrderReviewDao.order_review_join_food_for_order(userid)
+        print(order)
+        print(type(order))
+        return order, 200
+
+class OrderReviewUser(Resource):
+    @staticmethod
+    def get(userid : str):
+        orderlist = OrderReviewDao.order_review_join_food(userid)
+        return orderlist, 200
+
+class OrderReviewSelect(Resource):
+    @staticmethod
+    def get(or_id : str):
+        orderselect = OrderReviewDao.order_review_join_shop_for_review(or_id)
+        # print(orderselect)
+        return orderselect,200
+
+class OrderReviewInsert(Resource):
+
+    @staticmethod
+    def post():
+        params = request.get_json()
+        # or_id = params.pop("or_id")
+        # print(or_id)
+        # print("리뷰쓰자아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ" , params)
+        # order_revew = OrderReviewDto(**params)
+        # print(order_revew)
+        OrderReviewDao.order_review_writer(params)
+        return 200

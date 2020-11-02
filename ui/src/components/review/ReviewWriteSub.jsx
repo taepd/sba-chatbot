@@ -1,13 +1,15 @@
-import React from 'react';
+import React , {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import ReviewImageUpload from './ReviewImageUpload';
+// import ReviewImageUpload from './ReviewImageUpload';
 import TextField from '@material-ui/core/TextField';
 import Rating from '@material-ui/lab/Rating';
 import Divider from '@material-ui/core/Divider';
+import axios from 'axios';
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   margin: {
     marginTop: theme.spacing(5),
-    marginBottom: theme.spacing(5),
+    marginBottom: theme.spacing(2),
   },
   marginzero: {
     margin: theme.spacing(0),
@@ -66,9 +68,32 @@ const useStyles = makeStyles((theme) => ({
 
 
 const ReviewWriteSub = (props) => {
+  const {post} = props;
   const classes = useStyles();
-  const { archives, description, social, title } = props;
-  const [value, setValue] = React.useState(0);
+  // const [value, setValue] = React.useState(0);
+  const or_id = post.or_id;
+  const order_time = post.order_time;
+  const userid =  sessionStorage.getItem("sessionUser");
+  const shop_id = post.shop_id;
+  const food_id = post.food_id;
+  const [quantity_rate, setQuantity] = React.useState(5);
+  const [taste_rate, setTeste] = React.useState(5);
+  const [delivery_rate, setDelivery] = React.useState(5);
+  const review_time = new Date();
+  const [review_cmnt,setReviewCmnt] = useState();
+  const history = useHistory();
+
+  const reviewWrite = () => {
+    axios.post(`http://localhost:8080/reviewwrite`,
+                {or_id,quantity_rate,taste_rate,delivery_rate,review_time,review_cmnt})
+    .then(res =>{
+      alert("리뷰작성완료")
+    }).then(
+      history.push("/mypage")
+    ).catch(error=>{
+        alert("안돼 돌아가")
+    })
+  }
 
   return (
    
@@ -77,12 +102,12 @@ const ReviewWriteSub = (props) => {
          <Grid item xs={12} md={12} justify="center">
         <Grid container justify="center" item xs={12} md={12} className={classes.margin}>
           <Typography variant="h4">
-            네네치킨
+            {post.shop_name}
           </Typography>
         </Grid>
         <Grid container justify="center" item xs={12} md={12} className={classes.marginmenu}>
-          <Typography color="textSecondary" variant="body2">
-            순살치킨 ＋ 순살치킨/1(순살 소스선택(후라이드),순살 소스선택(간장),기본음료선택(콜라사이즈업),추가선택(무추가))
+          <Typography color="textSecondary" variant="h6">
+            {post.food_name}
           </Typography>
         </Grid>
         <Divider variant="middle" className={classes.marginzero} />
@@ -100,7 +125,11 @@ const ReviewWriteSub = (props) => {
               </Typography>
               </Grid>
               <Grid item>
-                <Rating name="teste" defaultValue={2.5} precision={0.5} size="large" />
+                <Rating name="teste" defaultValue={2.5} precision={0.5} size="large"
+                 value={taste_rate}
+                 onChange={(event, newValue) => {
+                   setTeste(newValue);
+                 }}/>
               </Grid>
             </Grid>
 
@@ -111,7 +140,11 @@ const ReviewWriteSub = (props) => {
               </Typography>
               </Grid>
               <Grid item>
-                <Rating name="yarng" defaultValue={2.5} precision={0.5} size="large" />
+                <Rating name="quantity" defaultValue={2.5} precision={0.5} size="large" 
+                value={quantity_rate}
+                onChange={(event, newValue) => {
+                  setQuantity(newValue);
+                }}/>
               </Grid>
             </Grid>
 
@@ -122,16 +155,19 @@ const ReviewWriteSub = (props) => {
               </Typography>
               </Grid>
               <Grid item>
-                <Rating name="delivery" defaultValue={2.5} precision={0.5} size="large" />
+                <Rating name="delivery" defaultValue={2.5} precision={0.5} size="large" 
+                 value={delivery_rate}
+                 onChange={(event, newValue) => {
+                   setDelivery(newValue);
+                 }}/>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-          <ReviewImageUpload/>
-
         <Grid container>
           <form className={classes.root} noValidate autoComplete="off">
-            <TextField className={classes.textfield}
+            <TextField className={classes.textfield} 
+              onChange={e => setReviewCmnt(e.target.value)}
               id="outlined-multiline-static"
               fullWidth
               multiline
@@ -142,7 +178,7 @@ const ReviewWriteSub = (props) => {
           </form>
         </Grid>
         <Grid container className={classes.button} justify="flex-end">
-          <Button className={classes.smallbutton} variant="contained" color="primary" disableElevation>
+          <Button onClick={reviewWrite} className={classes.smallbutton} variant="contained" color="primary" disableElevation>
             등록 완료
           </Button>
           <Button variant="contained" color="primary" disableElevation>
