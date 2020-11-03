@@ -118,7 +118,7 @@ const Main = () => {
 
                 </Grid>
             </Grid>
-            <Chatbot/>
+           
         </React.Fragment>
     );
 }

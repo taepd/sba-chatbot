@@ -48,13 +48,15 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
     topmargin: {
         marginTop: theme.spacing(5),
-        
+        maxWidth: 800,
+        // minHeight: 600,
+
     },
     nav: {
         flexGrow: 1,
         // backgroundColor: theme.palette.background.paper,
         display: 'flex',
-        minheight: 800,
+        // minheight: 800,
         marginTop: theme.spacing(3),
         maxWidth: 912,
 
@@ -66,20 +68,20 @@ const useStyles = makeStyles((theme) => ({
     },
     pagi: {
         '& > *': {
-            marginTop: theme.spacing(2),
+            marginTop: theme.spacing(3),
         },
     },
     maxwidthmypage: {
         maxWidth: 800,
-        paddingRight :70,
-        paddingLeft : 70,
+        paddingRight: 70,
+        paddingLeft: 70,
     },
     maxwidthlist: {
         maxWidth: 800,
-        paddingRight :50,
-        paddingLeft : 50,
+        paddingRight: 70,
+        paddingLeft: 70,
     },
-    small :{
+    small: {
         width: theme.spacing(3),
         height: theme.spacing(3),
     },
@@ -93,19 +95,28 @@ const useStyles = makeStyles((theme) => ({
 const Usernav = () => {
 
     const userid = sessionStorage.getItem("sessionUser");
-    const [userOderData , setuserOrderData] = useState([])
+    const [userOderData, setuserOrderData] = useState([])
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(`http://localhost:8080/mypage/${userid}`)
-        .then(res =>{
-            setuserOrderData(res.data)
-            console.log(res.data)
-        }).catch(error=>{
-            alert("안돼 돌아가")
-        })
-    },[])
+            .then(res => {
+                setuserOrderData(res.data)
+                // console.log(res.data)
+            }).catch(error => {
+                alert("안돼 돌아가")
+            })
+    }, [])
+
+
+    const itemsPerPage = 10;
+    const [page, setPage] = React.useState(1);
+    const noOfPages = Math.ceil(userOderData.length / itemsPerPage) /*Math.ceil 소수점 이하를 올림 한다. */
+
+    const handleChangepagi = (event, value) => {
+        setPage(value);
+    };
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -126,32 +137,40 @@ const Usernav = () => {
 
             </Tabs>
             <TabPanel value={value} index={0} >
-                    <Grid container className={classes.topmargin} justify="center">
-                        <Typography component="h1" variant="h5" >
-                            주문내역
-                        </Typography>
+                <Grid container className={classes.topmargin} justify="center" >
+                    <Typography component="h1" variant="h5" >
+                        주문내역
+                    </Typography>
+                    <Grid container alignItems="flex-start" className={classes.maxwidthlist}>
+                        {userOderData.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                            .map((post) => (
+                                <UserDeliveryList key={post.shop} post={post} />
+                            ))}
                     </Grid>
-                    <Grid container justify="center"  className={classes.maxwidthlist}>
-                        {userOderData.map((post) => (
-                            <UserDeliveryList key={post.shop} post={post} />
-                        ))}
+                    <Grid container justify="center" alignItems="flex-end" className={classes.pagi}>
+                        <Pagination
+                            count={noOfPages}
+                            page={page}
+                            onChange={handleChangepagi}
+                            defaultPage={2}
+                            color="secondary"
+                            showFirstButton
+                            showLastButton
+                            shape="rounded"
+                        />
                     </Grid>
-                    <Grid container justify="center" alignItems="flex-end">
-                            <Pagination count={10} color="secondary" className={classes.pagi} />
-                    </Grid>
+                </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <Grid container className={classes.topmargin} justify="center">
                     <Typography component="h1" variant="h5" >
                         정보수정
                     </Typography>
-                </Grid>
-                <Grid container justify="center" className={classes.maxwidthmypage}>
-                    <UserInfo />
+                    <Grid container justify="center" className={classes.maxwidthmypage}>
+                        <UserInfo />
+                    </Grid>
                 </Grid>
             </TabPanel>
-
-
         </div>
     );
 }

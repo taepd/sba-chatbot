@@ -82,7 +82,7 @@ const ReviewDescription = (props) => {
               {post.userid}
             </Typography>
             <Typography variant="body2" color="textSecondary" >
-              {rdate.getFullYear() + "-" + Number(rdate.getMonth()) + "-" + rdate.getDate()}
+              {rdate.getFullYear() + "-" + (rdate.getMonth()+1) + "-" + rdate.getDate()}
             </Typography>
           </Grid>
           <Grid container direction="row" alignItems="center">
