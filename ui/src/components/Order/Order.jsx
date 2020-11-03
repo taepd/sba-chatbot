@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const Order = () =>{
     const [orderData, setOrderData] = useState([])
     const userid = sessionStorage.getItem("sessionUser");
+
     useEffect(()=>{
         axios.get(`http://localhost:8080/order/${userid}`)
         .then(res =>{
@@ -32,9 +33,8 @@ const Order = () =>{
         }).catch(error=>{
             alert("안돼 돌아가")
         })
-    },[])
-
-    console.log(orderData)
+    },[userid])
+    // console.log(orderData)
     const classes = useStyles();
     return (
         <React.Fragment>

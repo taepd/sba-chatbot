@@ -103,7 +103,7 @@ const Usernav = () => {
         axios.get(`http://localhost:8080/mypage/${userid}`)
             .then(res => {
                 setuserOrderData(res.data)
-                console.log(res.data)
+                // console.log(res.data)
             }).catch(error => {
                 alert("안돼 돌아가")
             })

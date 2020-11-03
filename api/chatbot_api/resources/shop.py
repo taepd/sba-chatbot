@@ -134,8 +134,6 @@ class ShopDao(ShopDto):
     def find_by_cat(cls,cat_id):
         from chatbot_api.resources.food import FoodDto
         print(cat_id)
-        # if cat_id == 'cat1' :
-
         sql = db.session.query(ShopDto, FoodDto).\
                 filter(ShopDto.shop_id == FoodDto.shop_id).\
                 filter(ShopDto.cat.like('%'+cat_id+'%')).\
@@ -162,7 +160,7 @@ class ShopDao(ShopDto):
 
         df = pd.read_sql(sql.statement,sql.session.bind)
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
-        print(df)
+        # print(df)
         return json.loads(df.to_json(orient='records'))
 
 
@@ -201,7 +199,7 @@ class Shop(Resource):
         shopAfoodAreview.append(food)
         shopAfoodAreview.append(review)
         print('*'*40)
-        print(shop)
+        # print(shop)
         # shop = shop.json()
         # print(shop)
         # print(type(shopAfood))    

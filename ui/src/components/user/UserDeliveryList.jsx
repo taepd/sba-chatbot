@@ -76,7 +76,7 @@ const UserDeliveryList = (props) => {
         }
     }
 
-
+    // console.log(date)
 
     return (
             <Grid item xs={12}>
@@ -93,7 +93,7 @@ const UserDeliveryList = (props) => {
                                         className={classes.inline}
                                         color="textPrimary"
                                     >
-                                        {rdate.getFullYear() + "-" + Number(rdate.getMonth()) + "-" + rdate.getDate()+" "+ rdate.getHours()+":"+rdate.getMinutes()+ day()}
+                                        {rdate.getFullYear() + "-" + (rdate.getMonth()+1) + "-" + rdate.getDate()+" "+ rdate.getHours()+":"+rdate.getMinutes()+ day()}
                                     </Typography>
                                     <Typography color="textSecondary" className={classes.listtext}>{post.food_name}</Typography>
                                 </React.Fragment>

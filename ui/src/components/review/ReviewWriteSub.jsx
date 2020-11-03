@@ -73,14 +73,15 @@ const ReviewWriteSub = (props) => {
   const classes = useStyles();
   // const [value, setValue] = React.useState(0);
   const or_id = post.or_id;
-  const order_time = post.order_time;
-  const userid = sessionStorage.getItem("sessionUser");
-  const shop_id = post.shop_id;
-  const food_id = post.food_id;
+  // const order_time = post.order_time;
+  // const userid = sessionStorage.getItem("sessionUser");
+  // const shop_id = post.shop_id;
+  // const food_id = post.food_id;
   const [quantity_rate, setQuantity] = React.useState(5);
   const [taste_rate, setTeste] = React.useState(5);
   const [delivery_rate, setDelivery] = React.useState(5);
-  const review_time = new Date();
+  const date = new Date();
+  const review_time = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"/"+ date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
   const [review_cmnt, setReviewCmnt] = useState();
   const history = useHistory();
 
@@ -88,7 +89,7 @@ const ReviewWriteSub = (props) => {
     axios.post(`http://localhost:8080/reviewwrite`,
       { or_id, quantity_rate, taste_rate, delivery_rate, review_time, review_cmnt })
       .then(res => {
-        alert("리뷰작성완료")
+        // alert("리뷰작성완료")
       }).then(
         history.push("/mypage")
       ).catch(error => {

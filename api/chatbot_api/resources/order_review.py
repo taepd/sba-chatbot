@@ -135,16 +135,18 @@ class OrderReviewDao(OrderReviewDto):
         # print(df)
         return json.loads(df.to_json(orient='records'))
 
+    #새로운 주문
     @staticmethod
     def save(order_review):
         db.session.add(order_review)
         db.session.commit()
 
+    #주문 완료후 주문 정보 select 
     @classmethod
     def order_review_join_food_for_order(cls,userid):
         from chatbot_api.resources.user import UserDto
         from chatbot_api.resources.food import FoodDto
-        print("-------------+++++++++++--------------")
+        print("-------------주문목록--------------")
 
         sql = db.session.query(OrderReviewDto, FoodDto, UserDto).\
             filter(UserDto.userid == OrderReviewDto.userid).\
@@ -152,11 +154,13 @@ class OrderReviewDao(OrderReviewDto):
             filter_by(userid = userid).\
             order_by(OrderReviewDto.or_id.desc())
 
-        # print("시ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ바ㅏㅏㅏㅏ",sql)
         df = pd.read_sql(sql.statement, sql.session.bind) 
+        print(df)
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         return json.loads(df.loc[[0]].to_json(orient='records'))
-    
+
+
+    # 마이페이지 유저 주문 목록 select    
     @classmethod
     def order_review_join_food(cls,userid):
         from chatbot_api.resources.food import FoodDto
@@ -172,14 +176,15 @@ class OrderReviewDao(OrderReviewDto):
         # print(df)
         return json.loads(df.to_json(orient='records'))
 
+    # 마이페이지 > 리뷰쓰기 페이지 매장&메뉴 select
     @classmethod
     def order_review_join_shop_for_review(cls,or_id):
         from chatbot_api.resources.food import FoodDto
         from chatbot_api.resources.shop import ShopDto
         sql = db.session.query(OrderReviewDto, FoodDto, ShopDto).\
-            filter(OrderReviewDto.food_id == FoodDto.food_id,).\
-            filter(OrderReviewDto.shop_id == ShopDto.shop_id,).\
-            filter_by(or_id = or_id,).\
+            filter(OrderReviewDto.food_id == FoodDto.food_id).\
+            filter(OrderReviewDto.shop_id == ShopDto.shop_id).\
+            filter_by(or_id = or_id).\
             order_by(OrderReviewDto.order_time.desc())
 
         df = pd.read_sql(sql.statement, sql.session.bind) 
@@ -187,22 +192,21 @@ class OrderReviewDao(OrderReviewDto):
         # print(df)
         return json.loads(df.to_json(orient='records'))
     
+    #리뷰 작성 save
     @classmethod
     def order_review_writer(cls, params):
         or_id = params.pop("or_id")
-        print("리뷰 쓰고싶다아아아아아" , params)
         db.session.query(OrderReviewDto).\
             filter(cls.or_id == or_id).\
             update(params,synchronize_session=False);
         db.session.commit()
 
 class OrderReview(Resource):
-
     @staticmethod
     def post():
         params = request.get_json()
-        # print("뭐니이이ㅣㅇ",params)
         order_review = OrderReviewDto(**params)
+        print("주문정보",order_review)
         OrderReviewDao.save(order_review)
         return 200
 
@@ -210,9 +214,10 @@ class OrderReviewPage(Resource):
 
     @staticmethod
     def get(userid : str):
+        print("주문정보")
         order = OrderReviewDao.order_review_join_food_for_order(userid)
-        print(order)
-        print(type(order))
+        # print(order)
+        # print(type(order))
         return order[0], 200
 
 class OrderReviewUser(Resource):
@@ -239,4 +244,5 @@ class OrderReviewInsert(Resource):
         # order_revew = OrderReviewDto(**params)
         # print(order_revew)
         OrderReviewDao.order_review_writer(params)
+        print("리뷰썻다")
         return 200

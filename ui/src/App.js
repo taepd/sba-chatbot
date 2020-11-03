@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import { Header, Footer, Navigation , MainNavigation} from './components/common'
+import { Header, Footer, Navigation , MainNavigation, Chatbot} from './components/common'
 import { Review, Main, ReviewWritePage, UserInfo, UserPage, ShopMain, Order, ShopSearch } from './components'
 import { SignIn, SignUp } from './containers/user'  
 // import {Home, User, Article, Item} from './templates'  
@@ -50,6 +50,7 @@ const App = () => {
                         <Route component={Error}/> */}
                     </Provider>,
                 </Switch>
+                <Chatbot/>
             </main>
             <Footer title="Footer" description="Something here to give the footer a purpose!" />
         </Router>
