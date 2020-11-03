@@ -43,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
     paddingzero:{
         padding : 0,
     },
+    toolbarLink: {
+        
+        flexShrink: 0,
+        textDecoration: 'none',
+        color: 'inherit',
+    },
 
 }));
 
@@ -82,6 +88,7 @@ const UserDeliveryList = (props) => {
             <Grid item xs={12}>
                 <List className={classes.root}>
                     <ListItem alignItems="flex-start">
+                        <Link to={"/shop/" + post.shop_id} className={classes.toolbarLink}>
                         <ListItemText
                             primary={post.shop_name}
                             variant="h5"
@@ -99,6 +106,7 @@ const UserDeliveryList = (props) => {
                                 </React.Fragment>
                             }
                         />
+                        </Link>
                         <ListItemSecondaryAction>
                             <Button variant="outlined" color="primary" href={"/reviewwrite/"+post.or_id}>
                                 리뷰쓰기

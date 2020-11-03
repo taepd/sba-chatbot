@@ -47,7 +47,7 @@ class ShopDto(db.Model):
     shop_lng: float = db.Column(db.Float)
     shop_rev_avg: float = db.Column(db.Float)
     shop_rev_cnt: int = db.Column(db.Integer)
-    open_time: str = db.Column(db.Date)
+    open_time: str = db.Column(db.String(30))
 
     foods = db.relationship('FoodDto', backref='shop', lazy='dynamic', cascade="all, delete, delete-orphan")
     order_reviews = db.relationship('OrderReviewDto', backref='shop', lazy='dynamic', cascade="all, delete, delete-orphan")
