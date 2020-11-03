@@ -9,6 +9,7 @@ import ShopList from './ShopList';
 import PaginationItem from '@material-ui/lab/PaginationItem'
 import axios from 'axios'
 import Pagination from "@material-ui/lab/Pagination";
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,47 +24,40 @@ const useStyles = makeStyles((theme) => ({
     },
     pagi: {
         marginTop: theme.spacing(5)
+    },
+    top:{
+        marginTop : theme.spacing(8),
+        marginBottom : theme.spacing(3),
     }
 }));
 
 
 const ShopMain = ({ match }) => {
-    
-    const classes = useStyles();
-    const [data, setData] = useState([])
-    // const [currentPage, setCurrentPage] = useState(1);
-    // const [postsPerPage] = useState(10);
-    // const indexOfLastPost = currentPage * postsPerPage;
-    // const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    // const paginate = (pageNumber) => setCurrentPage(pageNumber);
-    const post = data;
-    const catif = match.params.cat_id;
-    const noncaturl = `http://localhost:8080/shops`;
-    const caturl = `http://localhost:8080/shops/${match.params.cat_id}`;
 
-    
+    const classes = useStyles();
+    const [searchData, setSearchData] = useState([]);
+    const post = searchData;
+    const key = match.params.key;
+
     useEffect(() => {
-        axios.get((() => {
-            if (catif == '전체보기') {
-                return noncaturl
-            } else {
-                return caturl
-            }
-        })())
-        .then(res => {
-            setData(res.data)
-        })
-        .catch(e => {
-            alert(`List Failure`)
-            throw (e)
-        })
-        
-    }, [catif])
-    
+        axios.get(`http://localhost:8080/search/${match.params.key}`)
+            .then(res => {
+                setSearchData(res.data)
+                // alert(res.data)
+                console.log(res.data)
+            })
+            .catch(err => {
+                alert("안돼 돌아가")
+            })
+
+    }, [key])
+
+    console.log(searchData)
+
     const itemsPerPage = 10;
     const [page, setPage] = React.useState(1);
-    const noOfPages =  Math.ceil(post.length / itemsPerPage) /*Math.ceil 소수점 이하를 올림 한다. */
-    
+    const noOfPages = Math.ceil(post.length / itemsPerPage) /*Math.ceil 소수점 이하를 올림 한다. */
+
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -73,13 +67,18 @@ const ShopMain = ({ match }) => {
         <React.Fragment>
             <CssBaseline />
             <Navigation />
+            <Grid>
+                <Typography align='center' variant="h5" className={classes.top}>
+                    "{key}" 에 대한 검색 결과 "{post.length}"건
+                </Typography>
+            </Grid>
             <Grid container className={classes.wd} >
                 {post.slice((page - 1) * itemsPerPage, page * itemsPerPage)
                     .map((post) => (
                         <Grid className={classes.spacing}>
                             <ShopList post={post} />
                         </Grid>
-                    ))}
+                ))}
             </Grid>
             <Grid container justify="center" alignItems="flex-end" className={classes.pagi}>
                 <Pagination

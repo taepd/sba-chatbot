@@ -8,6 +8,7 @@ import json
 import os
 import numpy as np
 import pandas as pd
+from sqlalchemy import or_
 
 
 from sklearn.ensemble import RandomForestClassifier  # rforest
@@ -31,6 +32,7 @@ from chatbot_api.resources.order_review import OrderReviewDto, OrderReviewDao
 parser = reqparse.RequestParser()
 parser.add_argument('shop_id', type=str, required=True)
 parser.add_argument('cat_id', type=str, required=True)
+parser.add_argument('key', type=str, required=True)
 
 class ShopDto(db.Model):
     __tablename__ = "shop"
@@ -102,8 +104,13 @@ class ShopDao(ShopDto):
     
     @classmethod
     def find_all(cls):
-        sql = cls.query
+        from chatbot_api.resources.food import FoodDto
+        sql = db.session.query(ShopDto, FoodDto).\
+                filter(ShopDto.shop_id == FoodDto.shop_id).\
+                order_by(FoodDto.food_rev_cnt.desc()).\
+                group_by(ShopDto.shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
+        df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         return json.loads(df.to_json(orient='records'))
 
     @classmethod
@@ -125,12 +132,37 @@ class ShopDao(ShopDto):
 
     @classmethod
     def find_by_cat(cls,cat_id):
+        from chatbot_api.resources.food import FoodDto
         print(cat_id)
         # if cat_id == 'cat1' :
-        sql = cls.query.filter(ShopDto.cat.like('%'+cat_id+'%'))
-        print("오나????????????????????")
+
+        sql = db.session.query(ShopDto, FoodDto).\
+                filter(ShopDto.shop_id == FoodDto.shop_id).\
+                filter(ShopDto.cat.like('%'+cat_id+'%')).\
+                order_by(FoodDto.food_rev_cnt.desc()).\
+                group_by(ShopDto.shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
-        # df = df.head(50)
+        df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
+        return json.loads(df.to_json(orient='records'))
+
+    @classmethod
+    def search(cls,key):
+        from chatbot_api.resources.food import FoodDto
+        # sql = cls.query.filter(ShopDto.shop_name.like('%'+key+'%'))
+        # df = pd.read_sql(sql.statement,sql.session.bind)
+        sql = db.session.query(ShopDto, FoodDto).\
+            filter(ShopDto.shop_id == FoodDto.shop_id).\
+            filter(or_(ShopDto.shop_name.like('%'+key+'%'),FoodDto.food_name.like('%'+key+'%'))).\
+            order_by(FoodDto.food_rev_cnt.desc()).\
+            group_by(ShopDto.shop_id)
+
+        # sql = cls.query(ShopDto, FoodDto).from_statement(\
+        #     "select * from shop s join food f on s.shop_id = f.shop_id where shop_name like :'%'key'%' or food_name like:'%'key'%' group by s.shop_id").\
+        #         params(key=key)
+
+        df = pd.read_sql(sql.statement,sql.session.bind)
+        df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
+        print(df)
         return json.loads(df.to_json(orient='records'))
 
 
@@ -146,9 +178,6 @@ class Shops(Resource):
         # print(type(shops))
         # print(shops)
         return shops, 200
-
-
-
 
 class Shopscat(Resource):
 
@@ -189,6 +218,15 @@ class Shop(Resource):
     #     print(type(food))    
     #     print(food)
     #     return food, 200
+
+
+class ShopSearch(Resource):
+
+    @staticmethod
+    def get(key : str):
+        print("search",key)
+        search = ShopDao.search(key)
+        return search, 200
 
 
 # ------------ 실행 영역 --------------

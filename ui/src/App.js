@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { Header, Footer, Navigation , MainNavigation} from './components/common'
-import { Review, Main, ReviewWritePage, UserInfo, UserPage, ShopMain, Order } from './components'
+import { Review, Main, ReviewWritePage, UserInfo, UserPage, ShopMain, Order, ShopSearch } from './components'
 import { SignIn, SignUp } from './containers/user'  
 // import {Home, User, Article, Item} from './templates'  
 import { createStore, applyMiddleware, combineReducers } from 'redux'
@@ -29,6 +29,7 @@ const App = () => {
                         <Route path="/signIn" component={SignIn} />
                         <Route path="/signUp" component={SignUp} />
                         <Route path="/shop/:shop_id" component={Review} />
+                        <Route path="/search/:key" component={ShopSearch}/>
                         <Switch>
                             <Route path="/shops/:cat_id" component={ShopMain}/>
                             <Route path="/shops" component={ShopMain}/>

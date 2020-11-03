@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         marginTop: theme.spacing(3),
 
+
     },
     root: {
         display: 'flex',
@@ -52,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
     },
     toolbarLink: {
         textDecoration: 'none',
+    },
+    maxwidth: {
+        width: 300,
     }
 
 }));
@@ -63,20 +67,20 @@ const ShopList = (props) => {
     return (
         <div className={classes.divroot} spacing={2}>
             <Link to={"/shop/" + post.shop_id} className={classes.toolbarLink}>
-                <Grid container justify="center"  >
+                <Grid container justify="center" wrap="nowrap">
                     <CardActionArea >
                         <Card className={classes.root} square elevation={0} variant="outlined">
-                            <Grid item xs className={classes.details}>
+                            <Grid item xs className={classes.details} >
                                 <CardContent className={classes.content}>
                                     <Typography variant="h6">
                                         {post.shop_name}
                                     </Typography>
                                     <Grid container direction="row">
-                                        <Rating name="iconstar" defaultValue={1} max={1} readOnly/>
+                                        <Rating name="iconstar" defaultValue={1} max={1} readOnly />
                                         <Typography variant="subtitle1" color="textSecondary">
                                             {post.shop_rev_avg} /
                                             </Typography>
-                                        <Rating name="iconstar" defaultValue={1} max={1} readOnly/>
+                                        <Rating name="iconstar" defaultValue={1} max={1} readOnly />
                                         <Typography variant="subtitle1" color="textSecondary">
                                             예상 {post.shop_pred_avg}
                                         </Typography>
@@ -84,9 +88,11 @@ const ShopList = (props) => {
                                     <Typography variant="subtitle1" color="textSecondary">
                                         리뷰  {post.shop_rev_cnt}
                                     </Typography>
-                                    <Typography variant="subtitle1" color="textSecondary">
-                                        대표메뉴 {post.food_name}
-                                    </Typography>
+                                    <Grid item xs zeroMinWidth className={classes.maxwidth}>
+                                        <Typography variant="subtitle1" color="textSecondary" noWrap>
+                                            대표메뉴 {post.food_name}
+                                        </Typography>
+                                    </Grid>
                                 </CardContent>
                             </Grid>
                             <CardMedia

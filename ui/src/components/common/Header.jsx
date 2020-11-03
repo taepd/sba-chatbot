@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 // import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -11,6 +11,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 // import Link from '@material-ui/core/Link';
 import { Link, useHistory } from 'react-router-dom'
+import IconButton from '@material-ui/core/IconButton';
+import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -70,30 +72,31 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.8),
         },
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing(1),
         marginLeft: 0,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
+            marginLeft: theme.spacing(1),
             width: 'auto',
         },
     },
     searchIcon: {
         padding: theme.spacing(0, 2),
         height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
+        // position: 'absolute',
+        // pointerEvents: 'none',
+        // display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        direction:"row",
     },
     inputRoot: {
         color: 'inherit',
     },
     inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
+        padding: theme.spacing(0),
         // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('md')]: {
@@ -113,6 +116,9 @@ const useStyles = makeStyles((theme) => ({
         // },
 
     },
+    bt:{
+        padding : 8,
+    },
 
 }));
 
@@ -122,6 +128,8 @@ const Header = props => {
     const userid = sessionStorage.getItem("sessionUser");
     const [value, setValue] = React.useState(0);
     const history  = useHistory()
+    const [key, setKey] = useState()
+
     const logout = e => {
         alert('logout')
         e.preventDefault();
@@ -129,6 +137,7 @@ const Header = props => {
         history.push('/')
         window.location.reload()
     }   
+
 
     return (
         <React.Fragment>
@@ -142,10 +151,8 @@ const Header = props => {
                             </Link>
                         </Typography>
                         <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon color="primary" />
-                            </div>
                             <InputBase
+                                onChange ={e=>setKey(e.target.value)}
                                 placeholder="검색"
                                 classes={{
                                     root: classes.inputRoot,
@@ -153,6 +160,11 @@ const Header = props => {
                                 }}
                                 inputProps={{ 'aria-label': 'search' }}
                             />
+                            <Link to={"/search/" + key}>
+                                <IconButton color="primary"component="span" className={classes.bt}>
+                                    <SearchIcon color="primary" fontSize="inherit" />
+                                </IconButton>
+                            </Link>
                         </div>
                         { props.isAuth === null
                         ?   
