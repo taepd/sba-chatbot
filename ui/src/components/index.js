@@ -7,5 +7,7 @@ export {default as UserPage} from './user/UserPage'
 export {default as ShopMain} from './shop/ShopMain'
 export {default as ShopSearch} from './shop/ShopSearch'
 export {default as Order} from './order/Order'
+export {default as Chatbot} from './chatbot/Chatbot'
+
 
 

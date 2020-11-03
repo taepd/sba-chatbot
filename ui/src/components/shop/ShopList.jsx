@@ -9,7 +9,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Rating from '@material-ui/lab/Rating';
 import { Link } from 'react-router-dom'
-import Navigation from '../common/Navigation'
 
 
 const useStyles = makeStyles((theme) => ({

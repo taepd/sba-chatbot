@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import MainList from './MainList';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Chatbot from '../common/Chatbot';
 import MainNavigation from '../common/MainNavigation';
 
 const useStyles = makeStyles((theme) => ({
