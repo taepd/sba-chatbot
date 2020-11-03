@@ -201,6 +201,40 @@ class OrderReviewDao(OrderReviewDto):
             update(params,synchronize_session=False);
         db.session.commit()
 
+# ==============================================================
+# ==============================================================
+# =====================   Service   ============================
+# ==============================================================
+# ==============================================================
+
+# from keras.models import Sequential
+# from keras.layers import Dense, Activation
+# from keras.models import load_model
+
+# class UserService:
+#     @staticmethod
+#     def load_model_from_file():
+#         fname = r'./modeling/recommender_mf.h5'
+#         model = load_model(fname)
+#         return model
+
+#     @staticmethod
+#     def shop_rev_predict(model, userid, shop_id):
+
+#         userid = int(userid.lstrip('user'))
+#         predict = model.predict([np.array([userid]), np.array([shop_id])])
+#         print(predict[0])
+#         return predict[0]
+
+
+
+# ==============================================================
+# ==============================================================
+# =====================   Controller   =========================
+# ==============================================================
+# ==============================================================
+
+
 class OrderReview(Resource):
     @staticmethod
     def post():
@@ -246,3 +280,8 @@ class OrderReviewInsert(Resource):
         OrderReviewDao.order_review_writer(params)
         print("리뷰썻다")
         return 200
+
+
+if __name__ == "__main__":
+    s = UserService()
+    model = s.load_model_from_file()

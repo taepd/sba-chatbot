@@ -2,7 +2,7 @@
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
 from pdb import main
 from typing import List
-from flask import request
+from flask import request, session
 from flask_restful import Resource, reqparse
 from flask import jsonify
 import json
@@ -106,6 +106,7 @@ class UserDao(UserDto):
 
     @classmethod
     def login(cls, user):
+        session['userid'] = user.userid
         sql = cls.query\
             .filter(cls.userid.like(user.userid))\
             .filter(cls.password.like(user.password))

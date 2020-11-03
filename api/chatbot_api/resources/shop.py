@@ -1,7 +1,7 @@
 # from sqlalchemy import Column, Integer, Float, String, ForeignKey, create_engine
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
 from typing import List
-from flask import request
+from flask import request, session
 from flask_restful import Resource, reqparse
 from flask import jsonify
 import json
@@ -110,6 +110,7 @@ class ShopDao(ShopDto):
                 order_by(FoodDto.food_rev_cnt.desc()).\
                 group_by(ShopDto.shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
+        df = df.head(100)  # 모델 테스트용으로 잠시
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         return json.loads(df.to_json(orient='records'))
 
@@ -140,6 +141,7 @@ class ShopDao(ShopDto):
                 order_by(FoodDto.food_rev_cnt.desc()).\
                 group_by(ShopDto.shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
+        df = df.head(100)  # 모델 테스트용으로 잠시
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         return json.loads(df.to_json(orient='records'))
 
@@ -159,10 +161,42 @@ class ShopDao(ShopDto):
         #         params(key=key)
 
         df = pd.read_sql(sql.statement,sql.session.bind)
+        df = df.head(100)  # 모델 테스트용으로 잠시
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         # print(df)
         return json.loads(df.to_json(orient='records'))
 
+# ==============================================================
+# ==============================================================
+# =====================   Service   ============================
+# ==============================================================
+# ==============================================================
+
+from keras.models import Sequential
+from keras.layers import Dense, Activation
+from keras.models import load_model
+
+class UserService:
+    @staticmethod
+    def load_model_from_file():
+        fname = r'./modeling/recommender_mf.h5'
+        model = load_model(fname)
+        return model
+
+    @staticmethod
+    def shop_rev_predict(model, userid, shop_id):
+        
+        userid = int(userid.lstrip('user'))
+        predict = model.predict([np.array([userid]), np.array([shop_id])])
+        print(predict[0])
+        return predict[0]
+
+
+# ==============================================================
+# ==============================================================
+# =====================   Controller   =========================
+# ==============================================================
+# ==============================================================
 
 class Shops(Resource):
 
@@ -183,6 +217,10 @@ class Shopscat(Resource):
     def get(cat_id : str):
         print('select catid : ' + cat_id)
         shopscat = ShopDao.find_by_cat(cat_id)
+        print(session)
+        for row in shopscat:
+            print(row['shop_id'])
+        
         return shopscat, 200
 
 

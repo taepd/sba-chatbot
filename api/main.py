@@ -14,6 +14,8 @@ print('========== url ==========')
 print(url)
 
 app = Flask(__name__)
+# 세션을 위한 키 설정
+app.secret_key = 'session need'
 CORS(app, resources={r'/*': {"origins": "*"}})
 # CORS(app, resources={r"/api/*": {"origins": "*"}})
 
