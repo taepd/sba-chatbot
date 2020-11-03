@@ -72,7 +72,8 @@ const useStyles = makeStyles((theme) => ({
 const ShopMenuInfo = (props) => {
   const { post } = props;
   const classes = useStyles();
-  const order_time = new Date();
+  const date = new Date();
+  const order_time = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"/"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
   const userid = sessionStorage.getItem("sessionUser");
   const food_id = post.food_id;
   const shop_id = post.shop_id;
@@ -91,7 +92,8 @@ const ShopMenuInfo = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const newOrder = () =>{
+  const newOrder = (e) =>{
+    e.preventDefault()
     // setUserid(sessionStorage.getItem("sessionUser"));
     // setFoodid(post.food_id);
     // setOrderTime(date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+"' '" + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds())
@@ -100,7 +102,7 @@ const ShopMenuInfo = (props) => {
     // alert(userid)
     axios.post(`http://localhost:8080/order`, {userid, food_id,order_time,shop_id})
     .then(res=>{
-      alert("성공")
+      // alert(date.getHours())
     }).then(
       history.push("/order/"+userid)
     )

@@ -44,16 +44,16 @@ const OrderInfo = (props) => {
                     주문정보
                 </Typography>
                 <Typography variant="subtitle1">
-                    주문 번호    {post.or_id}
+                    주문 번호 : {post.or_id}
                 </Typography>
                 <Typography variant="subtitle1">
-                    배달 주소    {post.addr}
+                    배달 주소 : {post.addr}
                 </Typography>
                 <Typography variant="subtitle1">
-                    메뉴    {post.food_name}
+                    메뉴 : {post.food_name}
                 </Typography>
                 <Typography variant="subtitle1">
-                    가격    {post.price}
+                    가격 : {post.price}원
                 </Typography>
 
                 <Typography variant="subtitle1" className={classes.subtitle}>

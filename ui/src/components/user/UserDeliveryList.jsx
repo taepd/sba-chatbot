@@ -43,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
     paddingzero:{
         padding : 0,
     },
+    toolbarLink: {
+        
+        flexShrink: 0,
+        textDecoration: 'none',
+        color: 'inherit',
+    },
 
 }));
 
@@ -76,12 +82,13 @@ const UserDeliveryList = (props) => {
         }
     }
 
-
+    // console.log(date)
 
     return (
             <Grid item xs={12}>
                 <List className={classes.root}>
                     <ListItem alignItems="flex-start">
+                        <Link to={"/shop/" + post.shop_id} className={classes.toolbarLink}>
                         <ListItemText
                             primary={post.shop_name}
                             variant="h5"
@@ -93,12 +100,13 @@ const UserDeliveryList = (props) => {
                                         className={classes.inline}
                                         color="textPrimary"
                                     >
-                                        {rdate.getFullYear() + "-" + Number(rdate.getMonth()) + "-" + rdate.getDate()+" "+ rdate.getHours()+":"+rdate.getMinutes()+ day()}
+                                        {rdate.getFullYear() + "-" + (rdate.getMonth()+1) + "-" + rdate.getDate()+" "+ rdate.getHours()+":"+rdate.getMinutes()+ day()}
                                     </Typography>
                                     <Typography color="textSecondary" className={classes.listtext}>{post.food_name}</Typography>
                                 </React.Fragment>
                             }
                         />
+                        </Link>
                         <ListItemSecondaryAction>
                             <Button variant="outlined" color="primary" href={"/reviewwrite/"+post.or_id}>
                                 리뷰쓰기

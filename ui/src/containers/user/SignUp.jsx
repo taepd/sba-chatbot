@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import axios from 'axios'
-
+import { Link, useHistory } from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -72,11 +72,12 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = () => {
 
   const classes = useStyles();
-
+  const history = useHistory();
   const [userid, setUserid] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [name, setName] = useState('')
+  const [addr, setAddr] = useState('')
 
   const onSubmitHandler = (e) => {
       e.preventDefault(); // 아무 동작 안하고 버튼만 눌러도 리프레쉬 되는 것을 막는다
@@ -85,11 +86,14 @@ const SignUp = () => {
           return alert('비밀번호와 비밀번호 확인은 같아야 합니다.')
       }
       axios.post(`http://localhost:8080/user`, { 
-        userid, password, name
+        userid, password, name,addr
       })
       .then(res => {
        alert(`signUp SUCCESS. ${res.data["userid"]} 가입완료`)
       })
+      .then(
+        history.push("/signin")
+      )
       .catch(error => {
         alert(`signUp FAIL`)
       })
@@ -165,13 +169,12 @@ const SignUp = () => {
               <Typography variant="h6" align="center">
                 지역 설정
               </Typography>
-              <TextField
+              <TextField onChange={e => setAddr(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
                 name="password"
                 label="동명(읍,면)으로 검색 (ex.서초동)"
-                type="password"
                 id="password"
                 autoComplete="current-password"
               />
