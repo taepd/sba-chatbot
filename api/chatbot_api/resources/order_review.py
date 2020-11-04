@@ -201,6 +201,7 @@ class OrderReviewDao(OrderReviewDto):
             update(params,synchronize_session=False);
         db.session.commit()
 
+
 # ==============================================================
 # ==============================================================
 # =====================   Service   ============================
@@ -279,9 +280,11 @@ class OrderReviewInsert(Resource):
         # print(order_revew)
         OrderReviewDao.order_review_writer(params)
         print("리뷰썻다")
+
         return 200
 
 
 if __name__ == "__main__":
     s = UserService()
     model = s.load_model_from_file()
+

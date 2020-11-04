@@ -111,6 +111,7 @@ class ShopDao(ShopDto):
                 group_by(ShopDto.shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
         df = df.head(100)  # 모델 테스트용으로 잠시
+
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         return json.loads(df.to_json(orient='records'))
 
@@ -142,6 +143,7 @@ class ShopDao(ShopDto):
                 group_by(ShopDto.shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
         df = df.head(100)  # 모델 테스트용으로 잠시
+
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         return json.loads(df.to_json(orient='records'))
 
@@ -162,6 +164,7 @@ class ShopDao(ShopDto):
 
         df = pd.read_sql(sql.statement,sql.session.bind)
         df = df.head(100)  # 모델 테스트용으로 잠시
+
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         # print(df)
         return json.loads(df.to_json(orient='records'))
