@@ -109,8 +109,8 @@ class ShopDao(ShopDto):
                 filter(ShopDto.shop_id == FoodDto.shop_id).\
                 order_by(FoodDto.food_rev_cnt.desc()).\
                 group_by(ShopDto.shop_id)
+
         df = pd.read_sql(sql.statement, sql.session.bind)
-        df = df.head(100)  # 모델 테스트용으로 잠시
 
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         return json.loads(df.to_json(orient='records'))
@@ -140,10 +140,8 @@ class ShopDao(ShopDto):
                 filter(ShopDto.shop_id == FoodDto.shop_id).\
                 filter(ShopDto.cat.like('%'+cat_id+'%')).\
                 order_by(FoodDto.food_rev_cnt.desc()).\
-                group_by(ShopDto.shop_id)
+                group_by(ShopDto.shop_id).limit(10)
         df = pd.read_sql(sql.statement, sql.session.bind)
-        df = df.head(100)  # 모델 테스트용으로 잠시
-
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         return json.loads(df.to_json(orient='records'))
 
@@ -164,7 +162,6 @@ class ShopDao(ShopDto):
 
         df = pd.read_sql(sql.statement,sql.session.bind)
         df = df.head(100)  # 모델 테스트용으로 잠시
-
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         # print(df)
         return json.loads(df.to_json(orient='records'))
@@ -191,8 +188,7 @@ class UserService:
         
         userid = int(userid.lstrip('user'))
         predict = model.predict([np.array([userid]), np.array([shop_id])])
-        print(predict[0])
-        return predict[0]
+        return predict[0][0]
 
 
 # ==============================================================
@@ -220,10 +216,14 @@ class Shopscat(Resource):
     def get(cat_id : str):
         print('select catid : ' + cat_id)
         shopscat = ShopDao.find_by_cat(cat_id)
-        print(session)
-        for row in shopscat:
-            print(row['shop_id'])
-        
+        model = UserService.load_model_from_file()
+        shopscat_ = shopscat
+        for i, row in enumerate(shopscat_):
+            userid = session['userid']
+            shop_id = row['shop_id']
+            predict = UserService.shop_rev_predict(model, userid, shop_id)
+            shopscat[i]['shop_pred_avg'] = round(float(predict), 1)
+
         return shopscat, 200
 
 
