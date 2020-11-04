@@ -7,7 +7,9 @@ import { SignIn, SignUp } from './containers/user'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import ReduxThunk from 'redux-thunk'
+import axios from 'axios'
 
+axios.defaults.withCredentials = true
 
 // 아직 의미 모름
 const rootReducer = combineReducers({

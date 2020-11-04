@@ -2,7 +2,8 @@
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
 from pdb import main
 from typing import List
-from flask import request
+from flask import request, session
+from flask_cors import cross_origin
 from flask_restful import Resource, reqparse
 from flask import jsonify
 import json
@@ -104,8 +105,9 @@ class UserDao(UserDto):
     def find_by_id(cls, userid):
         return cls.query.filter_by(userid == userid).first()
 
+    # @cross_origin(supports_credentials=True)
     @classmethod
-    def login(cls, user):
+    def login(cls, user):  
         sql = cls.query\
             .filter(cls.userid.like(user.userid))\
             .filter(cls.password.like(user.password))
@@ -588,6 +590,8 @@ class Access(Resource):
         print(user.userid)
         print(user.password)
         data = UserDao.login(user)
+        if data[0]:
+            session['userid'] = user.userid  
         return data[0], 200
 
 

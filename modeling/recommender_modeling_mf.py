@@ -15,30 +15,30 @@ import pandas as pd
 - 데이터 임포트
 """
 
-df = pd.read_csv("/content/drive/My Drive/Colab Notebooks/order_review(remove_userid_nan).csv", sep=",", encoding='utf-8-sig', error_bad_lines=False, engine="python")
+df = pd.read_csv("../data/csv/important/db/order_review(remove_userid_nan).csv", sep=",", encoding='utf-8-sig', error_bad_lines=False, engine="python")
 
 print(df.shape)
-df.head()
+print(df.head())
 
 """- 필요한 컬럼만 추출"""
 
-df = df[[ 'userid', 'shop_id', 'taste_rate', 'quantity_rate', 'delivery_rate']]
-df
+df = df[['userid', 'shop_id', 'taste_rate', 'quantity_rate', 'delivery_rate']]
+print(df)
 
 """- 합계 평점 컬럼 생성"""
 
 df['rating'] = (df['taste_rate'] + df['quantity_rate'] + df['delivery_rate'])/3
-df.head()
+print(df.head())
 
 """- 세부 평점 컬럼 제거"""
 
 df = df[['userid', 'shop_id', 'rating']]
-df.head()
+print(df.head())
 
 """- 정렬"""
 
 df_sort = df.sort_values(by=['userid', 'shop_id'], axis=0)
-df[df_sort['userid'] == 'user000000']
+print(df[df_sort['userid'] == 'user000000'])
 
 """- 유저 리스트가 몇몇 부분 연속되어 있지 않은 것 확인"""
 
@@ -54,8 +54,9 @@ df[df_sort['userid'] == 'user000000']
 df_group = df_sort.groupby(["userid", 'shop_id']).mean()  # groupby 객체 상태
 df = df_group.reset_index()  # reset_index를 해주면 dataframe 객체가 됨
 print(df.shape)
+''' 예측값과 비교할 때 사용할 실제값 dataframe'''
 df_backup = df
-df
+print(df)
 
 # df = groupby_df.head()  # 이유는 모르겠지만 head를 붙였더니 dataframe화 되었음
 # df
@@ -95,11 +96,11 @@ n_shops
 
 """- pivot table로 뽑아보기"""
 
-df_table = pd.pivot_table(df, index='userid', columns='shop_id',  values='rating', fill_value='', aggfunc='first')
+# df_table = pd.pivot_table(df, index='userid', columns='shop_id',  values='rating', fill_value='', aggfunc='first')
 
 """- 부분 발췌하여 희소 행렬 확인"""
 
-df_table.iloc[808:817, 212:222]
+# df_table.iloc[808:817, 212:222]
 
 """### 데이터 변환(Data Transformation)
 - 벡터화 연산을 위해 문자열을 숫자로 변환 필요
@@ -150,8 +151,8 @@ split = np.random.rand(len(df)) < 0.8
 train_df = df[split]
 test_df = df[~split]
 
-print('shape of train data is ',train_df.shape)
-print('shape of test data is ',test_df.shape)
+print('shape of train data is ', train_df.shape)
+print('shape of test data is ', test_df.shape)
 
 """### 임베딩(Embedding)
 
@@ -243,7 +244,7 @@ target = df_backup[(df_backup['userid'] == ('user' + f'{str(userid).zfill(6)}'))
 # print('user' + str(userid).zfill(6))
 user_v = np.expand_dims(userid2idx[userid], 0)
 shop_v = np.expand_dims(shop_id2idx[shop_id], 0)
-print(user_v)
+
 print(shop_v)
 predict = model.predict([user_v, shop_v])
 if target.empty:
@@ -253,5 +254,4 @@ else:
 
 """### 모델 저장"""
 
-from keras.models import load_model
 model.save('recommender_mf.h5')
