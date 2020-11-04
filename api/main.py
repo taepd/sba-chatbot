@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Api
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from chatbot_api.ext.db import url, db, openSession
 from chatbot_api.ext.routes import initialize_routes
 from chatbot_api.resources import user
@@ -12,9 +12,17 @@ import numpy as np
 import pandas as pd
 print('========== url ==========')
 print(url)
+import secrets
 
 app = Flask(__name__)
-CORS(app, resources={r'/*': {"origins": "*"}})
+
+# 세션을 위한 키 설정
+# app.config["SECRET_KEY"] = "secretkeyforsession"
+# SECRET_KEY = "secretkeyforsession"
+# SESSION_TYPE = 'filesystem'
+app.secret_key = 'super secret key'
+# app.config['SESSION_TYPE'] = 'filesystem'
+CORS(app, supports_credentials=True, resources={r'/*': {"origins": "*"}})
 # CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 
@@ -71,7 +79,8 @@ initialize_routes(api)
 # food/order_review 테이블 데이터 일괄 입력
 def insert_at_all(fila_name, dto):
     chunksize = 10 ** 4
-    for cnt, chunk in enumerate(pd.read_csv(f'./data/db/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)):
+    # for cnt, chunk in enumerate(pd.read_csv(f'./data/db/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)): # 혜정
+    for cnt, chunk in enumerate(pd.read_csv(f'./data/csv/important/db/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)): # 영돈
         df = chunk.replace(np.nan, 1, regex=True)
         # print(df.head())
 

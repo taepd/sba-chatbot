@@ -119,7 +119,7 @@ class OrderReviewDao(OrderReviewDto):
 
     @classmethod
     def review_find_by_shopid(cls,shop_id):
-        from chatbot_api.resources.food import FoodDto
+        from chatbot_api.resources.food import FoodDto # 주의! 여기서 임포트 해야함! 
         print("================review=================")
 
         # sql = cls.query.filter_by(shop_id = shop_id)
@@ -201,6 +201,41 @@ class OrderReviewDao(OrderReviewDto):
             update(params,synchronize_session=False);
         db.session.commit()
 
+
+# ==============================================================
+# ==============================================================
+# =====================   Service   ============================
+# ==============================================================
+# ==============================================================
+
+# from keras.models import Sequential
+# from keras.layers import Dense, Activation
+# from keras.models import load_model
+
+# class UserService:
+#     @staticmethod
+#     def load_model_from_file():
+#         fname = r'./modeling/recommender_mf.h5'
+#         model = load_model(fname)
+#         return model
+
+#     @staticmethod
+#     def shop_rev_predict(model, userid, shop_id):
+
+#         userid = int(userid.lstrip('user'))
+#         predict = model.predict([np.array([userid]), np.array([shop_id])])
+#         print(predict[0])
+#         return predict[0]
+
+
+
+# ==============================================================
+# ==============================================================
+# =====================   Controller   =========================
+# ==============================================================
+# ==============================================================
+
+
 class OrderReview(Resource):
     @staticmethod
     def post():
@@ -245,4 +280,11 @@ class OrderReviewInsert(Resource):
         # print(order_revew)
         OrderReviewDao.order_review_writer(params)
         print("리뷰썻다")
+
         return 200
+
+
+if __name__ == "__main__":
+    s = UserService()
+    model = s.load_model_from_file()
+
