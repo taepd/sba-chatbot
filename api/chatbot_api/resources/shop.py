@@ -1,7 +1,7 @@
 # from sqlalchemy import Column, Integer, Float, String, ForeignKey, create_engine
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
 from typing import List
-from flask import request
+from flask import request, session, escape
 from flask_restful import Resource, reqparse
 from flask import jsonify
 import json

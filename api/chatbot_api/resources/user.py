@@ -2,7 +2,7 @@
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
 from pdb import main
 from typing import List
-from flask import request
+from flask import request, session
 from flask_restful import Resource, reqparse
 from flask import jsonify
 import json

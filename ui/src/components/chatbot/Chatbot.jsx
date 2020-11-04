@@ -44,6 +44,11 @@ const userid = sessionStorage.getItem("sessionUser");
                 trigger: '2',
             },
             {
+                id: '1',
+                message: userid+' 님 어서오세요 메추리 입니다.',
+                trigger: '2',
+            },
+            {
                 id: '2',
                 message: '오늘은 어떤 메뉴를 추천해드릴까요?',
                 trigger: '3',
