@@ -28,6 +28,7 @@ from chatbot_api.util.file_handler import FileReader
 from chatbot_api.resources.food import FoodDto, FoodDao
 from chatbot_api.resources.user import UserDao, UserDto
 from chatbot_api.resources.order_review import OrderReviewDto, OrderReviewDao
+from chatbot_api.ext.model import model
 
 parser = reqparse.RequestParser()
 parser.add_argument('shop_id', type=str, required=True)
@@ -176,6 +177,8 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation
 from keras.models import load_model
 
+from surprise import dump
+
 class UserService:
     @staticmethod
     def load_model_from_file():
@@ -212,17 +215,35 @@ class Shops(Resource):
 
 class Shopscat(Resource):
 
+    # keras로 만든 mf모델
+    # @staticmethod
+    # def get(cat_id : str):
+    #     print('select catid : ' + cat_id)
+    #     shopscat = ShopDao.find_by_cat(cat_id)
+    #     model = UserService.load_model_from_file()
+    #     shopscat_ = shopscat
+    #     for i, row in enumerate(shopscat_):
+    #         userid = session['userid']
+    #         shop_id = row['shop_id']
+    #         predict = UserService.shop_rev_predict(model, userid, shop_id)
+    #         shopscat[i]['shop_pred_avg'] = round(float(predict), 1)
+
+    #     return shopscat, 200
+
+    # surprise로 만든 svd모델
     @staticmethod
     def get(cat_id : str):
         print('select catid : ' + cat_id)
         shopscat = ShopDao.find_by_cat(cat_id)
-        model = UserService.load_model_from_file()
         shopscat_ = shopscat
+        
         for i, row in enumerate(shopscat_):
-            userid = session['userid']
-            shop_id = row['shop_id']
-            predict = UserService.shop_rev_predict(model, userid, shop_id)
-            shopscat[i]['shop_pred_avg'] = round(float(predict), 1)
+            userid = int(session['userid'].lstrip('user'))
+            shop_id = int(row['shop_id'])
+            predict = model.predict(userid, shop_id)
+            print(predict)
+
+            shopscat[i]['shop_pred_avg'] = round(float(predict[3]), 1)
 
         return shopscat, 200
 
@@ -265,6 +286,14 @@ class ShopSearch(Resource):
     def get(key : str):
         print("search",key)
         search = ShopDao.search(key)
+        model = UserService.load_model_from_file()
+        shopscat_ = search
+        for i, row in enumerate(shopscat_):
+            userid = session['userid']
+            shop_id = row['shop_id']
+            predict = UserService.shop_rev_predict(model, userid, shop_id)
+            search[i]['shop_pred_avg'] = round(float(predict), 1)
+
         return search, 200
 
 
