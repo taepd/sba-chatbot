@@ -28,3 +28,7 @@ api/data
 
 # data
 *.csv
+*.h5
+
+#pyc
+*.pyc
