@@ -61,7 +61,7 @@ df_sort = df.sort_values(by=['userid', 'shop_id'], axis=0)
 
 """- 그룹화"""
 
-groupby_df = df_sort.groupby(["userid", 'shop_id'])  # groupby 객체 상태
+# groupby_df = df_sort.groupby(["userid", 'shop_id'])  # groupby 객체 상태
 df_group = df_sort.groupby(["userid", 'shop_id']).mean()  # groupby 객체 상태
 df = df_group.reset_index()  # reset_index를 해주면 dataframe 객체가 됨
 print(df.shape)
@@ -69,8 +69,9 @@ print(df.shape)
 df_backup = df
 print(df)
 
-df = groupby_df.head()  # 이유는 모르겠지만 head를 붙였더니 dataframe화 되었음
-print(df)
+# df = groupby_df.head()  # 이유는 모르겠지만 head를 붙였더니 dataframe화 되었음 -> 실수로 인한 잘못된 해결챇
+# print(df)
+
 
 """- 평점이 0인 항목을 제거"""
 
@@ -118,7 +119,10 @@ print(df)
 df.to_csv('model_df.csv', header=False, index=False)
 
 # # ###############################
-
+df_ = df[(df['userid'] == 777) & (df['shop_id'] == 472464)]
+print(df_)
+# import pdb
+# pdb.set_trace()
 
 """
 데이터 로딩
@@ -149,12 +153,16 @@ model.fit(trainset)
 
 testset = Trainset.build_testset(trainset)
 prediction_list = model.test(testset)
+print(prediction_list[:50])
+print(len(prediction_list))
 # for i in range(10):
 #     pred = model.predict(112, 260443+i)
 #     print(pred)
 # pred = model.predict(112, 260443)
 # print(pred)
-pred = model.predict(112, 260443)
+pred = model.predict(11366, 279569)
+print(pred)
+pred = model.predict(str(200000), str(279569))
 print(pred)
 # pred = model.predict(112, 260445)
 # print(pred)

@@ -28,7 +28,14 @@ from chatbot_api.util.file_handler import FileReader
 from chatbot_api.resources.food import FoodDto, FoodDao
 from chatbot_api.resources.user import UserDao, UserDto
 from chatbot_api.resources.order_review import OrderReviewDto, OrderReviewDao
-from chatbot_api.ext.model import model
+from chatbot_api.ext.model import model, df
+
+from haversine import haversine
+import sqlalchemy
+from sqlalchemy import func
+from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
+from sqlalchemy.sql.expression import cast
+from sqlalchemy.sql.sqltypes import Float
 
 parser = reqparse.RequestParser()
 parser.add_argument('shop_id', type=str, required=True)
@@ -88,6 +95,19 @@ class ShopDto(db.Model):
             'shop_rev_cnt': self.shop_rev_cnt,
             'open_time': self.open_time
         }
+    # 동적 컬럼 추가 실패
+    # @hybrid_property
+    # def dist(self):
+
+    #     user_location = (session['user']['lat'], session['user']['lng'])
+
+    #     return haversine((self.shop_lat, self.shop_lng), user_location)
+    
+    # @dist.expression
+    # def dist(cls):
+    #     user_location = (session['user']['lat'], session['user']['lng'])
+    #     return haversine((cast(cls.shop_lat, sqlalchemy.Float), cast(cls.shop_lng, sqlalchemy.Float)), user_location)
+
 
 class ShopVo:
     shop_id: int = 0
@@ -137,13 +157,20 @@ class ShopDao(ShopDto):
     def find_by_cat(cls,cat_id):
         from chatbot_api.resources.food import FoodDto
         print(cat_id)
+
+        user_location = (session['user']['lat'], session['user']['lng'])
+
         sql = db.session.query(ShopDto, FoodDto).\
                 filter(ShopDto.shop_id == FoodDto.shop_id).\
                 filter(ShopDto.cat.like('%'+cat_id+'%')).\
+                filter(func.mariadb.dist(ShopDto.shop_lat, ShopDto.shop_lng,
+                user_location[0], user_location[1]) <= 1).\
                 order_by(FoodDto.food_rev_cnt.desc()).\
-                group_by(ShopDto.shop_id).limit(100)
+                group_by(ShopDto.shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
+        print('*********')
+        print(df)
         return json.loads(df.to_json(orient='records'))
 
     @classmethod
@@ -151,12 +178,17 @@ class ShopDao(ShopDto):
         from chatbot_api.resources.food import FoodDto
         # sql = cls.query.filter(ShopDto.shop_name.like('%'+key+'%'))
         # df = pd.read_sql(sql.statement,sql.session.bind)
+        
+        user_location = (session['user']['lat'], session['user']['lng'])
+
         sql = db.session.query(ShopDto, FoodDto).\
             filter(ShopDto.shop_id == FoodDto.shop_id).\
             filter(or_(ShopDto.shop_name.like('%'+key+'%'),
             FoodDto.food_name.like('%'+key+'%'))).\
+            filter(func.mariadb.dist(ShopDto.shop_lat, ShopDto.shop_lng,
+            user_location[0], user_location[1]) <= 1).\
             order_by(FoodDto.food_rev_cnt.desc()).\
-            group_by(ShopDto.shop_id)
+            group_by(ShopDto.shop_id)       
 
         # sql = cls.query(ShopDto, FoodDto).from_statement(\
         #     "select * from shop s join food f on s.shop_id = f.shop_id where shop_name like :'%'key'%' or food_name like:'%'key'%' group by s.shop_id").\
@@ -165,6 +197,7 @@ class ShopDao(ShopDto):
         df = pd.read_sql(sql.statement,sql.session.bind)
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         # print(df)
+
         return json.loads(df.to_json(orient='records'))
 
 # ==============================================================
@@ -197,13 +230,22 @@ class ShopService:
     @staticmethod
     def shop_rev_predict_by_surprise(shops_dict):
         shops_dict_ = shops_dict
-        for i, row in enumerate(shops_dict_):
-            userid = int(session['userid'].lstrip('user'))
-            shop_id = int(row['shop_id'])
-            predict = model.predict(userid, shop_id)
-            print(predict)
 
-            shops_dict[i]['shop_pred_avg'] = round(float(predict[3]), 1)
+        for i, row in enumerate(shops_dict_):
+            userid = int((session['user']['userid']).lstrip('user'))
+            shop_id = row['shop_id']
+
+            predict = model.predict(userid, shop_id) # 인자를 string으로 넣어야 한다고 함
+            # 가게에 대한 유저의 평균평점을 불러와야 하는데, 복잡한 관계로 임시적으로 model 모듈에서 생성한 df를 활용
+            df_ = df[(df['userid'] == userid) & (df['shop_id'] == shop_id)]
+
+            
+            if not df_['rating'].values.any():  # 유저가 입력한 평점이 없으면
+                shops_dict[i]['shop_pred_avg'] = round(float(predict[3]), 1)
+            else:
+                print('******* 여기 *********')  # 유저가 입력한 평점이 있으면
+                shops_dict[i]['shop_user_avg'] = round(np.float(df_['rating'].values), 1)
+
         return shops_dict
 
 # ==============================================================
@@ -257,7 +299,7 @@ class Shop(Resource):
     
     @staticmethod
     def get(shop_id : str):
-        print("==============으아아아아=================")
+    
         shopAfoodAreview = []
         shop = {'Shop' : ShopDao.find_by_shopid(shop_id)}
         food = {'Food' : FoodDao.food_find_by_shopid(shop_id)}
