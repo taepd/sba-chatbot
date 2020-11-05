@@ -67,9 +67,7 @@ const ReviewDescription = (props) => {
     const classes = useStyles();
     const rateavg = (taste + quan + deli) / 3
     return (
-      <div className={classes.rating}>
         <Rating name="rating" defaultValue={rateavg} max={5} precision={0.5} readOnly />
-      </div>
     );
   }
 
@@ -86,8 +84,8 @@ const ReviewDescription = (props) => {
             </Typography>
           </Grid>
           <Grid container direction="row" alignItems="center">
-            <Rating name="avg" defaultValue={(post.taste_rate + post.quantity_rate + post.delivery_rate) / 3} max={5} className={classes.marginr} readOnly />
-            {/* <HalfRating className={classes.marginr} /> */}
+            {/* <Rating name="avg" defaultValue={(post.taste_rate + post.quantity_rate + post.delivery_rate) / 3} max={5} className={classes.marginr} readOnly /> */}
+            <HalfRating className={classes.marginr} />
             <Typography variant="subtitle1" color="textSecondary">
               맛
               </Typography>
@@ -116,7 +114,7 @@ const ReviewDescription = (props) => {
           <Typography variant="subtitle1" paragraph className={classes.marginbottom}>
             {post.review_cmnt}
           </Typography>
-          {post.owner_cmnt !== 1
+          {post.owner_cmnt !== "1"
           ?
           <Card className={classes.card} square elevation={0}>
             <CardContent>

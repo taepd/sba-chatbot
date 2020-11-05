@@ -102,10 +102,8 @@ const ShopMenuInfo = (props) => {
     // alert(userid)
     axios.post(`http://localhost:8080/order`, {userid, food_id,order_time,shop_id})
     .then(res=>{
-      // alert(date.getHours())
-    }).then(
       history.push("/order/"+userid)
-    )
+    })
     .catch(err =>{
       alert("실패")
     })

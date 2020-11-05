@@ -21,19 +21,18 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Order = () =>{
+const Order = ({match}) =>{
     const [orderData, setOrderData] = useState([])
-    const userid = sessionStorage.getItem("sessionUser");
 
     useEffect(()=>{
-        axios.get(`http://localhost:8080/order/${userid}`)
+        axios.get(`http://localhost:8080/order/${match.params.userid}`)
         .then(res =>{
             setOrderData(res.data)
             // console.log(res.data)
         }).catch(error=>{
             alert("안돼 돌아가")
         })
-    },[userid])
+    },[])
     // console.log(orderData)
     const classes = useStyles();
     return (
