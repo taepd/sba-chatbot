@@ -29,5 +29,9 @@ api/data
 # data
 *.csv
 
+
+/chatbot
+
 #pyc
 *.pyc
+
