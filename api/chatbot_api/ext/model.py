@@ -34,13 +34,13 @@ df_sort = df.sort_values(by=['userid', 'shop_id'], axis=0)
 
 """- 그룹화"""
 
-groupby_df = df_sort.groupby(["userid", 'shop_id'])  # groupby 객체 상태
+# groupby_df = df_sort.groupby(["userid", 'shop_id'])  # groupby 객체 상태
 df_group = df_sort.groupby(["userid", 'shop_id']).mean()  # groupby 객체 상태
 df = df_group.reset_index()  # reset_index를 해주면 dataframe 객체가 됨
 
 ''' 예측값과 비교할 때 사용할 실제값 dataframe'''
 df_backup = df
-df = groupby_df.head()  # 이유는 모르겠지만 head를 붙였더니 dataframe화 되었음
+# df = groupby_df.head()  # 이유는 모르겠지만 head를 붙였더니 dataframe화 되었음 -> 실수로 인한 잘못된 해결챇
 
 """- 평점이 0인 항목을 제거"""
 
@@ -75,8 +75,8 @@ df['userid'] = df['userid'].map(lambda x: int(x.lstrip('user')))
 
 reader = Reader(rating_scale=(0.5, 5))
 data = Dataset.load_from_df((df[['userid', 'shop_id', 'rating']]), reader=reader)
-# train, test = train_test_split(data, test_size=0.25, random_state=42)
-trainset = data.build_full_trainset()
+train, test = train_test_split(data, test_size=0.25, random_state=42)
+# trainset = data.build_full_trainset()
 
 
 #################
@@ -97,7 +97,10 @@ trainset = data.build_full_trainset()
 # 전체 데이터셋을 학습
 model = SVD(n_factors=64, n_epochs=20, random_state=42)
 # model.fit(train)
-model.fit(trainset)
+model.fit(train)
+
+# print(model.test(test))
+
 
 @classmethod
 def predict(user, item):
