@@ -115,4 +115,3 @@ def insert_at_all(fila_name, dto):
 #     db.session.close()
 
 
-

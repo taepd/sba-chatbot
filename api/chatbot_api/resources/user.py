@@ -612,3 +612,4 @@ if __name__ == '__main__':
     session.bulk_insert_mappings(UserDto, df.to_dict(orient="records"))
     session.commit()
     session.close()
+
