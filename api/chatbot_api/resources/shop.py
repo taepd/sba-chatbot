@@ -141,7 +141,7 @@ class ShopDao(ShopDto):
                 filter(ShopDto.shop_id == FoodDto.shop_id).\
                 filter(ShopDto.cat.like('%'+cat_id+'%')).\
                 order_by(FoodDto.food_rev_cnt.desc()).\
-                group_by(ShopDto.shop_id).limit(10)
+                group_by(ShopDto.shop_id).limit(100)
         df = pd.read_sql(sql.statement, sql.session.bind)
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         return json.loads(df.to_json(orient='records'))
@@ -153,7 +153,8 @@ class ShopDao(ShopDto):
         # df = pd.read_sql(sql.statement,sql.session.bind)
         sql = db.session.query(ShopDto, FoodDto).\
             filter(ShopDto.shop_id == FoodDto.shop_id).\
-            filter(or_(ShopDto.shop_name.like('%'+key+'%'),FoodDto.food_name.like('%'+key+'%'))).\
+            filter(or_(ShopDto.shop_name.like('%'+key+'%'),
+            FoodDto.food_name.like('%'+key+'%'))).\
             order_by(FoodDto.food_rev_cnt.desc()).\
             group_by(ShopDto.shop_id)
 
@@ -162,7 +163,6 @@ class ShopDao(ShopDto):
         #         params(key=key)
 
         df = pd.read_sql(sql.statement,sql.session.bind)
-        df = df.head(100)  # 모델 테스트용으로 잠시
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         # print(df)
         return json.loads(df.to_json(orient='records'))
@@ -179,7 +179,8 @@ from keras.models import load_model
 
 from surprise import dump
 
-class UserService:
+class ShopService:
+
     @staticmethod
     def load_model_from_file():
         fname = r'./modeling/recommender_mf.h5'
@@ -187,12 +188,23 @@ class UserService:
         return model
 
     @staticmethod
-    def shop_rev_predict(model, userid, shop_id):
+    def shop_rev_predict_by_keras(model, userid, shop_id):
         
         userid = int(userid.lstrip('user'))
         predict = model.predict([np.array([userid]), np.array([shop_id])])
         return predict[0][0]
 
+    @staticmethod
+    def shop_rev_predict_by_surprise(shops_dict):
+        shops_dict_ = shops_dict
+        for i, row in enumerate(shops_dict_):
+            userid = int(session['userid'].lstrip('user'))
+            shop_id = int(row['shop_id'])
+            predict = model.predict(userid, shop_id)
+            print(predict)
+
+            shops_dict[i]['shop_pred_avg'] = round(float(predict[3]), 1)
+        return shops_dict
 
 # ==============================================================
 # ==============================================================
@@ -225,7 +237,7 @@ class Shopscat(Resource):
     #     for i, row in enumerate(shopscat_):
     #         userid = session['userid']
     #         shop_id = row['shop_id']
-    #         predict = UserService.shop_rev_predict(model, userid, shop_id)
+    #         predict = ShopService.shop_rev_predict_by_keras(model, userid, shop_id)
     #         shopscat[i]['shop_pred_avg'] = round(float(predict), 1)
 
     #     return shopscat, 200
@@ -235,15 +247,8 @@ class Shopscat(Resource):
     def get(cat_id : str):
         print('select catid : ' + cat_id)
         shopscat = ShopDao.find_by_cat(cat_id)
-        shopscat_ = shopscat
         
-        for i, row in enumerate(shopscat_):
-            userid = int(session['userid'].lstrip('user'))
-            shop_id = int(row['shop_id'])
-            predict = model.predict(userid, shop_id)
-            print(predict)
-
-            shopscat[i]['shop_pred_avg'] = round(float(predict[3]), 1)
+        shopscat = ShopService.shop_rev_predict_by_surprise(shopscat)
 
         return shopscat, 200
 
@@ -281,20 +286,30 @@ class Shop(Resource):
 
 
 class ShopSearch(Resource):
+    # keras 모델 적용
+    # @staticmethod
+    # def get(key : str):
+    #     print("search",key)
+    #     search = ShopDao.search(key)
+    #     model = UserService.load_model_from_file()
+    #     shopscat_ = search
+    #     for i, row in enumerate(shopscat_):
+    #         userid = session['userid']
+    #         shop_id = row['shop_id']
+    #         predict = ShopService.shop_rev_predict(model, userid, shop_id)
+    #         search[i]['shop_pred_avg'] = round(float(predict), 1)
 
+    #     return search, 200
+
+    # surprise 모델 적용
     @staticmethod
     def get(key : str):
         print("search",key)
         search = ShopDao.search(key)
-        model = UserService.load_model_from_file()
-        shopscat_ = search
-        for i, row in enumerate(shopscat_):
-            userid = session['userid']
-            shop_id = row['shop_id']
-            predict = UserService.shop_rev_predict(model, userid, shop_id)
-            search[i]['shop_pred_avg'] = round(float(predict), 1)
+        
+        search = ShopService.shop_rev_predict_by_surprise(search)
 
-        return search, 200
+        return search, 200        
 
 
 # ------------ 실행 영역 --------------

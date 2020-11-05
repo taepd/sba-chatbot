@@ -592,7 +592,7 @@ class Access(Resource):
         print(user.password)
         data = UserDao.login(user)
         if data[0]:
-            session['userid'] = user.userid  
+            session['user'] = data[0]
         return data[0], 200
 
 
