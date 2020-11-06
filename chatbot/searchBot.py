@@ -125,7 +125,7 @@ def chat(text):
     dict_entity = {
     'active' : ['추천','가격','얼마','메뉴','찾아'],
     'order' : ['주문','배달','시켜'],
-    'menu' : ['피자','햄버거','짜장면','짬뽕','치킨','돈까스','초밥','일식','양식','스파게티','밥','보쌈','한식','프렌차이즈','김밥','떡볶이','족발','분식','디저트','야식','한식','중식','커피','삼계탕','찌개','냉면'],
+    'menu' : ['피자','햄버거','짜장면','짬뽕','치킨','돈까스','초밥','일식','양식','스파게티','밥','보쌈','한식','프렌차이즈','김밥','떡볶이','족발','분식','디저트','야식','한식','중식','커피','삼계탕','찌개','냉면','찜닭'],
     'loc' : ['근처','동네','강남','집','회사','신사','논현','압구정','청담','삼성','대치','역삼','도곡','개포','일원','수서','세곡'],
     'date' : ['오늘','내일','모래','점심','저녁','아침']
     }
@@ -136,7 +136,7 @@ def chat(text):
     length = 1
     for key in list(dict_entity.keys()):
         length = length * len(dict_entity[key])
-    print("Augmentation length is {0}".format(length))
+    # print("Augmentation length is {0}".format(length))
 
     morpphed_text = kkma.pos(get_data_list)
     print('5',morpphed_text) # [('근처', 'NNG'), ('피자', 'NNG'), ('추천', 'NNG'), ('해', 'XSV+EC'), ('줘', 'VX+EC')]
@@ -146,17 +146,20 @@ def chat(text):
     for pos_tags in morpphed_text:
         if (pos_tags[1] in ['NNG','MAG', 'NNP','SL'] and len(pos_tags[0]) > 1): #Check only Noun
             feature_value = pos_tags[0]
+            print('7',feature_value)
             tagged_text = tagged_text + pos_tags[0] + ' '
 
     print('6',tagged_text) #(근처 피자 추천)
 
+    menu = tagged_text.split(' ')
+    menu = menu[0]
+    print('가게',menu)
 
     x_data = np.array([ text 
     ])
-    
+
     for i, text in enumerate(x_data):
         text = BeautifulSoup(text, 'html.parser').text 
-        #print(text) #스토리가 진짜 너무 노잼
         x_data[i] = text
     print('1',x_data) 
 
@@ -164,12 +167,14 @@ def chat(text):
     for i, text in enumerate(x_data):
         # okt = konlpy.tag.Okt()
         clean_words = mecab.nouns(text) 
-        print('clean_words',clean_words) #['스토리', '진짜', '노잼']
+        print('clean_words',clean_words) 
         text = ' '.join(clean_words)
-        print('text',text) #스토리 진짜 노잼
+        print('text',text) 
         x_data[i] = text
     print('2',x_data) 
     
+ 
+
     x_data = transformer.transform(x_data)
     print(x_data.shape) #(10, 23)
     y_predict = model.predict(x_data)
@@ -178,7 +183,8 @@ def chat(text):
     print('4',labels[y_predict[0]]) #ham
     
     if text == '추천':
-        response = '메뉴 추천해 드릴까요'
+        response = menu + ' 추천해 드릴까요'
+
     elif text == '주문':
         response = '주문해 드릴까요'
     # elif text == '메뉴':
