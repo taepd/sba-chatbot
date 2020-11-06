@@ -28,7 +28,7 @@ config = {
     'password': 1004,
     'host': '127.0.0.1',
     'port': '3306',
-    'database': 'mariadb'
+    'database': 'mychatbot'
 }
 
 charset = {'utf8': 'utf8'}

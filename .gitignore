@@ -27,11 +27,11 @@ yarn-error.log*
 api/data
 
 # data
-*.csv
+
 *.h5
 
+*.whl
 
-/chatbot
 
 #pyc
 *.pyc
