@@ -14,6 +14,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import Rating from '@material-ui/lab/Rating';
+import Chip from '@material-ui/core/Chip';
 import { Link, useHistory } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
@@ -65,6 +67,12 @@ const useStyles = makeStyles((theme) => ({
   toolbarLink: {
     textDecoration: 'none',
   },
+  marr:{
+    marginRight : theme.spacing(1),
+  },
+  marl:{
+    marginLeft: -4,
+  }
 
 }));
 
@@ -170,6 +178,23 @@ const ShopMenuInfo = (props) => {
                 <Typography variant="subtitle1" color="textSecondary">
                   {post.price} 원
                 </Typography>
+                {/* 음식 예상평점 추가 영역 */}
+                <Grid container direction="row" className={classes.marl}>
+                <Rating name="iconstar" defaultValue={1} max={1} readOnly />
+                {post.food_user_avg === undefined
+                ?   
+                <Typography variant="subtitle1" color="textSecondary" >
+                    예상 {post.food_pred_avg}
+                </Typography>
+                :
+                <>
+                <Typography variant="subtitle1" color="textSecondary" className={classes.marr}>
+                    예상 {post.food_pred_avg} 
+                </Typography>
+                <Chip color="secondary" size="small" label={'내 평점  '+ post.food_user_avg}/>
+                </>
+                }
+                </Grid>
               </CardContent>
             </Grid>
             <CardMedia

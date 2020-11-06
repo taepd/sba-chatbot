@@ -28,7 +28,7 @@ from chatbot_api.util.file_handler import FileReader
 from chatbot_api.resources.food import FoodDto, FoodDao
 from chatbot_api.resources.user import UserDao, UserDto
 from chatbot_api.resources.order_review import OrderReviewDto, OrderReviewDao
-from chatbot_api.ext.model import model, df
+from chatbot_api.ext.model import df_shop, predict_shop, df_food, predict_food
 
 from haversine import haversine
 import sqlalchemy
@@ -235,18 +235,37 @@ class ShopService:
             userid = int((session['user']['userid']).lstrip('user'))
             shop_id = row['shop_id']
 
-            predict = model.predict(userid, shop_id) # 인자를 string으로 넣어야 한다고 함
+            predict = predict_shop(userid, shop_id) # 인자를 string으로 넣어야 한다고 함
             # 가게에 대한 유저의 평균평점을 불러와야 하는데, 복잡한 관계로 임시적으로 model 모듈에서 생성한 df를 활용
-            df_ = df[(df['userid'] == userid) & (df['shop_id'] == shop_id)]
+            df_ = df_shop[(df_shop['userid'] == userid) & (df_shop['shop_id'] == shop_id)]
 
             
-            if not df_['rating'].values.any():  # 유저가 입력한 평점이 없으면
-                shops_dict[i]['shop_pred_avg'] = round(float(predict[3]), 1)
-            else:
-                print('******* 여기 *********')  # 유저가 입력한 평점이 있으면
-                shops_dict[i]['shop_user_avg'] = round(np.float(df_['rating'].values), 1)
+            if df_['rating'].values.any():   # 유저가 입력한 평점이 있으면
+                 shops_dict[i]['shop_user_avg'] = round(np.float(df_['rating'].values), 1)
 
+            shops_dict[i]['shop_pred_avg'] = round(float(predict[3]), 1)
+                          
         return shops_dict
+
+    @staticmethod
+    def food_rev_predict_by_surprise(food_dict):
+        food_dict_ = food_dict
+
+        for i, row in enumerate(food_dict_):
+            userid = int((session['user']['userid']).lstrip('user'))
+
+            food_id = row['food_id']
+
+            predict = predict_food(userid, food_id) # 인자를 string으로 넣어야 한다고 함
+            # 가게에 대한 유저의 평균평점을 불러와야 하는데, 복잡한 관계로 임시적으로 model 모듈에서 생성한 df를 활용
+            df_ = df_food[(df_food['userid'] == userid) & (df_food['food_id'] == food_id)]
+            
+            if df_['rating'].values.any():   # 유저가 입력한 평점이 있으면
+                 food_dict[i]['food_user_avg'] = round(np.float(df_['rating'].values), 1)
+
+            food_dict[i]['food_pred_avg'] = round(float(predict[3]), 1)
+                          
+        return food_dict
 
 # ==============================================================
 # ==============================================================
@@ -289,7 +308,7 @@ class Shopscat(Resource):
     def get(cat_id : str):
         print('select catid : ' + cat_id)
         shopscat = ShopDao.find_by_cat(cat_id)
-        
+
         shopscat = ShopService.shop_rev_predict_by_surprise(shopscat)
 
         return shopscat, 200
@@ -301,12 +320,20 @@ class Shop(Resource):
     def get(shop_id : str):
     
         shopAfoodAreview = []
-        shop = {'Shop' : ShopDao.find_by_shopid(shop_id)}
-        food = {'Food' : FoodDao.food_find_by_shopid(shop_id)}
-        review = {'Review' : OrderReviewDao.review_find_by_shopid(shop_id)}
-        shopAfoodAreview.append(shop)
-        shopAfoodAreview.append(food)
-        shopAfoodAreview.append(review)
+        shop_dict = {'Shop' : ShopDao.find_by_shopid(shop_id)}
+
+        # 음식 예상 평점 키/값 입력
+        food = FoodDao.food_find_by_shopid(shop_id)
+        # print('*'*40)
+        # print(food)
+        # print('*'*40)
+        food = ShopService.food_rev_predict_by_surprise(food)
+        food_dict = {'Food' : food}
+
+        review_dict = {'Review' : OrderReviewDao.review_find_by_shopid(shop_id)}
+        shopAfoodAreview.append(shop_dict)
+        shopAfoodAreview.append(food_dict)
+        shopAfoodAreview.append(review_dict)
         print('*'*40)
         # print(shop)
         # shop = shop.json()
