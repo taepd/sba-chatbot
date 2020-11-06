@@ -80,7 +80,7 @@ const ShopList = (props) => {
                                         <Rating name="iconstar" defaultValue={1} max={1} readOnly />
                                         <Typography variant="subtitle1" color="textSecondary">
                                             {post.shop_rev_avg} /
-                                            </Typography>
+                                        </Typography>
                                         <Rating name="iconstar" defaultValue={1} max={1} readOnly />
                                         {post.shop_user_avg === undefined
                                         ?   
@@ -92,7 +92,12 @@ const ShopList = (props) => {
                                         //    내 평점 {post.shop_user_avg} 
                                         //    {console.log(post.shop_user_avg)}
                                         // </Typography>}
+                                        <>
+                                        <Typography variant="subtitle1" color="textSecondary">
+                                            예상 {post.shop_pred_avg} 
+                                        </Typography>
                                         <Chip color="secondary" size="small" label={'내 평점  '+ post.shop_user_avg}/>
+                                        </>
                                         }
                                         
                                     </Grid>
