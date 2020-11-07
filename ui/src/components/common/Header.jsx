@@ -146,7 +146,7 @@ const Header = props => {
                 <Grid container justify="center">
                     <Toolbar className={classes.toolbar}>
                         <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-                            <Link to="/main" className={classes.toolbarLink}>
+                            <Link to="/" className={classes.toolbarLink}>
                                 메추리
                             </Link>
                         </Typography>

@@ -27,7 +27,7 @@ const App = () => {
                 <Switch>
                     <Provider store={createStore(rootReducer, applyMiddleware(ReduxThunk))}>
                         <Route exact path="/" component={Main} />
-                        <Route path="/main" component={Main} />
+                        {/* <Route path="/main" component={Main} /> */}
                         <Route path="/signIn" component={SignIn} />
                         <Route path="/signUp" component={SignUp} />
                         <Route path="/shop/:shop_id" component={Review} />
@@ -54,7 +54,7 @@ const App = () => {
                 </Switch>
                 <Chatbot/>
             </main>
-            <Footer title="Footer" description="Something here to give the footer a purpose!" />
+            <Footer title="Footer" description="SBA React Machine Learning Project Team#1" />
         </Router>
         {/* </div> */}
     </>)
