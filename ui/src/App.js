@@ -27,7 +27,7 @@ const App = () => {
                 <Switch>
                     <Provider store={createStore(rootReducer, applyMiddleware(ReduxThunk))}>
                         <Route exact path="/" component={Main} />
-                        {/* <Route path="/main" component={Main} /> */}
+                        <Route path="/main" component={Main} />
                         <Route path="/signIn" component={SignIn} />
                         <Route path="/signUp" component={SignUp} />
                         <Route path="/shop/:shop_id" component={Review} />

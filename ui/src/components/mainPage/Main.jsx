@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -84,11 +84,15 @@ const shoplistl = [
 
 const Main = () => {
     const classes = useStyles();
-
+    const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('sessionUser'))
     return (
         <React.Fragment>
             <CssBaseline />
             <MainNavigation />
+            {  loggedIn === null
+            ?  '로그인하세요'
+            :
+            <>
             <Grid container justify="center" className={classes.wd}>
                 <Grid container justify="center" className={classes.title}>
                     <Typography variant="h5" >
@@ -117,7 +121,8 @@ const Main = () => {
 
                 </Grid>
             </Grid>
-           
+            </>
+            }
         </React.Fragment>
     );
 }

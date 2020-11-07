@@ -49,15 +49,9 @@ def initialize_routes(api):
     api.add_resource(OrderReviewSelect, '/reviewwrite/<string:or_id>')
     api.add_resource(OrderReviewInsert, '/reviewwrite')
     api.add_resource(ShopSearch, '/search/<string:key>')
-    # api.add_resource(Home, '/api')
-    # api.add_resource(Item, '/api/item/<string:id>')
-    # api.add_resource(Items,'/api/items')
-    # api.add_resource(User, '/user/<string:id>')
-    # api.add_resource(Users, '/api/users')
     # api.add_resource(Auth, '/api/auth')
     api.add_resource(Access, '/access')
-    # api.add_resource(Article, '/api/article')
-    # api.add_resource(Articles, '/api/articles/')
+
 
 @user.errorhandler(500)
 def user_api_error(e):
