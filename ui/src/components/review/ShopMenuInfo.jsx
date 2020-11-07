@@ -67,10 +67,10 @@ const useStyles = makeStyles((theme) => ({
   toolbarLink: {
     textDecoration: 'none',
   },
-  marr:{
-    marginRight : theme.spacing(1),
+  marr: {
+    marginRight: theme.spacing(1),
   },
-  marl:{
+  marl: {
     marginLeft: -4,
   }
 
@@ -81,7 +81,7 @@ const ShopMenuInfo = (props) => {
   const { post } = props;
   const classes = useStyles();
   const date = new Date();
-  const order_time = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"/"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+  const order_time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "/" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
   const userid = sessionStorage.getItem("sessionUser");
   const food_id = post.food_id;
   const shop_id = post.shop_id;
@@ -100,7 +100,7 @@ const ShopMenuInfo = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const newOrder = (e) =>{
+  const newOrder = (e) => {
     e.preventDefault()
     // setUserid(sessionStorage.getItem("sessionUser"));
     // setFoodid(post.food_id);
@@ -108,16 +108,16 @@ const ShopMenuInfo = (props) => {
     // setShopid(post.shop_id)
     // debugger
     // alert(userid)
-    axios.post(`http://localhost:8080/order`, {userid, food_id,order_time,shop_id})
-    .then(res=>{
-      history.push("/order/"+userid)
-    })
-    .catch(err =>{
-      alert("실패")
-    })
+    axios.post(`http://localhost:8080/order`, { userid, food_id, order_time, shop_id })
+      .then(res => {
+        history.push("/order/" + userid)
+      })
+      .catch(err => {
+        alert("실패")
+      })
   }
-  
-  
+
+
   return (
 
     <div className={classes.divroot}>
@@ -161,8 +161,8 @@ const ShopMenuInfo = (props) => {
             </Button>
           </Link> */}
           {/* <Link to={"/order/"+post.food_id} className={classes.toolbarLink}> */}
-            <Button onClick={newOrder}  color="primary" autoFocus>
-              주문하기
+          <Button onClick={newOrder} color="primary" autoFocus>
+            주문하기
             </Button>
           {/* </Link> */}
         </DialogActions>
@@ -180,20 +180,20 @@ const ShopMenuInfo = (props) => {
                 </Typography>
                 {/* 음식 예상평점 추가 영역 */}
                 <Grid container direction="row" className={classes.marl}>
-                <Rating name="iconstar" defaultValue={1} max={1} readOnly />
-                {post.food_user_avg === undefined
-                ?   
-                <Typography variant="subtitle1" color="textSecondary" >
-                    예상 {post.food_pred_avg}
-                </Typography>
-                :
-                <>
-                <Typography variant="subtitle1" color="textSecondary" className={classes.marr}>
-                    예상 {post.food_pred_avg} 
-                </Typography>
-                <Chip color="secondary" size="small" label={'내 평점  '+ post.food_user_avg}/>
-                </>
-                }
+                  <Rating name="iconstar" defaultValue={1} max={1} readOnly />
+                  {post.food_user_avg === undefined
+                    ?
+                    <Typography variant="subtitle1" color="textSecondary" >
+                      예상 {post.food_pred_avg}
+                    </Typography>
+                    :
+                    <>
+                      <Typography variant="subtitle1" color="textSecondary" className={classes.marr}>
+                        예상 {post.food_pred_avg}
+                      </Typography>
+                      <Chip color="secondary" size="small" label={'내 평점  ' + post.food_user_avg} />
+                    </>
+                  }
                 </Grid>
               </CardContent>
             </Grid>

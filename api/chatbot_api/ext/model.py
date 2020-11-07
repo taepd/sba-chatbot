@@ -5,8 +5,8 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 baseurl = os.path.dirname(os.path.abspath(__file__))
 
 
-from surprise import Reader, Dataset
-from surprise import SVD, NMF
+from surprise import Reader, Dataset, Trainset
+from surprise import SVD, NMF, KNNBaseline, KNNBasic
 from surprise.model_selection import train_test_split, cross_validate
 import pandas as pd
 
@@ -88,7 +88,7 @@ def prep_food_model(df):
     df = df[['userid', 'food_id', 'rating']]
 
     """_ food_id 결측된 행 제거 """
-    print(df.dtypes)
+    # print(df.dtypes)
     df = df.dropna(axis=0)  # 결측값이 들어있는 행 전체 삭제
     
     
@@ -101,7 +101,7 @@ def prep_food_model(df):
 
     df_sort = df.sort_values(by=['userid', 'food_id'], axis=0)
 
-    print(df_sort)
+    # print(df_sort)
 
     """- 그룹화"""
 
@@ -113,7 +113,7 @@ def prep_food_model(df):
 
     df = df.loc[(df.rating != 0)]
 
-    print(df)
+    # print(df)
 
     return df
 
@@ -134,9 +134,12 @@ def prep_surprise_dataset(df, id_column_name):
     # surprise에서 사용가능하도록  데이터셋 처리
     reader = Reader(rating_scale=(0.5, 5))
     data = Dataset.load_from_df((df[['userid', id_column_name, 'rating']]), reader=reader)
-    train, test = train_test_split(data, test_size=0.25, random_state=42)
-    # trainset = data.build_full_trainset()
-
+    
+    # train, test = train_test_split(data, test_size=0.25, random_state=42)
+    
+    # 데이터셋 전체를 학습데이터로 사용할 때
+    train = data.build_full_trainset()
+    test = Trainset.build_testset(train)
     return data, train, test
 
 
@@ -156,10 +159,6 @@ def prep_surprise_dataset(df, id_column_name):
 """
 def train_model(model, data, train, test):
 
-
-
-
-    # 전체 데이터셋을 학습
     algo = model(n_factors=64, n_epochs=20, random_state=42)
     # cross_validate(algo, data, measures=['rmse', 'mae'], cv=5, verbose=True)
     # model.fit(train)
@@ -181,10 +180,13 @@ def hook_shop(df, model):
 
     return algo, df_shop
 
-shop_algo, df_shop = hook_shop(df, SVD)
+shop_algo, df_shop = hook_shop(df, KNNBaseline)
 
+
+# 예측 평점
 def predict_shop(user, item):
     return shop_algo.predict(user, item)
+
 
 # ##########################
 
@@ -200,13 +202,43 @@ def hook_food(df, model):
 
     return algo, df_food
 
-food_algo, df_food = hook_food(df, NMF)
+food_algo, df_food = hook_food(df, SVD)
 
 
 def predict_food(user, item):
     return food_algo.predict(user, item)
 
 # ##########################
+
+# ##########################
+# 유저 유사도 기반 k개의 샘플링 후 추천
+def hook_user_based_recommend(df):
+    df_shop = prep_shop_model(df)
+    df_shop = transform_data(df_shop)
+    data, train, test = prep_surprise_dataset(df_shop, 'shop_id')
+    option = {'name': 'cosine'}  # cosine, msd, pearson, pearson_baseline
+    algo = KNNBaseline(sim_options=option)
+    algo.fit(train)
+
+    return algo, df_shop
+
+algo, df_shop = hook_user_based_recommend(df)  # df_shop이 위와 중복이지만 우선 유지
+
+
+def user_based_recommend(user):
+    result = algo.get_neighbors(user, k=5)
+
+    print(result)  # [882, 908, 989, 744, 745]
+
+    recommend_set = set()
+    for userid in result:
+        df_ = df_shop[(df_shop['userid'] == userid)].sort_values(by=['rating'], ascending=False)
+        # print(df_)
+        for item in df_['shop_id'].head(5).values:
+            recommend_set.add(item)
+    print(recommend_set)
+# ##########################
+
 
 
 
@@ -233,4 +265,6 @@ print('============= 모델 학습 완료 ==============')
 
 # 모듈 내 테스트용
 # if __name__ == "__main__":
-#     prep_food_model(df)
+    
+        
+    
