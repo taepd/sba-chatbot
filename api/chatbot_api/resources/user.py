@@ -588,12 +588,17 @@ class Access(Resource):
         user = UserVo()
         user.userid = args.userid
         user.password = args.password
-        print(user.userid)
-        print(user.password)
         data = UserDao.login(user)
         if data[0]:
-            session['user'] = data[0]
+            session[f'{args.userid}'] = data[0]
         return data[0], 200
+
+    def delete(self):
+        print('========== access delete 요청 받음 ==========')
+        print(session)
+        args = parser.parse_args()
+        session.pop(f'{args.userid}', None)
+        return {'code' : 0, 'message' : 'SUCCESS'}, 200
 
 
 

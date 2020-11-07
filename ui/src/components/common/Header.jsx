@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 // import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
         // display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        direction:"row",
+        direction: "row",
     },
     inputRoot: {
         color: 'inherit',
@@ -116,8 +116,8 @@ const useStyles = makeStyles((theme) => ({
         // },
 
     },
-    bt:{
-        padding : 8,
+    bt: {
+        padding: 8,
     },
 
 }));
@@ -127,16 +127,26 @@ const Header = props => {
     const classes = useStyles();
     const userid = sessionStorage.getItem("sessionUser");
     const [value, setValue] = React.useState(0);
-    const history  = useHistory()
+    const history = useHistory()
     const [key, setKey] = useState()
 
     const logout = e => {
-        alert('logout')
+        
         e.preventDefault();
-        sessionStorage.removeItem("sessionUser")
-        history.push('/')
-        window.location.reload()
-    }   
+        axios.delete(`http://localhost:8080/access`, { userid })
+        .then(res => {
+            alert('logout success')
+            sessionStorage.removeItem("sessionUser")
+            history.push('/')
+            window.location.reload()
+
+        })
+        .catch(error => {
+            alert("logout fail");
+            // window.location.reload();
+        })
+    }
+   
 
 
     return (
@@ -152,7 +162,7 @@ const Header = props => {
                         </Typography>
                         <div className={classes.search}>
                             <InputBase
-                                onChange ={e=>setKey(e.target.value)}
+                                onChange={e => setKey(e.target.value)}
                                 placeholder="검색"
                                 classes={{
                                     root: classes.inputRoot,
@@ -161,36 +171,36 @@ const Header = props => {
                                 inputProps={{ 'aria-label': 'search' }}
                             />
                             <Link to={"/search/" + key}>
-                                <IconButton color="primary"component="span" className={classes.bt}>
+                                <IconButton color="primary" component="span" className={classes.bt}>
                                     <SearchIcon color="primary" fontSize="inherit" />
                                 </IconButton>
                             </Link>
                         </div>
-                        { props.isAuth === null
-                        ?   
-                            <>                         
-                            <Link to="/signUp" className={classes.toolbarLink}>
-                                <Button color="primary" variant="outlined" className={classes.link}>
-                                    회원가입
-                                </Button>
-                            </Link>
-                            <Link to="/signIn" className={classes.toolbarLink}>
-                                <Button color="primary" variant="outlined" className={classes.link}>
-                                    로그인
-                                </Button>
-                            </Link>
-                            </>:
+                        {props.isAuth === null
+                            ?
                             <>
-                             <Link to={"/myPage/"+userid} className={classes.toolbarLink}>
-                                <Button color="primary" variant="outlined" className={classes.link}>
-                                    마이페이지
+                                <Link to="/signUp" className={classes.toolbarLink}>
+                                    <Button color="primary" variant="outlined" className={classes.link}>
+                                        회원가입
                                 </Button>
-                             </Link>
-                            <Link to="/signIn" className={classes.toolbarLink}>
-                                <Button onClick={logout} color="primary" variant="outlined" className={classes.link}>
-                                    로그아웃
+                                </Link>
+                                <Link to="/signIn" className={classes.toolbarLink}>
+                                    <Button color="primary" variant="outlined" className={classes.link}>
+                                        로그인
                                 </Button>
-                            </Link>
+                                </Link>
+                            </> :
+                            <>
+                                <Link to={"/myPage/" + userid} className={classes.toolbarLink}>
+                                    <Button color="primary" variant="outlined" className={classes.link}>
+                                        마이페이지
+                                </Button>
+                                </Link>
+                                <Link to="/signIn" className={classes.toolbarLink}>
+                                    <Button onClick={logout} color="primary" variant="outlined" className={classes.link}>
+                                        로그아웃
+                                </Button>
+                                </Link>
                             </>
                         }
                     </Toolbar>
