@@ -163,6 +163,8 @@ const Header = props => {
                         <div className={classes.search}>
                             <InputBase
                                 onChange={e => setKey(e.target.value)}
+                                onKeyDown={e => {if(e.key === 'Enter'){  history.push("/search/" + key)}                              
+                                }}
                                 placeholder="검색"
                                 classes={{
                                     root: classes.inputRoot,

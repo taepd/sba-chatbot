@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,72 +23,22 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         marginBottom: theme.spacing(1),
-    }
+    },
+    toolbarLink: {
+        textDecoration: 'none',
+    },
 }));
-
-
-const shoplistl = [
-    {
-        shop_img: 'https://www.yogiyo.co.kr/media/restaurant_logos/베이컨포테이토골드피자02_20131128_FoodAD_crop_200x200_I47tFRa.jpg',
-        shop_name: '네네치킨1',
-        shop_rev_avg:
-            '4.5',
-        pred_rev_avg:
-            '4.7',
-        shop_rev_amt:
-            '304',
-        food_name: '뿌링치즈볼',
-        shop_pred_avg: '4.7'
-
-    },
-    {
-        shop_img: 'https://rev-static.yogiyo.co.kr/restaurants/thumbnail/stock_img/족발보쌈/족발/5fb02edc8f0531ede141222ae99cafcc_tn.jpg',
-        shop_name: '네네치킨1',
-        shop_rev_avg:
-            '4.5',
-        pred_rev_avg:
-            '4.7',
-        shop_rev_amt:
-            '304',
-        food_name: '뿌링치즈볼',
-        shop_pred_avg: '4.7'
-
-    },
-    {
-        shop_img: 'https://rev-static.yogiyo.co.kr/franchise/thumbnail/20181228144604231071_c1167f872d2823627279e43082f41e0e_tn.jpg',
-        shop_name: '네네치킨1',
-        shop_rev_avg:
-            '4.5',
-        pred_rev_avg:
-            '4.7',
-        shop_rev_amt:
-            '304',
-        food_name: '뿌링치즈볼',
-        shop_pred_avg: '4.7'
-
-    },
-    {
-        shop_img: 'https://www.yogiyo.co.kr/media/restaurant_logos/베이컨포테이토골드피자02_20131128_FoodAD_crop_200x200_I47tFRa.jpg',
-        shop_name: '네네치킨1',
-        shop_rev_avg:
-            '4.5',
-        pred_rev_avg:
-            '4.7',
-        shop_rev_amt:
-            '304',
-        food_name: '뿌링치즈볼',
-        shop_pred_avg: '4.7'
-
-    },
-
-];
-
 
 
 
 const Main = () => {
     const classes = useStyles();
-    const [data, setData] = useState([])
+    const userid = sessionStorage.getItem("sessionUser");
+    const [userBasedData, setUserBasedData] = useState([])
+    const [itemBasedData, setItemBasedData] = useState([])
+    const [recommendShopName, setRecommendShopName] = useState([])
+    
+
     const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('sessionUser'))
 
     useEffect(() => {
@@ -95,7 +46,10 @@ const Main = () => {
         else {
             axios.get(`http://localhost:8080/main`)
                 .then(res => {
-                    setData(res.data)
+                    setUserBasedData(res.data[0])
+                    setItemBasedData(res.data[1])
+                    setRecommendShopName(res.data[2])
+                    
                 })
                 .catch(e => {
                     alert(`List Failure`)
@@ -118,13 +72,15 @@ const Main = () => {
                     <Grid container justify="center" className={classes.wd}>
                         <Grid container justify="center" className={classes.title}>
                             <Typography variant="h5" >
-                                회원님의 취향을 분석한 추천 매장 리스트
-                    </Typography>
+                               {userid}회원님의 취향을 분석한 추천 매장 리스트
+                            </Typography>
                         </Grid>
                         <Divider variant="middle" />
                         <Grid container justify="center" spacing={2} >
-                            {data.map((post) => (
-                                <MainList key={post.shop_name} post={post} />
+                            {userBasedData.map((post) => (
+                                <Link to={"/shop/" + post.shop_id} className={classes.toolbarLink}>
+                                    <MainList key={post.shop_name} post={post} />
+                                </Link>
                             ))}
 
                         </Grid>
@@ -132,12 +88,12 @@ const Main = () => {
                     <Grid container justify="center" className={classes.wd}>
                         <Grid container justify="center" className={classes.title}>
                             <Typography variant="h5" >
-                                인기 맛집 리스트
+                                {userid}회원님이 높은 평점을 주신 [{recommendShopName}]과 유사한 매장 리스트
                     </Typography>
                         </Grid>
                         <Divider variant="middle" />
                         <Grid container justify="center" spacing={2} >
-                            {shoplistl.map((post) => (
+                            {itemBasedData.map((post) => (
                                 <MainList key={post.shop_name} post={post} />
                             ))}
 

@@ -58,11 +58,11 @@ const useStyles = makeStyles((theme) => ({
     maxwidth: {
         width: 300,
     },
-    marr:{
-        marginRight : theme.spacing(1),
-      },
-    marl:{
-      marginLeft: -4,
+    marr: {
+        marginRight: theme.spacing(1),
+    },
+    marl: {
+        marginLeft: -4,
     }
 
 }));
@@ -87,30 +87,25 @@ const ShopList = (props) => {
                                         <Typography variant="subtitle1" color="textSecondary">
                                             {post.shop_rev_avg}
                                         </Typography>
-                                    
-                                            <Rating name="iconstar" defaultValue={1} max={1} readOnly />
-                                            {post.shop_user_avg === undefined
-                                                ?
-                                                <Typography variant="subtitle1" color="textSecondary">
-                                                    예상 {post.shop_pred_avg}
-                                                </Typography>
-                                                :
-                                                // <Typography variant="subtitle1" color="textSecondary"  style={{ backgroundColor: "gold"}}>
-                                                //    내 평점 {post.shop_user_avg} 
-                                                //    {console.log(post.shop_user_avg)}
-                                                // </Typography>}
-                                                <>
-                                                    <Typography variant="subtitle1" color="textSecondary" className={classes.marr}>
-                                                        예상 {post.shop_pred_avg}
-                                                    </Typography>
-                                                    <Chip color="secondary" size="small" label={'내 평점  ' + post.shop_user_avg} />
-                                                </>
-                                            }
-                                   
+
+                                        <Rating name="iconstar" defaultValue={1} max={1} readOnly />
+
+                                        {/* <Typography variant="subtitle1" color="textSecondary" style={{ backgroundColor: "gold" }}>
+                                            내 평점 {post.shop_user_avg}
+                                            {console.log(post.shop_user_avg)}
+                                        </Typography>} */}
+
+                                        <Typography variant="subtitle1" color="textSecondary" className={classes.marr}>
+                                            예상 {post.shop_pred_avg}
+                                        </Typography>
+                                        {post.shop_user_avg !== undefined &&
+                                            <Chip color="secondary" size="small" label={'내 평점  ' + post.shop_user_avg} />
+                                        }
+
 
                                     </Grid>
                                     <Typography variant="subtitle1" color="textSecondary">
-                                        리뷰  {post.shop_rev_cnt}
+                                        리뷰  {post.shop_rev_cnt}개
                                     </Typography>
                                     <Grid item xs zeroMinWidth className={classes.maxwidth}>
                                         <Typography variant="subtitle1" color="textSecondary" noWrap>

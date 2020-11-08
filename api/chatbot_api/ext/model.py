@@ -222,11 +222,11 @@ def hook_user_based_recommend(df):
 
     return algo, df_shop
 
-algo, df_shop = hook_user_based_recommend(df)  # df_shop이 위와 중복이지만 우선 유지
+user_based_algo, df_shop = hook_user_based_recommend(df)  # df_shop이 위와 중복이지만 우선 유지
 
 
 def user_based_recommend(user):
-    result = algo.get_neighbors(user, k=5)
+    result = user_based_algo.get_neighbors(user, k=5)
 
     print(result)  # [882, 908, 989, 744, 745]
 
@@ -238,6 +238,34 @@ def user_based_recommend(user):
             recommend_set.add(item)
     return recommend_set , df_shop
 # ##########################
+
+
+# ##########################
+# 아이템 유사도 기반 k개의 샘플링 후 추천
+def hook_item_based_recommend(df):
+    df_shop = prep_shop_model(df)
+    df_shop = transform_data(df_shop)
+    data, train, test = prep_surprise_dataset(df_shop, 'shop_id')
+    option = {'name': 'pearson_baseline', 'user_based': False }  # cosine, msd, pearson, pearson_baseline / 'user_based: False > item_based
+    algo = KNNBaseline(sim_options=option)
+    algo.fit(train)
+
+    return algo, df_shop
+
+item_based_algo, df_shop = hook_item_based_recommend(df)  # df_shop이 위와 중복이지만 우선 유지
+
+def item_based_recommend(item):
+    item_inner_id = item_based_algo.trainset.to_inner_iid(item) # 내부 인덱스로 인코딩
+    print(item_inner_id)  
+    recommend_list = item_based_algo.get_neighbors(item_inner_id, k=10)
+    decode_recommend_list = []
+    for item in recommend_list:
+        _ = item_based_algo.trainset.to_raw_iid(item)
+        decode_recommend_list.append(_)
+
+    return decode_recommend_list, df_shop
+# ##########################
+
 
 
 

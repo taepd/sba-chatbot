@@ -137,11 +137,21 @@ class ShopDao(ShopDto):
         return json.loads(df.to_json(orient='records'))
 
     @classmethod
-    def find_by_shopid(cls,shop_id):
-        sql = cls.query.filter_by(shop_id = shop_id)
+    def find_by_shopid(cls, shop_id):
+        sql = db.session.query(ShopDto, FoodDto).\
+        filter(ShopDto.shop_id == FoodDto.shop_id).\
+        filter(ShopDto.shop_id == shop_id).limit(1)        
         df = pd.read_sql(sql.statement, sql.session.bind)
+        df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
         return json.loads(df.to_json(orient='records'))
         # return cls.query.filter_by(shop_id = shopid).all()
+
+
+        # sql = cls.query.filter_by(shop_id = shop_id)
+        # df = pd.read_sql(sql.statement, sql.session.bind)
+        # return json.loads(df.to_json(orient='records'))
+        # # return cls.query.filter_by(shop_id = shopid).all()
+
 
     @classmethod
     def find_limit(cls):
