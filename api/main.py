@@ -2,11 +2,9 @@ from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS, cross_origin
 from chatbot_api.ext.db import url, db, openSession
-from chatbot_api.ext.routes import initialize_routes
 from chatbot_api.resources import user
 from chatbot_api.resources.user import UserDto
 from chatbot_api.resources.food import FoodDto
-from chatbot_api.resources.shop import ShopDto
 from chatbot_api.resources.order_review import OrderReviewDto
 import numpy as np
 import pandas as pd
@@ -42,6 +40,7 @@ with app.app_context():
 
 # 테이블 일괄 생성
 with app.app_context():
+    from chatbot_api.ext.routes import initialize_routes  # db에서 sql를 첫 로딩시 실행하기 위한 임시 방편.. 모듈 로딩 관련
     db.create_all()
 
 
@@ -51,7 +50,9 @@ with app.app_context():
 #     if count == 0:
 #         UserDao.insert_many()
 
+
 initialize_routes(api)
+
 
 # @app.route('/api/test')
 # def test():

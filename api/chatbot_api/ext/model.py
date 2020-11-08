@@ -10,13 +10,18 @@ from surprise import SVD, NMF, KNNBaseline, KNNBasic
 from surprise.model_selection import train_test_split, cross_validate
 import pandas as pd
 
+from chatbot_api.ext.db import db
 """
 데이터 로딩
 surprise data형식에 맞춰 dataframe 변환
 """
+# 파일에서 불러옴
+# df = pd.read_csv("./data/csv/important/db/order_review(remove_userid_nan).csv", sep=",", encoding='utf-8-sig', error_bad_lines=False, engine="python")
 
-df = pd.read_csv("./data/csv/important/db/order_review(remove_userid_nan).csv", sep=",", encoding='utf-8-sig', error_bad_lines=False, engine="python")
-
+# db에서 불러옴
+sql = db.engine.execute("select * from order_review")
+df = pd.DataFrame(sql.fetchall())
+df.columns = sql.keys()
 
 
 
