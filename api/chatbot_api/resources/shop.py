@@ -289,7 +289,6 @@ class Shopscat(Resource):
     def get(cat_id : str):
         print('select catid : ' + cat_id)
         shopscat = ShopDao.find_by_cat(cat_id)
-        
         shopscat = ShopService.shop_rev_predict_by_surprise(shopscat)
 
         return shopscat, 200
@@ -348,7 +347,6 @@ class ShopSearch(Resource):
     def get(key : str):
         print("search",key)
         search = ShopDao.search(key)
-        
         search = ShopService.shop_rev_predict_by_surprise(search)
 
         return search, 200        

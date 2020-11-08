@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
     listtext: {
        paddingRight : 100,
+       width : 520,
     },
 
     paddingzero:{
