@@ -1,11 +1,14 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import MainList from './MainList';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+
 import MainNavigation from '../common/MainNavigation';
+import MainList from './MainList';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -84,44 +87,63 @@ const shoplistl = [
 
 const Main = () => {
     const classes = useStyles();
+    const [data, setData] = useState([])
     const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('sessionUser'))
+
+    useEffect(() => {
+        if (loggedIn === null) return
+        else {
+            axios.get(`http://localhost:8080/main`)
+                .then(res => {
+                    setData(res.data)
+                })
+                .catch(e => {
+                    alert(`List Failure`)
+                    throw (e)
+                })
+
+        }
+    }, [])
+
+
+
     return (
         <React.Fragment>
             <CssBaseline />
             <MainNavigation />
             {  loggedIn === null
-            ?  '로그인하세요'
-            :
-            <>
-            <Grid container justify="center" className={classes.wd}>
-                <Grid container justify="center" className={classes.title}>
-                    <Typography variant="h5" >
-                        회원님의 취향을 분석한 추천 매장 리스트
+                ? '로그인하세요'
+                :
+                <>
+                    <Grid container justify="center" className={classes.wd}>
+                        <Grid container justify="center" className={classes.title}>
+                            <Typography variant="h5" >
+                                회원님의 취향을 분석한 추천 매장 리스트
                     </Typography>
-                </Grid>
-                <Divider variant="middle" />
-                <Grid container justify="center" spacing={2} >
-                    {shoplistl.map((post) => (
-                        <MainList key={post.shop_name} post={post} />
-                    ))}
+                        </Grid>
+                        <Divider variant="middle" />
+                        <Grid container justify="center" spacing={2} >
+                            {data.map((post) => (
+                                <MainList key={post.shop_name} post={post} />
+                            ))}
 
-                </Grid>
-            </Grid>
-            <Grid container justify="center" className={classes.wd}>
-                <Grid container justify="center" className={classes.title}>
-                    <Typography variant="h5" >
-                        인기 맛집 리스트
+                        </Grid>
+                    </Grid>
+                    <Grid container justify="center" className={classes.wd}>
+                        <Grid container justify="center" className={classes.title}>
+                            <Typography variant="h5" >
+                                인기 맛집 리스트
                     </Typography>
-                </Grid>
-                <Divider variant="middle" />
-                <Grid container justify="center" spacing={2} >
-                    {shoplistl.map((post) => (
-                        <MainList key={post.shop_name} post={post} />
-                    ))}
+                        </Grid>
+                        <Divider variant="middle" />
+                        <Grid container justify="center" spacing={2} >
+                            {shoplistl.map((post) => (
+                                <MainList key={post.shop_name} post={post} />
+                            ))}
 
-                </Grid>
-            </Grid>
-            </>
+                        </Grid>
+                    </Grid>
+                </>
             }
         </React.Fragment>
     );

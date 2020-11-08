@@ -1,7 +1,7 @@
 import logging
 from flask import Blueprint
 from flask_restful import Api
-# from chatbot_api.resources.home import Home
+from chatbot_api.resources.home import Home
 from chatbot_api.resources.user import User, Access
 from chatbot_api.resources.home import Home
 from chatbot_api.resources.shop import Shop, Shops, Shopscat, ShopSearch
@@ -38,19 +38,20 @@ api = Api(access)
 
 def initialize_routes(api):
     print('========== routes ==========')
-    api.add_resource(Home,'/main')
+    api.add_resource(Home,'/main')  # 초기화면 userid 노출을 피하기 위해 post형식 사용
     api.add_resource(User, '/user', '/user/<string:userid>')
+    api.add_resource(Shop, '/shop/<string:shop_id>')
+    api.add_resource(ShopSearch, '/search/<string:key>')
     api.add_resource(Shops, '/shops')
     api.add_resource(Shopscat,'/shops/<string:cat_id>')
-    api.add_resource(Shop, '/shop/<string:shop_id>')
     api.add_resource(OrderReview, '/order')
     api.add_resource(OrderReviewPage, '/order/<string:userid>')
     api.add_resource(OrderReviewUser, '/mypage/<string:userid>')
     api.add_resource(OrderReviewSelect, '/reviewwrite/<string:or_id>')
     api.add_resource(OrderReviewInsert, '/reviewwrite')
-    api.add_resource(ShopSearch, '/search/<string:key>')
     # api.add_resource(Auth, '/api/auth')
-    api.add_resource(Access, '/access')
+    api.add_resource(Access, '/access', '/access/<string:userid>')
+
 
 
 @user.errorhandler(500)

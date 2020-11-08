@@ -69,7 +69,7 @@ const MainList = (props) => {
                         <CardActionArea href="/review">
                             <CardMedia
                                 className={classes.media}
-                                image={post.shop_img}
+                                image={'https://www.yogiyo.co.kr' + post.shop_img}
                                 title="Contemplative Reptile"
                             />
                             <CardContent>

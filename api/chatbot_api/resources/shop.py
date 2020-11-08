@@ -322,11 +322,8 @@ class Shop(Resource):
         shopAfoodAreview = []
         shop_dict = {'Shop' : ShopDao.find_by_shopid(shop_id)}
 
-        # 음식 예상 평점 키/값 입력
         food = FoodDao.food_find_by_shopid(shop_id)
-        # print('*'*40)
-        # print(food)
-        # print('*'*40)
+        # 음식 예상 평점 키/값 입력
         food = ShopService.food_rev_predict_by_surprise(food)
         food_dict = {'Food' : food}
 
@@ -342,16 +339,6 @@ class Shop(Resource):
         # print(shopAfoodAreview[2])
         return shopAfoodAreview, 200
 
-
-    # @staticmethod
-    # def get(shopid : str):
-    #     food = FoodDao.food_find_by_shopid(shopid)
-    #     print('*'*40)
-    #     # shop = shop.json()
-    #     # print(shop)
-    #     print(type(food))    
-    #     print(food)
-    #     return food, 200
 
 
 class ShopSearch(Resource):

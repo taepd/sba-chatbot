@@ -236,7 +236,7 @@ def user_based_recommend(user):
         # print(df_)
         for item in df_['shop_id'].head(5).values:
             recommend_set.add(item)
-    print(recommend_set)
+    return recommend_set , df_shop
 # ##########################
 
 

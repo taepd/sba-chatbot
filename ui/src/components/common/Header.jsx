@@ -133,7 +133,7 @@ const Header = props => {
     const logout = e => {
         
         e.preventDefault();
-        axios.delete(`http://localhost:8080/access`, { userid })
+        axios.delete(`http://localhost:8080/access/${userid}`)
         .then(res => {
             alert('logout success')
             sessionStorage.removeItem("sessionUser")
