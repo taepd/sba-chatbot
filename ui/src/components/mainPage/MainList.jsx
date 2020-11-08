@@ -8,13 +8,14 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Rating from '@material-ui/lab/Rating';
-
+import Chip from '@material-ui/core/Chip';
 
 
 const useStyles = makeStyles((theme) => ({
     divroot: {
         flexGrow: 1,
         marginTop: theme.spacing(3),
+
 
     },
     root: {
@@ -40,8 +41,17 @@ const useStyles = makeStyles((theme) => ({
     },
     media: {
         height: 140,
-        
-      },
+
+    },
+    textOverflow: {
+        textOverflow: 'ellipsis',
+    },
+    marr: {
+        marginRight: theme.spacing(1),
+    },
+    marl: {
+        marginLeft: -4,
+    }
 }));
 
 function HalfRating() {
@@ -61,7 +71,7 @@ const MainList = (props) => {
     const { post } = props;
 
     return (
-        
+
         <div className={classes.divroot} spacing={2}>
             <Grid container justify="flex-start"  >
                 <Grid>
@@ -72,26 +82,30 @@ const MainList = (props) => {
                                 image={'https://www.yogiyo.co.kr' + post.shop_img}
                                 title="Contemplative Reptile"
                             />
-                            <CardContent>
-                                <Typography gutterBottom variant="h6" component="h6">
+                            <CardContent >
+                                <Typography gutterBottom variant="h6" component="h6" noWrap>               {/* noWrap: test overflow 적용 */}
                                     {post.shop_name}
                                 </Typography>
                                 <Grid container direction="row">
-                                    <Rating name="iconstar" defaultValue={1} max={1}/> 
-                                        <Typography variant="subtitle1" color="textSecondary">
-                                             {post.shop_rev_avg} /
+                                    <Rating name="iconstar" defaultValue={1} max={1} />
+                                    <Typography variant="subtitle1" color="textSecondary">
+                                        {post.shop_rev_avg} /
                                         </Typography>
-                                    <Rating name="iconstar" defaultValue={1} max={1}/> 
-                                        <Typography variant="subtitle1" color="textSecondary">
-                                            예상 {post.shop_pred_avg}
-                                        </Typography>
+                                    <Rating name="iconstar" defaultValue={1} max={1} />
+                                    <Typography variant="subtitle1" color="textSecondary" className={classes.marr}>
+                                        예상 {post.shop_pred_avg}
+                                    </Typography>
+
                                 </Grid>
+                                    {post.shop_user_avg !== undefined &&
+                                        <Chip color="secondary" size="small" label={'내 평점  ' + post.shop_user_avg} />
+                                    }
                                 <Typography variant="body2" color="textSecondary" component="p">
-                                   리뷰 {post.shop_rev_amt}
+                                    리뷰 {post.shop_rev_cnt}개
                                 </Typography>
-                                
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                   대표메뉴 {post.food_name}
+
+                                <Typography variant="body2" color="textSecondary" component="p" noWrap>
+                                    대표메뉴 {post.food_name}
                                 </Typography>
                             </CardContent>
                         </CardActionArea>

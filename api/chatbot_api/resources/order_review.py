@@ -284,7 +284,6 @@ class OrderReviewInsert(Resource):
         return 200
 
 
-if __name__ == "__main__":
-    s = UserService()
-    model = s.load_model_from_file()
-
+# if __name__ == "__main__":
+    # s = UserService()
+    # model = s.load_model_from_file()
