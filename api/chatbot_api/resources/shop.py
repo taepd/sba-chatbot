@@ -294,6 +294,7 @@ class Shops(Resource):
         # print("-------------shops-----------------")
         # print(type(shops))
         # print(shops)
+        shops = ShopService.shop_rev_predict_by_surprise(shops)
         return shops, 200
 
 class Shopscat(Resource):
