@@ -64,14 +64,13 @@ const ChatbotMenuSearchContents = (props) => {
     const theme = useTheme();
     const { post } = props;
     const userid = sessionStorage.getItem("sessionUser");
-
     return (
 
         <div className={classes.divroot}>
             <Grid container justify="flex-start" >
                 <Grid>
                     <Card className={classes.root} square elevation={0} variant="outlined" >
-                        <CardActionArea href="/shop/67">
+                        <CardActionArea href={"/shop/" + post.shop_id}>
                             <CardMedia
                                 className={classes.media}
                                 image={post.food_img}
@@ -79,15 +78,18 @@ const ChatbotMenuSearchContents = (props) => {
                             />
                             <CardContent>
                                 <Typography variant="body2" >
-                                    {post.food_name} / {post.price}원
+                                    {post.food_name}
+                                </Typography>
+                                <Typography variant="body2" >
+                                    {post.price}원
                                 </Typography>
                                 <Grid container direction="row">
-                                    <Typography gutterBottom variant="caption" color="textSecondary" className={classes.mrr}>
+                                    {/* <Typography gutterBottom variant="caption" color="textSecondary" className={classes.mrr}>
                                         {post.shop_name}
-                                    </Typography>
+                                    </Typography> */}
                                     <Rating name="iconstar" defaultValue={1} max={1} size="small" className={classes.rating}/>
                                     <Typography variant="caption" color="textSecondary">
-                                        {post.shop_rev_avg}
+                                        {post.food_rev_cnt}
                                     </Typography>
                                 </Grid>
                             </CardContent>

@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(1),
     },
     titleb: {
-        marginTop : theme.spacing(2),
+        marginTop: theme.spacing(2),
         marginBottom: theme.spacing(1),
     },
     toolbarLink: {
@@ -84,43 +84,54 @@ const Main = () => {
             <CssBaseline />
             <MainNavigation />
             <Grid container justify="center" className={classes.he}>
-            { loading ? <CircularProgress /> :
-                <>
-                    { loggedIn === null
-                        ? '로그인하세요'
-                        :
-                        <>
-                            <Grid container justify="center" className={classes.wd}>
-                                <Grid container justify="center" direction="column" alignItems="center"  className={classes.title}>
-                                    <Typography variant="h5" >
-                                        {userid} 님을 위한 추천 매장
+                {loading ? <CircularProgress /> :
+                    <>
+                        {loggedIn === null
+                            ? 
+                                <Grid container justify="center" direction="column" alignItems="center">
+                                    <Typography variant="h6" >
+                                    추천 서비스를 이용하시려면 로그인을 해주세요 
                                     </Typography>
-                                   
-                                </Grid>
-                                {/* <Divider variant="middle" /> */}
-                                <Grid container justify="center" spacing={2} >
-                                    {userBasedData.map((post) => (
-                                            <MainList key={post.shop_name} post={post} />
-                                    ))}
-                                </Grid>
-                            </Grid>
-                            <Grid container justify="center" className={classes.wd}>
-                                <Grid container justify="center" direction="column" alignItems="center" className={classes.titleb}>
-                                    <Typography variant="h5" >
-                                        [{recommendShopName}]과 함께 다른 고객 님들이 찾은 매장
+                                    <Typography variant="subtitle1" >
+                                    userid : user000001 ~user000001
+                                    </Typography>
+                                    <Typography variant="subtitle1" >
+                                    password : 1004
                                     </Typography>
                                 </Grid>
-                                {/* <Divider variant="middle" /> */}
-                                <Grid container justify="center" spacing={2} >
-                                    {itemBasedData.map((post) => (
+                            :
+                            <>
+                                <Grid container justify="center" className={classes.wd}>
+                                    <Grid container justify="center" direction="column" alignItems="center" className={classes.title}>
+                                        <Typography variant="h5" >
+                                            {userid} 님을 위한 추천 매장
+                                    </Typography>
+
+                                    </Grid>
+                                    {/* <Divider variant="middle" /> */}
+                                    <Grid container justify="center" spacing={2} >
+                                        {userBasedData.map((post) => (
                                             <MainList key={post.shop_name} post={post} />
-                                    ))}
+                                        ))}
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </>
-                    }
-                </>
-            }
+                                <Grid container justify="center" className={classes.wd}>
+                                    <Grid container justify="center" direction="column" alignItems="center" className={classes.titleb}>
+                                        <Typography variant="h5" >
+                                            [{recommendShopName}]과 함께 다른 고객 님들이 찾은 매장
+                                    </Typography>
+                                    </Grid>
+                                    {/* <Divider variant="middle" /> */}
+                                    <Grid container justify="center" spacing={2} >
+                                        {itemBasedData.map((post) => (
+                                            <MainList key={post.shop_name} post={post} />
+                                        ))}
+                                    </Grid>
+                                </Grid>
+                            </>
+                        }
+                    </>
+                }
             </Grid>
         </React.Fragment>
     );

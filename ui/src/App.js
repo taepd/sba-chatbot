@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import { Header, Footer, Navigation , MainNavigation} from './components/common'
-import { Review, Main, ReviewWritePage, UserInfo, UserPage, ShopMain, Order, ShopSearch, Chatbot } from './components'
-import { SignIn, SignUp } from './containers/user'  
+import { Header, Footer, Navigation, MainNavigation } from './components/common'
+import { Review, Main, ReviewWritePage, UserInfo, UserPage, ShopMain, Order, ShopSearch} from './components'
+import { SignIn, SignUp } from './containers/user'
 // import {Home, User, Article, Item} from './templates'  
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import ReduxThunk from 'redux-thunk'
 import axios from 'axios'
-// import { Chatbot } from 'react-chatbot-kit'
+
+import { Chatbot } from 'react-chatbot-kit'
+import config from './components/chatbot/config'
+import ActionProvider from './components/chatbot/ActionProvider'
+import MessageParser from './components/chatbot/MessageParser'
 
 axios.defaults.withCredentials = true
 
@@ -26,7 +30,7 @@ const App = () => {
         {/* <div style={{ width: "1000px", margin: "0 auto" }}> */}
 
         <Router>
-            <Header isAuth = {loggedIn}/>
+            <Header isAuth={loggedIn} />
             <main>
                 <Switch>
                     <Provider store={createStore(rootReducer, applyMiddleware(ReduxThunk))}>
@@ -35,10 +39,10 @@ const App = () => {
                         <Route path="/signIn" component={SignIn} />
                         <Route path="/signUp" component={SignUp} />
                         <Route path="/shop/:shop_id" component={Review} />
-                        <Route path="/search/:key" component={ShopSearch}/>
+                        <Route path="/search/:key" component={ShopSearch} />
                         <Switch>
-                            <Route path="/shops/:cat_id" component={ShopMain}/>
-                            <Route path="/shops" component={ShopMain}/>
+                            <Route path="/shops/:cat_id" component={ShopMain} />
+                            <Route path="/shops" component={ShopMain} />
                         </Switch>
                         <Route path="/reviewwrite/:or_id" component={ReviewWritePage} />
                         {/* <Route path="/userinfo" component={UserInfo} /> */}
@@ -56,7 +60,7 @@ const App = () => {
                         <Route component={Error}/> */}
                     </Provider>,
                 </Switch>
-                <Chatbot />
+                <Chatbot config={config} messageParser={MessageParser} actionProvider={ActionProvider} />
             </main>
             <Footer title="Footer" description="SBA React Machine Learning Project Team#1" />
         </Router>

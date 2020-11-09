@@ -50,80 +50,174 @@ export const ShopSearch = () => {
 //     )
 // }
 
-export const InputText = (props) => {
-    // const [chatbotData, setChatbotData] = useState()
-    const [intent, setIntent] = useState()
-    console.log('chatbot' + JSON.stringify(props.value))
-    alert(JSON.stringify(props))
-    // const re = ''
-    // useEffect(()=>{
-    axios.get(`http://localhost:8080/chatbot/${props.value}`)
-        .then(res => {
+// export const InputText = (props) => {
+//     // const [chatbotData, setChatbotData] = useState()
+//     const [intent, setIntent] = useState()
+//     console.log('chatbot' + JSON.stringify(props.value))
+//     alert(JSON.stringify(props))
+//     // const re = ''
+//     // useEffect(()=>{
+//     axios.get(`http://localhost:8080/chatbot/${props.value}`)
+//         .then(res => {
 
-            alert(JSON.stringify(res.data[0][0]))
-            // alert(JSON.stringify(res.data[0]))
-            // console.log(res.data[1])
-            // console.log(typeof (res.data[1]))
-            // setChatbotData(res.data[0])
+//             alert(JSON.stringify(res.data[0][0]))
+//             // alert(JSON.stringify(res.data[0]))
+//             // console.log(res.data[1])
+//             // console.log(typeof (res.data[1]))
+//             // setChatbotData(res.data[0])
 
-            setIntent(res.data[1])
-            if (res.data[1] == '추천') {
-                alert("1")
-                // setChatbotData('recommend')
-            }
-            if (res.data[1] == '주문') {
-                alert('2')
-                // setChatbotData('order')
-            }
-            if (res.data[1] == '인사') {
-                alert('3')
-                // setChatbotData('greeting')
-            }
-        }).catch(err => {
-            alert("안돼 돌아가")
-        })
-    // })
+//             setIntent(res.data[1])
+//             if (res.data[1] == '추천') {
+//                 alert("1")
+//                 // setChatbotData('recommend')
+//             }
+//             if (res.data[1] == '주문') {
+//                 alert('2')
+//                 // setChatbotData('order')
+//             }
+//             if (res.data[1] == '인사') {
+//                 alert('3')
+//                 // setChatbotData('greeting')
+//             }
+//         }).catch(err => {
+//             alert("안돼 돌아가")
+//         })
+//     // })
+    
+// }
+
+// InputText.propTypes = {
+//     steps: PropTypes.object,
+// };
+
+
+const Test2 = (props)=>{
+
+    props.triggerNextStep({trigger: localStorage.getItem('intent')})
+    
 
 }
 
-InputText.propTypes = {
-    steps: PropTypes.object,
-};
-
 class Test extends Component {
-
     constructor(props) {
+
+        // console.log(props)
         super(props);
-
         this.state = {
-            // result='',
-            trigger: false,
+            inte:'',
+            food_name :'',
+            food_img:'',
+            price:'',
+            food_rev_cnt:'',
+            shop_id: '',
+            result:[],
+            // trigger: false,
         };
-        this.triggerNext = this.triggerNext.bind(this)
+        // this.triggerNext()
     }
-
-    componentMount() {
-        const [chatbotData, setChatbotData] = useState()
-        const self = this;
+    
+    componentWillMount() {
+        console.log('죽여')
         const { steps } = this.props;
-        const text = steps.input.value;
-
-        axios.get(`http://localhost:8080/chatbot/${text}`)
-            .then(res => {
-                // alert(JSON.stringify(res.data))
-                console.log(res.data[1])
-                setChatbotData(res.data)
+        this.state.input = steps.input.value;
+        // const [chatbotData, setChatbotData] = useState()
+        console.log(this.state.input)
+        axios.get(`http://localhost:8080/chatbot/${this.state.input}`)
+        .then(res => {
+            this.state.inte = res.data[1]
+            res.data[0].forEach(item => {this.state.result.push({
+                food_name : item.food_name,
+                food_img: item.food_img,
+                price : item.price,
+                food_rev_cnt : item.food_rev_cnt,
+                shop_id : item.shop_id
+            })})
+            
+            // res.data.forEach
+            // alert(JSON.stringify(res.data))
+            // console.log('????????????'+res.data[1])
+            // setChatbotData(res.data)
+            console.log("iiiiiiiiiiiiiiiiiii"+this.state.inte)
             }).catch(err => {
                 alert("안돼 돌아가")
             })
-        console.log(chatbotData)
-
-        return (
-            alert('d으앗')
+        }
+        
+    // triggetNext() {
+    //     this.setState({ trigger: true }, () => {
+    //       this.props.triggerNextStep();
+    //     });
+    // }
+    render(){
+        // const { trigger} = this.state;
+        return(
+            <div>
+            <p>시ㅏ리ㅏㅓ이라ㅓㅁ</p>
+            <ChatbotMenuSearch post={this.state.result}/>
+            </div>
         )
     }
+}
 
 
+
+
+class Input extends Component {
+    constructor(props) {
+
+        // console.log(props)
+        super(props);
+        this.state = {
+            inte:'',
+            food_name :'',
+            food_img:'',
+            price:'',
+            food_rev_cnt:'',
+            shop_id: '',
+            result:[],
+            // trigger: false,
+        };
+        // this.triggerNext()
+    }
+    
+    componentWillMount() {
+        console.log('죽여')
+        const { steps } = this.props;
+        this.state.input = steps.input.value;
+        // const [chatbotData, setChatbotData] = useState()
+        console.log(this.state.input)
+        axios.get(`http://localhost:8080/chatbot/${this.state.input}`)
+        .then(res => {
+            this.state.inte = res.data[1]
+            res.data[0].forEach(item => {this.state.result.push({
+                food_name : item.food_name,
+                food_img: item.food_img,
+                price : item.price,
+                food_rev_cnt : item.food_rev_cnt,
+                shop_id : item.shop_id
+            })})
+            
+            // res.data.forEach
+            // alert(JSON.stringify(res.data))
+            // console.log('????????????'+res.data[1])
+            // setChatbotData(res.data)
+            console.log("iiiiiiiiiiiiiiiiiii"+this.state.inte)
+            }).catch(err => {
+                alert("안돼 돌아가")
+            })
+        }
+        
+    // triggetNext() {
+    //     this.setState({ trigger: true }, () => {
+    //       this.props.triggerNextStep();
+    //     });
+    // }
+    render(){
+        // const { trigger} = this.state;
+        return(
+            <ChatbotMenuSearch post={this.state.result}/>
+        )
+    }
 }
 
 Component.propTypes = {
@@ -131,6 +225,11 @@ Component.propTypes = {
     triggerNextStep: PropTypes.func,
 };
 
+
+Test.propTypes = {
+    steps: PropTypes.object,
+    triggerNextStep: PropTypes.func,
+};
 
 const ItemChatBot = () => {
     const userid = sessionStorage.getItem("sessionUser");
@@ -202,14 +301,14 @@ const ItemChatBot = () => {
                             }
                             return true;
                         },
-                        trigger: (value) => {
-                            inputText(value);                             
-                            setTimeout(() => {}, 50000)
-                            return intent
-                            // return localStorage.getItem('intent')
-                           
-                        },
-                        // trigger : 'test'
+                        // trigger: (value) => {
+                            // inputText(value);                             
+                        //     setTimeout(() => {}, 50000)
+                        //     return intent
+                        //     // return localStorage.getItem('intent')
+                        // },
+                        // component:<Test/>
+                        trigger : 'test'
                     },
                     {
                         id: '추천',
@@ -230,10 +329,19 @@ const ItemChatBot = () => {
                     },
                     {
                         id: 'test',
-                        component: <Test />,
-                        message: 'ㅅㅄㅄㅄㅄ',
-                        end: true,
+                        component: <Test/>,
+                        // message: 'ㅅㅄㅄㅄㅄ',
+                        trigger:'1',
+                        // end: true,
                     },
+                    {
+                        id: '12',
+                        component: <Test2 />,
+                        // message: 'ㅅㅄㅄㅄㅄ',
+                        trigger:'1',
+                        // end: true,
+                    },
+
 
                 ]}
             />
