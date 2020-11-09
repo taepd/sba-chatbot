@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 import joblib
 import konlpy
-from eunjeon import Mecab
+# from eunjeon import Mecab
 from bs4 import BeautifulSoup
 from chatbot_api.ext.searchChatbot import chatbot
 
