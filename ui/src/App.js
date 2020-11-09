@@ -8,6 +8,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import ReduxThunk from 'redux-thunk'
 import axios from 'axios'
+// import { Chatbot } from 'react-chatbot-kit'
 
 axios.defaults.withCredentials = true
 
@@ -15,6 +16,9 @@ axios.defaults.withCredentials = true
 const rootReducer = combineReducers({
     // itemReducer
 })
+
+
+
 
 const App = () => {
     const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('sessionUser'))
@@ -52,7 +56,7 @@ const App = () => {
                         <Route component={Error}/> */}
                     </Provider>,
                 </Switch>
-                <Chatbot/>
+                <Chatbot />
             </main>
             <Footer title="Footer" description="SBA React Machine Learning Project Team#1" />
         </Router>

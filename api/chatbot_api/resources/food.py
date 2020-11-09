@@ -8,7 +8,14 @@ import json
 import os
 import numpy as np
 import pandas as pd
+import joblib
+import konlpy
+from eunjeon import Mecab
+from bs4 import BeautifulSoup
+from chatbot_api.ext.searchChatbot import chatbot
 
+
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier  # rforest
 from sklearn.tree import DecisionTreeClassifier  # dtree
 from sklearn.ensemble import RandomForestClassifier  # rforest
@@ -104,6 +111,15 @@ class FoodDao(FoodDto):
         # df = pd.read_sql(sql.statement, sql.session.bind)
         return cls.query.filter_by(food_id = food_id).first()
 
+    @classmethod
+    def chat_food_find(cls, key):
+        print("되자")
+        # print('basequery',cls.query)
+        sql = cls.query.filter(FoodDto.food_name.like('%'+key+'%')).\
+            order_by(FoodDao.food_rev_cnt.desc())
+        df = pd.read_sql(sql.statement,sql.session.bind)
+        df = df.head(3)
+        return json.loads(df.to_json(orient='records'))
 
 
 class Food(Resource):
@@ -114,8 +130,42 @@ class Food(Resource):
         # print(type(shop))
         return food.json, 200
 
+
+class ChatbotService:
+
+    @staticmethod
+    def load_model_from_file():
+        print("어디까지 오니 ================")
+        fname = r'./modeling/chatbot_model.h5'
+        model = joblib.load(fname)
+        print("모델 리턴전 ")
+        return model
+
+    @staticmethod
+    def text(text):
+        print("chatbot 2 text : ", text)
+        chat = chatbot(text)
+        word = chat[1]
+        text = chat[0]
+        print('하이', chat[0])
+        print('dhdn', chat[1])
+        chatsearch = FoodDao.chat_food_find(word)
+        print('조회',chatsearch)
+        return chatsearch, text, 200
+
+class Chatbot(Resource):
+    
+    @staticmethod
+    def get(key : str):
+        print("chatbot 1 key : ", key)
+        words = ChatbotService.text(key)
+        return words, 200
+    
+
 # ------------ 실행 영역 --------------
 # if __name__ == '__main__':
+#     chat = ChatbotService()
+#     model = chat.load_model_from_file()
 
 #     # import pdb
 #     # # 데이터 일괄 입력

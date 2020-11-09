@@ -1,11 +1,12 @@
 import logging
 from flask import Blueprint
 from flask_restful import Api
-from chatbot_api.resources.order_review import OrderReview, OrderReviewPage, OrderReviewUser, OrderReviewSelect,OrderReviewInsert
 from chatbot_api.resources.user import User, Access
-from chatbot_api.resources.food import Food
 from chatbot_api.resources.home import Home
 from chatbot_api.resources.shop import Shop, Shops, Shopscat, ShopSearch
+from chatbot_api.resources.food import Food, Chatbot
+from chatbot_api.resources.order_review import OrderReview, OrderReviewPage, OrderReviewUser, OrderReviewSelect,OrderReviewInsert
+
 
 
 home = Blueprint('home', __name__, url_prefix='/')
@@ -48,6 +49,12 @@ def initialize_routes(api):
     api.add_resource(OrderReviewUser, '/mypage/<string:userid>')
     api.add_resource(OrderReviewSelect, '/reviewwrite/<string:or_id>')
     api.add_resource(OrderReviewInsert, '/reviewwrite')
+    api.add_resource(Chatbot, '/chatbot/<string:key>')
+    # api.add_resource(Home, '/api')
+    # api.add_resource(Item, '/api/item/<string:id>')
+    # api.add_resource(Items,'/api/items')
+    # api.add_resource(User, '/user/<string:id>')
+    # api.add_resource(Users, '/api/users')
     # api.add_resource(Auth, '/api/auth')
     api.add_resource(Access, '/access', '/access/<string:userid>')
 
