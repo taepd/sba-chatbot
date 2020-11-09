@@ -1,0 +1,11 @@
+.bot_avatar {
+    width: 55px;
+    height: 55;
+    border-radius: 25%;
+    display:  flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    border-color: purple;
+    color: ffffff;
+}

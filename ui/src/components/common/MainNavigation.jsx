@@ -116,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
     },
     margintop: {
         marginTop: theme.spacing(3),
-        marginBottom : theme.spacing(8),
+        marginBottom : theme.spacing(6),
     },
     button: {
         border: "0px",

@@ -8,11 +8,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 import pickle
 from sklearn.naive_bayes import MultinomialNB
-from eunjeon import Mecab
+# from eunjeon import Mecab
 # from dataCreate import dataCreate
 
-mecab = Mecab()
-kkma = konlpy.tag.Kkma()
+# mecab = Mecab()
+# kkma = konlpy.tag.Kkma()
+# Okt = konlpy.tag.Okt()
+komoran = konlpy.tag.Komoran()
 
 ##########데이터 로드
 chatbot_data = pd.read_csv('C:/Users/user/Desktop/chat/chatbot/NLP/running.csv')
@@ -45,7 +47,7 @@ for i, text in enumerate(x_data):
 #텍스트 정제 (어간 추출)
 for i, text in enumerate(x_data):
     # okt = konlpy.tag.Okt()
-    clean_words = mecab.nouns(text) 
+    clean_words = komoran.nouns(text) 
     # print(clean_words) #['스토리', '진짜', '노잼']
     text = ' '.join(clean_words)
     # print(text) #스토리 진짜 노잼
@@ -90,7 +92,7 @@ def chatbot(text):
     get_data_list = [text][0]
 
 
-    morpphed_text = kkma.pos(get_data_list)
+    morpphed_text = komoran.pos(get_data_list)
     print('5',morpphed_text) # [('근처', 'NNG'), ('피자', 'NNG'), ('추천', 'NNG'), ('해', 'XSV+EC'), ('줘', 'VX+EC')]
 
     tagged_text = ''
@@ -116,7 +118,7 @@ def chatbot(text):
     #텍스트 정제 (어간 추출)
     for i, text in enumerate(x_data):
         # okt = konlpy.tag.Okt()
-        clean_words = mecab.nouns(text) 
+        clean_words = komoran.nouns(text) 
         print('clean_words',clean_words) 
         text = ' '.join(clean_words)
         print('text',text) 
