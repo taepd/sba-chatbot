@@ -242,7 +242,8 @@ class ShopService:
         shops_dict_ = shops_dict
 
         for i, row in enumerate(shops_dict_):
-            userid = int((session['user']['userid']).lstrip('user'))
+            # userid = int((session['user']['userid']).lstrip('user'))
+            userid = session['user']['userid']
             shop_id = row['shop_id']
 
             predict = predict_shop(userid, shop_id) # 인자를 string으로 넣어야 한다고 함
@@ -262,8 +263,8 @@ class ShopService:
         food_dict_ = food_dict
 
         for i, row in enumerate(food_dict_):
-            userid = int((session['user']['userid']).lstrip('user'))
-
+            # userid = int((session['user']['userid']).lstrip('user'))
+            userid = session['user']['userid']
             food_id = row['food_id']
 
             predict = predict_food(userid, food_id) # 인자를 string으로 넣어야 한다고 함
