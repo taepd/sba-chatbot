@@ -493,7 +493,7 @@ service.hook()
 # ==============================================================
 # ==============================================================
 
-parser = reqparse.RequestParser()  # only allow price changes, no name changes allowed
+parser = reqparse.RequestParser()  # only allow price changes, no name changes allowed   # deprecated 예정이라고 함
 parser.add_argument('userid', type=str, required=True,
                                         help='This field should be a userid')
 parser.add_argument('password', type=str, required=True,
@@ -582,18 +582,28 @@ class Auth(Resource):
 
 class Access(Resource):
 
-    def post(self):
+    @staticmethod
+    def post():
         print('========== access post 요청 받음 ==========')
         args = parser.parse_args()
         user = UserVo()
         user.userid = args.userid
         user.password = args.password
-        print(user.userid)
-        print(user.password)
         data = UserDao.login(user)
         if data[0]:
+            # session[f'{args.userid}'] = data[0]
             session['user'] = data[0]
+        print(session)
         return data[0], 200
+
+    @staticmethod
+    def delete(userid):
+        print('========== access delete 요청 받음 ==========')
+        print(session)
+        session.pop('user', None)
+        # session.pop('user', None)
+        # session.clear()   
+        return {'code' : 0, 'message' : 'SUCCESS'}, 200
 
 
 

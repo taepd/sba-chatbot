@@ -1,7 +1,7 @@
 # from sqlalchemy import Column, Integer, Float, String, Date, ForeignKey, create_engine
 # from sqlalchemy import Column, Integer, Float, String, ForeignKey, create_engine
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
-from typing import List
+
 from flask import request
 from flask_restful import Resource, reqparse
 from flask import jsonify
@@ -192,7 +192,7 @@ class OrderReviewDao(OrderReviewDto):
         # print(df)
         return json.loads(df.to_json(orient='records'))
     
-    #리뷰 작성 save
+    # 리뷰 작성 save
     @classmethod
     def order_review_writer(cls, params):
         or_id = params.pop("or_id")
@@ -200,6 +200,8 @@ class OrderReviewDao(OrderReviewDto):
             filter(cls.or_id == or_id).\
             update(params,synchronize_session=False);
         db.session.commit()
+
+
 
 
 # ==============================================================
@@ -271,7 +273,7 @@ class OrderReviewSelect(Resource):
 class OrderReviewInsert(Resource):
 
     @staticmethod
-    def post():
+    def post():  # update로 변경할 것
         params = request.get_json()
         # or_id = params.pop("or_id")
         # print(or_id)
@@ -284,7 +286,6 @@ class OrderReviewInsert(Resource):
         return 200
 
 
-if __name__ == "__main__":
-    s = UserService()
-    model = s.load_model_from_file()
-
+# if __name__ == "__main__":
+    # s = UserService()
+    # model = s.load_model_from_file()

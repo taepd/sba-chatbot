@@ -58,7 +58,7 @@ const App = () => {
                 </Switch>
                 <Chatbot />
             </main>
-            <Footer title="Footer" description="Something here to give the footer a purpose!" />
+            <Footer title="Footer" description="SBA React Machine Learning Project Team#1" />
         </Router>
         {/* </div> */}
     </>)
