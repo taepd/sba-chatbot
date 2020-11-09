@@ -32,6 +32,7 @@ class HomeService:
                 
         # print(shop_dict_list)
         recommend = ShopService.shop_rev_predict_by_surprise(shop_dict_list)
+        print(recommend)
         user_based_list = random.sample(recommend, 4)  # 랜덤하게 4개 추출
 
         return user_based_list, df_shop
@@ -78,7 +79,7 @@ class Home(Resource):
     @staticmethod
     def get():
         userid = session['user']['userid']
-        userid = int(userid.lstrip('user'))
+        # userid = int(userid.lstrip('user'))
         print('userid: ', userid)
         
         # user_based_recommendation
