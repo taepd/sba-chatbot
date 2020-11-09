@@ -49,7 +49,6 @@ def initialize_routes(api):
     api.add_resource(OrderReviewUser, '/mypage/<string:userid>')
     api.add_resource(OrderReviewSelect, '/reviewwrite/<string:or_id>')
     api.add_resource(OrderReviewInsert, '/reviewwrite')
-    api.add_resource(ShopSearch, '/search/<string:key>')
     api.add_resource(Chatbot, '/chatbot/<string:key>')
     # api.add_resource(Home, '/api')
     # api.add_resource(Item, '/api/item/<string:id>')

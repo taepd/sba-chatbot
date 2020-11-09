@@ -60,6 +60,7 @@ const Main = () => {
 
         }
     }, [])
+    // spinner
     useEffect(() => {
         if (loading) {
             setTimeout(() => {

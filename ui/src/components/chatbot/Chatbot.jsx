@@ -153,7 +153,7 @@ const ItemChatBot = () => {
                 alert(res.data[1])
                 intent = res.data[1]
                 // setIntent(res.data[1])
-               
+                localStorage.setItem('intent', res.data[1])
                 
                 // if (res.data[1] == '추천') {
                 //     alert("1")
@@ -167,12 +167,13 @@ const ItemChatBot = () => {
                 //     alert('3')
                 //     // setChatbotData('greeting')
                 // }
+                return intent
             })
             .catch(err => {
                 alert("안돼 돌아가")
+                return err
             })
             
-            return intent
     }
 
     return (
@@ -203,8 +204,9 @@ const ItemChatBot = () => {
                         },
                         trigger: (value) => {
                             inputText(value);                             
-                            alert(intent)
+                            setTimeout(() => {}, 50000)
                             return intent
+                            // return localStorage.getItem('intent')
                            
                         },
                         // trigger : 'test'
