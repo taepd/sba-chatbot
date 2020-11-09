@@ -107,7 +107,9 @@ const Main = () => {
                                 <Divider variant="middle" />
                                 <Grid container justify="center" spacing={2} >
                                     {itemBasedData.map((post) => (
-                                        <MainList key={post.shop_name} post={post} />
+                                        <Link to={"/shop/" + post.shop_id} className={classes.toolbarLink}>
+                                            <MainList key={post.shop_name} post={post} />
+                                        </Link>
                                     ))}
 
                                 </Grid>
