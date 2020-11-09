@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { Header, Footer, Navigation , MainNavigation} from './components/common'
-import { Review, Main, ReviewWritePage, UserInfo, ActionProvider, MessageParser, config,UserPage, ShopMain, Order, ShopSearch } from './components'
+import { Review, Main, ReviewWritePage, UserInfo, UserPage, ShopMain, Order, ShopSearch, Chatbot } from './components'
 import { SignIn, SignUp } from './containers/user'  
 // import {Home, User, Article, Item} from './templates'  
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import ReduxThunk from 'redux-thunk'
 import axios from 'axios'
-import { Chatbot } from 'react-chatbot-kit'
+// import { Chatbot } from 'react-chatbot-kit'
 
 axios.defaults.withCredentials = true
 
@@ -16,6 +16,9 @@ axios.defaults.withCredentials = true
 const rootReducer = combineReducers({
     // itemReducer
 })
+
+
+
 
 const App = () => {
     const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('sessionUser'))
@@ -53,7 +56,7 @@ const App = () => {
                         <Route component={Error}/> */}
                     </Provider>,
                 </Switch>
-                <Chatbot config={config} messageParser ={MessageParser} actionProvider={ActionProvider} />
+                <Chatbot />
             </main>
             <Footer title="Footer" description="Something here to give the footer a purpose!" />
         </Router>
