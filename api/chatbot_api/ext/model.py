@@ -19,6 +19,7 @@ surprise data형식에 맞춰 dataframe 변환
 # df = pd.read_csv("./data/csv/important/db/order_review(remove_userid_nan).csv", sep=",", encoding='utf-8-sig', error_bad_lines=False, engine="python")
 
 # db에서 불러옴
+
 sql = db.engine.execute("select * from order_review")
 df = pd.DataFrame(sql.fetchall())
 df.columns = sql.keys()
@@ -130,7 +131,7 @@ def transform_data(df):
     - 유저를 숫자로 변환
     """
     # df.userid = df.userid.astype('category').cat.codes.values  # 향후 확인을 위해 이 방식보다는 map을 사용해야 함
-    df['userid'] = df['userid'].map(lambda x: int(x.lstrip('user')))
+    # df['userid'] = df['userid'].map(lambda x: int(x.lstrip('user')))
 
     return df
 
@@ -231,13 +232,14 @@ user_based_algo, df_shop = hook_user_based_recommend(df)  # df_shop이 위와 �
 
 
 def user_based_recommend(user):
-    result = user_based_algo.get_neighbors(user, k=5)
+    user_inner_id = item_based_algo.trainset.to_inner_uid(user) # 내부 인덱스로 인코딩
+    result = user_based_algo.get_neighbors(user_inner_id, k=5)
 
     print(result)  # [882, 908, 989, 744, 745]
 
     recommend_set = set()
     for userid in result:
-        df_ = df_shop[(df_shop['userid'] == userid)].sort_values(by=['rating'], ascending=False)
+        df_ = df_shop[(df_shop['userid'] == item_based_algo.trainset.to_raw_uid(userid))].sort_values(by=['rating'], ascending=False)
         # print(df_)
         for item in df_['shop_id'].head(5).values:
             recommend_set.add(item)
