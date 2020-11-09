@@ -66,16 +66,18 @@ const shoplistl = [
 
 
 
-const ChatbotMenuSearch = () => {
+const ChatbotMenuSearch = (props) => {
+    const {post} = props;
     const classes = useStyles();
+
 
     return (
         <React.Fragment>
             <CssBaseline />
             <Grid container  direction="row" justify="flex-start" className={classes.wd}>
-                    {shoplistl.map((post) => (
-                        <ChatbotMenuSearchContents key={post.shop_name} post={post} />
-                    ))}
+                {post.map((post) => (
+                    <ChatbotMenuSearchContents key={post.shop_name} post={post} />
+                ))}
             </Grid>        
         </React.Fragment>
     );
