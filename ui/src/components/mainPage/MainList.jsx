@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         width: 245,
+        height: 329,
     },
     details: {
         display: 'flex',
@@ -76,11 +77,11 @@ const MainList = (props) => {
             <Grid container justify="flex-start"  >
                 <Grid>
                     <Card className={classes.root} square elevation={0} variant="outlined" >
-                        <CardActionArea href="/review">
+                        <CardActionArea>
                             <CardMedia
                                 className={classes.media}
                                 image={'https://www.yogiyo.co.kr' + post.shop_img}
-                                title="Contemplative Reptile"
+                                title={post.shop_name}
                             />
                             <CardContent >
                                 <Typography gutterBottom variant="h6" component="h6" noWrap>               {/* noWrap: test overflow 적용 */}
