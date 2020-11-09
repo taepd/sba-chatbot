@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Rating from '@material-ui/lab/Rating';
 import Chip from '@material-ui/core/Chip';
+import { Link } from 'react-router-dom'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,12 +17,11 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         marginTop: theme.spacing(3),
 
-
     },
     root: {
         display: 'flex',
-        width: 245,
-        height: 329,
+        width: 270,
+        // height: 329,
     },
     details: {
         display: 'flex',
@@ -30,19 +30,13 @@ const useStyles = makeStyles((theme) => ({
     content: {
         // flex: '1 0 auto',
     },
-    cover: {
-        width: 150,
-        height: 150,
-    },
-
     paper: {
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
     media: {
-        height: 140,
-
+        height: 180,
     },
     textOverflow: {
         textOverflow: 'ellipsis',
@@ -52,7 +46,10 @@ const useStyles = makeStyles((theme) => ({
     },
     marl: {
         marginLeft: -4,
-    }
+    },
+    toolbarLink: {
+        textDecoration: 'none',
+    },
 }));
 
 function HalfRating() {
@@ -73,9 +70,9 @@ const MainList = (props) => {
 
     return (
 
-        <div className={classes.divroot} spacing={2}>
+        <div className={classes.divroot}>
             <Grid container justify="flex-start"  >
-                <Grid>
+                <Link to={"/shop/" + post.shop_id} className={classes.toolbarLink}>
                     <Card className={classes.root} square elevation={0} variant="outlined" >
                         <CardActionArea>
                             <CardMedia
@@ -91,16 +88,16 @@ const MainList = (props) => {
                                     <Rating name="iconstar" defaultValue={1} max={1} />
                                     <Typography variant="subtitle1" color="textSecondary">
                                         {post.shop_rev_avg} /
-                                        </Typography>
+                                    </Typography>
                                     <Rating name="iconstar" defaultValue={1} max={1} />
                                     <Typography variant="subtitle1" color="textSecondary" className={classes.marr}>
                                         예상 {post.shop_pred_avg}
                                     </Typography>
-
-                                </Grid>
                                     {post.shop_user_avg !== undefined &&
                                         <Chip color="secondary" size="small" label={'내 평점  ' + post.shop_user_avg} />
                                     }
+                                </Grid>
+                                
                                 <Typography variant="body2" color="textSecondary" component="p">
                                     리뷰 {post.shop_rev_cnt}개
                                 </Typography>
@@ -111,8 +108,7 @@ const MainList = (props) => {
                             </CardContent>
                         </CardActionArea>
                     </Card>
-                </Grid>
-
+                </Link>
             </Grid>
         </div >
 
