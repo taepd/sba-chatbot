@@ -22,8 +22,6 @@ const rootReducer = combineReducers({
 })
 
 
-
-
 const App = () => {
     const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('sessionUser'))
     return (<>

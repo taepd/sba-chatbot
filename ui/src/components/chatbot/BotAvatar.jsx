@@ -1,10 +1,10 @@
 import React from 'react';
 
-import './BotAvatar.css';
+import './BotAvatar.css'
 
 const BotAvatar = () =>{
     return(
-    <div className ="bot_avatar">
+    <div className ="bot-avatar">
         시발
     </div>
 

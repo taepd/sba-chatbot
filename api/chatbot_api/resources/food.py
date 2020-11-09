@@ -112,12 +112,11 @@ class FoodDao(FoodDto):
 
     @classmethod
     def chat_food_find(cls, key):
-        print("되자")
         # print('basequery',cls.query)
         sql = cls.query.filter(FoodDto.food_name.like('%'+key+'%')).\
             order_by(FoodDao.food_rev_cnt.desc())
         df = pd.read_sql(sql.statement,sql.session.bind)
-        df = df.head(3)
+        df = df.head(1)
         return json.loads(df.to_json(orient='records'))
 
 
@@ -150,7 +149,7 @@ class ChatbotService:
         print('dhdn', chat[1])
         chatsearch = FoodDao.chat_food_find(word)
         print('조회',chatsearch)
-        return chatsearch, text, 200
+        return chatsearch, text, word, 200
 
 class Chatbot(Resource):
     

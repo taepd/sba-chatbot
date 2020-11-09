@@ -144,11 +144,11 @@ def chatbot(text):
     elif text == '언제':
         return text, word
 
-    else:
+    elif x_data =='':
         text = 'none'
-    return text
+        return text
 
-
+    print("장난하냐", text)
 ##########모델 저장
 
 # joblib.dump(model,'chatbot_model.h5')
