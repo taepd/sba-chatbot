@@ -59,7 +59,7 @@ class ActionProvider {
     this.setChatbotMessage(message)
   };
   sorryBotMessage = () => {
-    const message = this.createChatBotMessage("죄송합니다. 다시한번 말씀해주세요")
+    const message = this.createChatBotMessage("죄송합니다. 이해하지 못했어요. 다시한번 말씀해주세요")
     this.setChatbotMessage(message)
   }
   nonMassage = () => {

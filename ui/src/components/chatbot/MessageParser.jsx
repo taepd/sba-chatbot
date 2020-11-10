@@ -43,7 +43,7 @@ class MessageParser {
         }
 
       }).catch(err => {
-        alert("뿌우우우웅우우우")
+        this.actionProvider.sorryBotMessage();
       })
     // console.log(key)
     // lowercase = localStorage.getItem('intent')

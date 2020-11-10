@@ -76,12 +76,12 @@ const ChatbotMenuSearchContents = (props) => {
                         <CardActionArea >
                             <CardMedia
                                 className={classes.media}
-                                image={post.food_img}
+                                image={'https://www.yogiyo.co.kr' + post.shop_img}
                                 title="Contemplative Reptile"
                             />
                             <CardContent>
                                 <Typography variant="body2" >
-                                    {post.food_name}
+                                    {post.shop_name}
                                 </Typography>
                                 <Typography variant="body2" >
                                     {post.price}원
@@ -92,7 +92,7 @@ const ChatbotMenuSearchContents = (props) => {
                                     </Typography> */}
                                     <Rating name="iconstar" defaultValue={1} max={1} size="small" className={classes.rating}/>
                                     <Typography variant="caption" color="textSecondary">
-                                        {post.food_rev_cnt}
+                                        {post.shop_rev_avg}
                                     </Typography>
                                 </Grid>
                             </CardContent>
