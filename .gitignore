@@ -27,7 +27,7 @@ yarn-error.log*
 api/data
 
 # data
-
+*.pth
 *.h5
 
 *.whl

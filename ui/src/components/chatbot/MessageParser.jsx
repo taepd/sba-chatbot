@@ -17,7 +17,7 @@ class MessageParser {
     const userid = sessionStorage.getItem("sessionUser");
     axios.get(`http://localhost:8080/chatbot/${lowercase}`)
       .then(res => {
-        alert(JSON.stringify(res.data[0][0]))
+        // alert(JSON.stringify(res.data[0][0]))
         key = res.data[1]
         // localStorage.setItem('intent', res.data[1])
         // localStorage.setItem('key' , res.data[2])
