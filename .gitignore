@@ -29,7 +29,7 @@ api/data
 # data
 *.pth
 *.h5
-
+*.csv
 *.whl
 
 

@@ -163,7 +163,7 @@ model.eval()
 tokenizer = get_tokenizer()
 # #############################
 
-def chatbot(text):
+def process_kobert(text):
   
     data = kobert_input(tokenizer, text, device, 512)
     # print(data)

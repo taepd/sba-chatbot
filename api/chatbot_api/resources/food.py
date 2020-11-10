@@ -12,7 +12,6 @@ import joblib
 import konlpy
 # from eunjeon import Mecab
 from bs4 import BeautifulSoup
-from chatbot_api.ext.searchChatbot import chatbot
 
 
 from sklearn.feature_extraction.text import TfidfVectorizer
