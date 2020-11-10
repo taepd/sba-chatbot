@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import MainList from '../mainPage/MainList';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ChatbotMenuSearchContents from './ChatbotMenuSearchContents';
@@ -75,7 +74,7 @@ const ChatbotMenuSearch = (props) => {
         <React.Fragment>
             <CssBaseline />
             <Grid container  direction="row" justify="flex-start" className={classes.wd}>
-                {post.map((post) => (
+                {shoplistl.map((post) => (
                     <ChatbotMenuSearchContents key={post.shop_name} post={post} />
                 ))}
             </Grid>        

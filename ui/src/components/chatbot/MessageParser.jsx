@@ -1,19 +1,54 @@
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 // MessageParser starter code
 class MessageParser {
   constructor(actionProvider, state) {
     this.actionProvider = actionProvider;
     this.state = state;
   }
-
   parse(message) {
 
-    const lowercase = message.toLowerCase()
-
-    if(lowercase.includes("hellow world")){
-      this.actionProvider.helloworldHandler()
+    let lowercase = message
+    let key = ''
+    const DataFunction = () => {
+      const userid = sessionStorage.getItem("sessionUser");
+      axios.get(`http://localhost:8080/chatbot/${lowercase}`)
+        .then(res => {
+          alert(JSON.stringify(res.data))
+          key = res.data[1]
+          // localStorage.setItem('intent', res.data[1])
+          // localStorage.setItem('key' , res.data[2])
+          // setKeyData(res.data[1])
+          if (res.data[1].includes("추천")) {
+            this.actionProvider.recommendSearchBotMessage(res.data[2]);
+          }
+          if (res.data[1].includes("주문")) {
+            this.actionProvider.orderBotMessage(res.data[2]);
+          }
+          if (res.data[1].includes("인사")) {
+            if(userid != null){
+              this.actionProvider.greetingLoginUserBotMessage(userid);
+            }else{
+              this.actionProvider.greetingBotMessage();
+            }
+          }
+          if(res.data[1].includes("언제")){
+            this.actionProvider.recommendBotMessage();
+          }
+          if(res.data[1].includes("none") || res.data == ''){
+            this.actionProvider.sorryBotMessage();
+          }
+          
+        }).catch(err => {
+          alert("뿌우우우웅우우우")
+        })
+      // console.log(key)
+      // lowercase = localStorage.getItem('intent')
+      // key = localStorage.getItem('key')
     }
-    if(lowercase.includes("todos")){
-      this.actionProvider.todosHandler();
+
+    if (lowercase != '') {
+      DataFunction()
     }
   }
 }
