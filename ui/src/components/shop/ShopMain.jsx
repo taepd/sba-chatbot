@@ -5,16 +5,16 @@ import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Navigation from '../common/Navigation';
-// import Pagination from '@material-ui/lab/Pagination';
-import PaginationItem from '@material-ui/lab/PaginationItem'
 import Pagination from "@material-ui/lab/Pagination";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
+import Navigation from '../common/Navigation';
 import ShopList from './ShopList';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        minHeight : 600,
     },
     wd: {
         width: 1050,
@@ -30,7 +30,16 @@ const useStyles = makeStyles((theme) => ({
 
 
 const ShopMain = ({ match }) => {
-    
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        if (loading) {
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        }
+    }, [loading]);
+
     const classes = useStyles();
     const [data, setData] = useState([])
     // const [currentPage, setCurrentPage] = useState(1);
@@ -43,7 +52,7 @@ const ShopMain = ({ match }) => {
     const noncaturl = `http://localhost:8080/shops`;
     const caturl = `http://localhost:8080/shops/${match.params.cat_id}`;
 
-    
+
     useEffect(() => {
         axios.get((() => {
             if (catif == '전체보기') {
@@ -52,20 +61,20 @@ const ShopMain = ({ match }) => {
                 return caturl
             }
         })())
-        .then(res => {
-            setData(res.data)
-        })
-        .catch(e => {
-            alert(`List Failure`)
-            throw (e)
-        })
-        
+            .then(res => {
+                setData(res.data)
+            })
+            .catch(e => {
+                alert(`List Failure`)
+                throw (e)
+            })
+
     }, [catif])
-    
+
     const itemsPerPage = 10;
     const [page, setPage] = React.useState(1);
-    const noOfPages =  Math.ceil(post.length / itemsPerPage) /*Math.ceil 소수점 이하를 올림 한다. */
-    
+    const noOfPages = Math.ceil(post.length / itemsPerPage) /*Math.ceil 소수점 이하를 올림 한다. */
+
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -75,25 +84,31 @@ const ShopMain = ({ match }) => {
         <React.Fragment>
             <CssBaseline />
             <Navigation />
-            <Grid container className={classes.wd} >
-                {post.slice((page - 1) * itemsPerPage, page * itemsPerPage)
-                    .map((post) => (
-                        <Grid className={classes.spacing}>
-                            <ShopList post={post} />
+            <Grid container justify="center" alignItems="center" className={classes.root}>
+                {loading ? <CircularProgress /> :
+                    <>
+                        <Grid container className={classes.wd} >
+                            {post.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                                .map((post) => (
+                                    <Grid className={classes.spacing}>
+                                        <ShopList post={post} />
+                                    </Grid>
+                                ))}
                         </Grid>
-                    ))}
-            </Grid>
-            <Grid container justify="center" alignItems="flex-end" className={classes.pagi}>
-                <Pagination
-                    count={noOfPages}
-                    page={page}
-                    onChange={handleChange}
-                    defaultPage={2}
-                    color="primary"
-                    showFirstButton
-                    showLastButton
-                    shape="rounded"
-                />
+                        <Grid container justify="center" alignItems="flex-end" className={classes.pagi}>
+                            <Pagination
+                                count={noOfPages}
+                                page={page}
+                                onChange={handleChange}
+                                defaultPage={2}
+                                color="primary"
+                                showFirstButton
+                                showLastButton
+                                shape="rounded"
+                            />
+                        </Grid>
+                    </>
+                }
             </Grid>
         </React.Fragment>
     );

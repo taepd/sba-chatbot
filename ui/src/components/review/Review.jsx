@@ -1,10 +1,13 @@
 import React , {useEffect, useState} from 'react'
+import axios from 'axios'
+
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import ShopInfo from './ShopInfo';
 import MenuAndReviewArea from './MenuAndReviewArea';
-import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -13,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     flexGrow: 1,
+    minHeight : 600,
   },
 
   bg: {
@@ -23,8 +27,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Review = ({match}) => {
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (loading) {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }
+}, [loading]);
 
   // console.log(match.params.shopid)
+  const classes = useStyles();
   const [shopdata, setDataShop] = useState([])
   const [fooddata, setDataFood] = useState([])
   const [reviewdata, setDatareview] = useState([])
@@ -51,11 +65,17 @@ const Review = ({match}) => {
   return (
     <React.Fragment>
       <CssBaseline />
+      <Grid container justify="center" alignItems="center" className={classes.root}>
+      {loading ? <CircularProgress /> :
+       <>
       <Grid container justify="center" >
           <ShopInfo post={shopdata}/> {/* {} 객체만 보내줌 */}
       </Grid>
       <Grid container justify="center" spacing={5} className={useStyles.mainGrid}>
          <MenuAndReviewArea reviews={reviewdata} food={fooddata}/>
+      </Grid>
+      </>
+      }
       </Grid>
     </React.Fragment>
   )

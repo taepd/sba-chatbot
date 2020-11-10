@@ -47,22 +47,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop : 2,
     }
 }));
-const shoplistl = [
-    {
-        shop_name: '맛자랑24시찜닭닭도리',
-        food_name: '닭볶음탕',
-        price:'20000',
-        food_img:'https://images.deliveryhero.io/image/yogiyo/STOCK_IMG/%ED%95%9C%EC%8B%9D/%EA%B5%AD%EB%AC%BC%EC%9A%94%EB%A6%AC-%EC%B0%8C%EA%B0%9Cn%ED%83%95%EB%A5%98/%EC%8A%A4%ED%83%81_20170912_foodon_fon12432_%EB%8B%AD%EB%8F%84%EB%A6%AC%ED%83%9503_1080x640.jpg?width=384&height=273&quality=100',
-        shop_rev_avg:
-            '4.5',
-        pred_rev_avg:
-            '4.7',
-        shop_rev_amt:
-            '304',
-        shop_pred_avg: '4.7'
 
-    },
-]
 
 function HalfRating() {
     const classes = useStyles();
@@ -115,7 +100,7 @@ const ChatbotMenuSearchContents = (props) => {
                     </Card>
                     <Grid container justify="center" className={classes.mrb}>
                         <Typography variant="subtitle2" >
-                            {userid}님의 예상 평점 {shoplistl.shop_pred_avg}
+                            {userid}님의 예상 평점 {post.shop_pred_avg}
                         </Typography>
                     </Grid>
                 </Grid>

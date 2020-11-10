@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { MemoryRouter, Route } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios'
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Navigation from '../common/Navigation';
-import ShopList from './ShopList';
-// import Pagination from '@material-ui/lab/Pagination';
-import PaginationItem from '@material-ui/lab/PaginationItem'
-import axios from 'axios'
 import Pagination from "@material-ui/lab/Pagination";
 import Typography from '@material-ui/core/Typography';
+
+import Navigation from '../common/Navigation';
+import ShopList from './ShopList';
 
 const useStyles = makeStyles((theme) => ({
     root: {

@@ -23,7 +23,7 @@ class MessageParser {
         // localStorage.setItem('key' , res.data[2])
         // setKeyData(res.data[1])
         if (res.data[1].includes("추천")) {
-          this.actionProvider.recommendSearchBotMessage(res.data[2], res.data[0][0]);
+          this.actionProvider.recommendSearchBotMessage(res.data[2], res.data[0][0], userid);
         }
         if (res.data[1].includes("주문")) {
           this.actionProvider.orderBotMessage(res.data[2]);

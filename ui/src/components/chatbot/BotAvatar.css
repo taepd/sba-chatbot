@@ -1,11 +1,13 @@
-.bot-avatar {
-    width: 55px;
-    height: 55;
-    border-radius: 25%;
+.crazy-bot-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     display:  flex;
     justify-content: center;
     align-items: center;
     font-size: 0.9rem;
-    border-color: purple;
-    color: ffffff;
+    border-color:#f50057;
+    background-color: #f50057;
+    color: #ffffff;
+    margin-right: 15px;
 }

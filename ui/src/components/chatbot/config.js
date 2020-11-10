@@ -2,17 +2,18 @@
 import React from 'react';
 import { createChatBotMessage } from "react-chatbot-kit";
 import BotAvatar from "./BotAvatar";
-import Todos from"./Todos";
 import ChatbotMenuSearchContents from './ChatbotMenuSearchContents'
+import './Chatbot.css'
 
 const config = {
   initialMessages: [createChatBotMessage(`어서오세요 메추리 입니다.`)],
-  botName :'메추리',
-  customcomponents:{
+  botName :"메추리",
+  customComponents: {
+    header: () => <div className="react-chatbot-kit-chat-header">메추리</div>,
     botAvatar:(props) => <BotAvatar {...props} />
   },
   customStyles:{
-    botMessageBos:{
+    botMessageBox:{
       backgroundColor : "#f50057",
     },
     chatButton :{
@@ -27,8 +28,10 @@ const config = {
       widgetName: "ChatbotMenuSearchContents",
       widgetFunc: (props) => <ChatbotMenuSearchContents {...props} />,
       mapStateToProps: ["menu"],
-      
     },
+    {
+
+    }
   ],
 }
 
