@@ -35,7 +35,7 @@ class ActionProvider {
   }
 
   recommendSearchViewBotMessage = (key, menu, userid) => {
-
+    const message = this.createChatBotMessage(userid + " 님 위치를 기준으로 가장 평점이 높은 메뉴 입니다.", {
       widget: "ChatbotMenuSearchContents",
     });
     console.log(JSON.stringify(menu))

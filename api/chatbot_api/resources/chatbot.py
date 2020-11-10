@@ -27,7 +27,6 @@ class ChatbotService:
         if intent != '인사':
         # chatsearch = FoodDao.chat_food_find(keyword)
             chatsearch = ShopDao.search(keyword)
-        print(chatsearch[0])
         # search = ShopService.shop_rev_predict_by_surprise(chatsearch[0])
         return chatsearch, intent, keyword, 200
 
