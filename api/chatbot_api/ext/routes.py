@@ -4,7 +4,8 @@ from flask_restful import Api
 from chatbot_api.resources.user import User, Access
 from chatbot_api.resources.home import Home
 from chatbot_api.resources.shop import Shop, Shops, Shopscat, ShopSearch
-from chatbot_api.resources.food import Food, Chatbot
+from chatbot_api.resources.food import Food
+from chatbot_api.resources.chatbot import Chatbot
 from chatbot_api.resources.order_review import OrderReview, OrderReviewPage, OrderReviewUser, OrderReviewSelect,OrderReviewInsert
 
 
