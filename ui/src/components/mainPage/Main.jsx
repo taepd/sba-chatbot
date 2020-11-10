@@ -13,6 +13,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import CheckIcon from '@material-ui/icons/Check';
+import main2 from '../img/main2.jpg'
 
 import MainNavigation from '../common/MainNavigation';
 import MainList from './MainList';
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none',
     },
     media: {
-        height: 300,
+        height: 400,
         // height: 0,
         // paddingTop: '56.25%', // 16:9
 
@@ -72,6 +73,9 @@ const useStyles = makeStyles((theme) => ({
     },
     pad:{
         padding : 25,
+    },
+    margttt:{
+        marginTop : theme.spacing(8)
     }
 }));
 
@@ -120,17 +124,17 @@ const Main = () => {
         <React.Fragment>
 
             <CssBaseline />
-            <MainNavigation />
+            {loggedIn && <MainNavigation />}
             <Grid container justify="center" alignItems="center" className={classes.root}>
                 {loading ? <CircularProgress /> :
                     <>
                         {loggedIn === null
                             ?
-                            <Grid container justify="center" direction="column" alignItems="center">
+                            <Grid container justify="center" direction="column" alignItems="center" className={classes.margttt}> 
                                 <Card className={classes.cardroot}>
                                 <CardMedia
                                     className={classes.media}
-                                    image="./img/main.jpg"
+                                    image={main2}
                                     // image="https://images.unsplash.com/photo-1546548970-71785318a17b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2134&q=80"
                                     title="Paella dish"
                                 />
