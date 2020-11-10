@@ -75,9 +75,12 @@ function HalfRating() {
 }
 
 const ChatbotMenuSearchContents = (props) => {
+    // console.log("뭐올거니"+JSON.stringify(props))
+    // console.log("아악"+props)
     const classes = useStyles();
     const theme = useTheme();
-    const { post } = props;
+    const post  = props.menu[0];
+    // console.log("post "+props.menu[0].food_img)
     const userid = sessionStorage.getItem("sessionUser");
     return (
 
@@ -85,18 +88,18 @@ const ChatbotMenuSearchContents = (props) => {
             <Grid container justify="flex-start" >
                 <Grid>
                     <Card className={classes.root} square elevation={0} variant="outlined" >
-                        <CardActionArea href={"/shop/" + shoplistl.shop_id}>
+                        <CardActionArea >
                             <CardMedia
                                 className={classes.media}
-                                image={shoplistl.food_img}
+                                image={post.food_img}
                                 title="Contemplative Reptile"
                             />
                             <CardContent>
                                 <Typography variant="body2" >
-                                    {shoplistl.food_name}
+                                    {post.food_name}
                                 </Typography>
                                 <Typography variant="body2" >
-                                    {shoplistl.price}원
+                                    {post.price}원
                                 </Typography>
                                 <Grid container direction="row">
                                     {/* <Typography gutterBottom variant="caption" color="textSecondary" className={classes.mrr}>
@@ -104,7 +107,7 @@ const ChatbotMenuSearchContents = (props) => {
                                     </Typography> */}
                                     <Rating name="iconstar" defaultValue={1} max={1} size="small" className={classes.rating}/>
                                     <Typography variant="caption" color="textSecondary">
-                                        {shoplistl.food_rev_cnt}
+                                        {post.food_rev_cnt}
                                     </Typography>
                                 </Grid>
                             </CardContent>

@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import ChatbotMenuSearchContents from './ChatbotMenuSearchContents';
+import ChatbotMenuSearchContents from '../ChatbotMenuSearchContents';
 
 
 const useStyles = makeStyles((theme) => ({

@@ -126,7 +126,7 @@ def chatbot(text):
     print('2',x_data) 
     
     x_data = transformer.transform(x_data)
-    # print(x_data.shape) #(10, 23)
+    print(x_data) #(10, 23)
     y_predict = model.predict(x_data)
     text = labels[y_predict[0]]
     # print('3',y_predict) #[0]

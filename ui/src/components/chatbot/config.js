@@ -3,7 +3,7 @@ import React from 'react';
 import { createChatBotMessage } from "react-chatbot-kit";
 import BotAvatar from "./BotAvatar";
 import Todos from"./Todos";
-import ChatbotMenuSearch from './ChatbotMenuSearch'
+import ChatbotMenuSearchContents from './ChatbotMenuSearchContents'
 
 const config = {
   initialMessages: [createChatBotMessage(`어서오세요 메추리 입니다.`)],
@@ -13,20 +13,21 @@ const config = {
   },
   customStyles:{
     botMessageBos:{
-      backgroundColor : "purple",
+      backgroundColor : "#f50057",
     },
     chatButton :{
-      backgroundColor:"purple",
+      backgroundColor:"#f50057",
     },
   },
   state:{
-    menu:[]
+    menu:'',
   },
-  widget:[
+  widgets:[
     {
-      widgetName: "ChatbotMenuSearch",
-      widgetFunc: (props) => <ChatbotMenuSearch {...props} />,
+      widgetName: "ChatbotMenuSearchContents",
+      widgetFunc: (props) => <ChatbotMenuSearchContents {...props} />,
       mapStateToProps: ["menu"],
+      
     },
   ],
 }
