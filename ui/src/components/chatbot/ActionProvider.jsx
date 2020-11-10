@@ -27,19 +27,30 @@ class ActionProvider {
       ...state, messages: [...state.messages, message],
     }));
   }
-  recommendSearchBotMessage = (key, menu) => {
-    const message = this.createChatBotMessage(key + "를 추천해 드리겠습니다.", {
+  recommendSearchBotMessage = (key, menu, userid) => {
+    const message = this.createChatBotMessage(key + " 을(를) 찾으시는 군요")
+    this.setChatbotMessage(message);
+    this.recommendSearchViewBotMessage(key, menu, userid)
+  }
+
+  recommendSearchViewBotMessage = (key, menu, userid) => {
+    const message = this.createChatBotMessage(userid + " 님 위치를 기준으로 가장 평점이 높은 메뉴 입니다.", {
       widget: "ChatbotMenuSearchContents",
     });
     console.log(JSON.stringify(menu))
     this.setChatbotMessage(message);
     this.setState((state) => ({
-      ...state, menu : [menu]
+      ...state, menu: [menu]
 
     }));
   };
   greetingLoginUserBotMessage = (userid) => {
     const message = this.createChatBotMessage(userid + "님 안녕하세요")
+    this.setChatbotMessage(message)
+    this.helpQuestionBotMessage()
+  };
+  helpQuestionBotMessage = () => {
+    const message = this.createChatBotMessage("무엇을 도와드릴까요?")
     this.setChatbotMessage(message)
   };
   greetingBotMessage = () => {
@@ -50,8 +61,9 @@ class ActionProvider {
     const message = this.createChatBotMessage("죄송합니다. 다시한번 말씀해주세요")
     this.setChatbotMessage(message)
   }
-  nonMassage = () =>{
-    const massage = this.createChatBotMessage("입력된 메세지가 없습니다.")
+  nonMassage = () => {
+    const message = this.createChatBotMessage("입력된 메세지가 없습니다.")
+    this.setChatbotMessage(message)
   }
 }
 

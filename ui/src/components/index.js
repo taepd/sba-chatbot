@@ -11,14 +11,3 @@ export {default as Order} from './order/Order'
 export {default as ActionProvider} from './chatbot/ActionProvider'
 // export {default as config} from './chatbot/config'
 export {default as MessageParser} from './chatbot/MessageParser'
-
-// import Chatbot from "./chatbot/chatcomponents/Chatbot/Chatbot";
-// import {
-//   createChatBotMessage,
-//   createClientMessage,
-// } from "./chatbot/chatcomponents/Chat/chatUtils";
-
-// export { createChatBotMessage, createClientMessage } from "./chatbot/chatcomponents/Chat/chatUtils";
-// export { default as Chatbot } from "./chatbot/chatcomponents/ChatBot/Chatbot";
-
-// export default Chatbot;
