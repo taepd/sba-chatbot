@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 // import { Link } from 'react-router-dom';
+import axios from 'axios'
+
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,10 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-// import Link from '@material-ui/core/Link';
 import { Link, useHistory } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton';
-import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({

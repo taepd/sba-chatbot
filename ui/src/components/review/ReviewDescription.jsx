@@ -1,18 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import CardContent from '@material-ui/core/CardContent';
-import Hidden from '@material-ui/core/Hidden';
 import Rating from '@material-ui/lab/Rating';
 import Divider from '@material-ui/core/Divider';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import { ThemeProvider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
-import { Group, TheatersSharp } from '@material-ui/icons';
 import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
+import Chip from '@material-ui/core/Chip';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,11 +45,18 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     backgroundColor: theme.palette.grey[200]
   },
+  marginl:{
+    marginLeft : theme.spacing(2)
+  },
+  marginlm:{
+    marginLeft : -3
+  }
 
 }));
 
 
 const ReviewDescription = (props) => {
+  const sessionuserid = sessionStorage.getItem("sessionUser");
   const classes = useStyles();
   const { post } = props;
   // console.log(post)
@@ -67,7 +71,7 @@ const ReviewDescription = (props) => {
     const classes = useStyles();
     const rateavg = (taste + quan + deli) / 3
     return (
-        <Rating name="rating" defaultValue={rateavg} max={5} precision={0.5} readOnly />
+        <Rating name="rating" defaultValue={rateavg} max={5} precision={0.5} readOnly className={classes.marginlm}/>
     );
   }
 
@@ -79,14 +83,21 @@ const ReviewDescription = (props) => {
             <Typography component="h6" variant="h6" className={classes.marginr}>
               {post.userid}
             </Typography>
-            <Typography variant="body2" color="textSecondary" >
+            <Typography variant="body2" color="textSecondary" className={classes.marginr} >
               {rdate.getFullYear() + "-" + (rdate.getMonth()+1) + "-" + rdate.getDate()}
             </Typography>
+            {post.userid === sessionuserid
+                    ?
+                    <Chip color="secondary" size="small" label="내 리뷰" />
+                    :
+                    <>
+                    </>
+                  }
           </Grid>
           <Grid container direction="row" alignItems="center">
             {/* <Rating name="avg" defaultValue={(post.taste_rate + post.quantity_rate + post.delivery_rate) / 3} max={5} className={classes.marginr} readOnly /> */}
-            <HalfRating className={classes.marginr} />
-            <Typography variant="subtitle1" color="textSecondary">
+            <HalfRating  />
+            <Typography variant="subtitle1" color="textSecondary" className={classes.marginl}>
               맛
               </Typography>
             <Rating name="iconstar" defaultValue={1} max={1} readOnly />
