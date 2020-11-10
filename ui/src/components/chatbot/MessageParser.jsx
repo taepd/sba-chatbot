@@ -26,7 +26,7 @@ class MessageParser {
           this.actionProvider.recommendSearchBotMessage(res.data[2], res.data[0][0], userid);
         }
         if (res.data[1].includes("주문")) {
-          this.actionProvider.orderBotMessage(res.data[2]);
+          this.actionProvider.orderBotMessage(res.data);
         }
         if (res.data[1].includes("인사")) {
           if (userid != null) {
@@ -43,7 +43,7 @@ class MessageParser {
         }
 
       }).catch(err => {
-        alert("뿌우우우웅우우우")
+        this.actionProvider.sorryBotMessage();
       })
     // console.log(key)
     // lowercase = localStorage.getItem('intent')

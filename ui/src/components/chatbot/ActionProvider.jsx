@@ -35,13 +35,24 @@ class ActionProvider {
   }
 
   recommendSearchViewBotMessage = (key, menu, userid) => {
-    const message = this.createChatBotMessage(userid + " 님 위치를 기준으로 가장 평점이 높은 메뉴 입니다.", {
+    const message = this.createChatBotMessage(userid + " 님 위치를 기준으로 예상 평점이 높은 메뉴 입니다.", {
       widget: "ChatbotMenuSearchContents",
     });
     console.log(JSON.stringify(menu))
     this.setChatbotMessage(message);
     this.setState((state) => ({
       ...state, menu: [menu]
+
+    }));
+  };
+  orderBotMessage = (order) => {
+    const message = this.createChatBotMessage("주문이 완료되었습니다.", {
+      widget: "ChatbotOrderContents",
+    });
+    console.log(JSON.stringify(order))
+    this.setChatbotMessage(message);
+    this.setState((state) => ({
+      ...state, order: [order]
 
     }));
   };
@@ -59,7 +70,7 @@ class ActionProvider {
     this.setChatbotMessage(message)
   };
   sorryBotMessage = () => {
-    const message = this.createChatBotMessage("죄송합니다. 다시한번 말씀해주세요")
+    const message = this.createChatBotMessage("죄송합니다. 이해하지 못했어요. 다시한번 말씀해주세요")
     this.setChatbotMessage(message)
   }
   nonMassage = () => {

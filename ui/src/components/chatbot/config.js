@@ -3,6 +3,7 @@ import React from 'react';
 import { createChatBotMessage } from "react-chatbot-kit";
 import BotAvatar from "./BotAvatar";
 import ChatbotMenuSearchContents from './ChatbotMenuSearchContents'
+import ChatbotOrderContents from './ChatbotOrderContents'
 import './Chatbot.css'
 
 const config = {
@@ -22,12 +23,18 @@ const config = {
   },
   state:{
     menu:'',
+    order:'',
   },
   widgets:[
     {
       widgetName: "ChatbotMenuSearchContents",
       widgetFunc: (props) => <ChatbotMenuSearchContents {...props} />,
       mapStateToProps: ["menu"],
+    },
+    {
+      widgetName: "ChatbotOrderContents",
+      widgetFunc: (props) => <ChatbotOrderContents {...props} />,
+      mapStateToProps: ["order"],
     },
     {
 

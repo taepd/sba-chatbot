@@ -79,7 +79,7 @@ print('============= chatbot 모델 학습 완료 ==============')
 
 ##########모델 예측
 
-def chatbot(text):
+def process_nb(text):
     
     dict_entity = {
     'active' : ['추천','가격','얼마','메뉴','찾아'],

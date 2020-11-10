@@ -8,6 +8,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Rating from '@material-ui/lab/Rating';
+import Divider from '@material-ui/core/Divider';
 
 
 
@@ -43,8 +44,8 @@ const useStyles = makeStyles((theme) => ({
     mrb: {
         marginTop: theme.spacing(2),
     },
-    rating:{
-        marginTop : 2,
+    rating: {
+        marginTop: 2,
     }
 }));
 
@@ -59,12 +60,12 @@ function HalfRating() {
     );
 }
 
-const ChatbotMenuSearchContents = (props) => {
-    // console.log("뭐올거니"+JSON.stringify(props))
+const ChatbotOrderContents = (props) => {
+    console.log("뭐올거니" + JSON.stringify(props))
     // console.log("아악"+props)
     const classes = useStyles();
     const theme = useTheme();
-    const post  = props.menu[0];
+    const post = props.order[0][0][0];
     // console.log("post "+props.menu[0].food_img)
     const userid = sessionStorage.getItem("sessionUser");
     return (
@@ -76,33 +77,38 @@ const ChatbotMenuSearchContents = (props) => {
                         <CardActionArea >
                             <CardMedia
                                 className={classes.media}
-                                image={'https://www.yogiyo.co.kr' + post.shop_img}
+                                image={'https://www.yogiyo.co.kr' + post.food_img}
                                 title="Contemplative Reptile"
                             />
                             <CardContent>
-                                <Typography variant="body2" >
-                                    {post.shop_name}
+                                <Typography variant="h5" className={classes.title}>
+                                    {sessionStorage.getItem("sessionUser")} 님의 주문이 완료 되었습니다.
                                 </Typography>
-                                <Typography variant="body2" >
-                                    {post.price}원
+                                <Divider variant="inset" variant="middle" />
+                                <Typography variant="h6" className={classes.subtitle}>
+                                    주문정보
+                             </Typography>
+                                <Typography variant="subtitle1">
+                                    주문 번호 : {post.or_id}
                                 </Typography>
-                                <Grid container direction="row">
-                                    {/* <Typography gutterBottom variant="caption" color="textSecondary" className={classes.mrr}>
-                                        {post.shop_name}
-                                    </Typography> */}
-                                    <Rating name="iconstar" defaultValue={1} max={1} size="small" className={classes.rating}/>
-                                    <Typography variant="caption" color="textSecondary">
-                                        {post.shop_rev_avg}
-                                    </Typography>
-                                </Grid>
+                                <Typography variant="subtitle1">
+                                    배달 주소 : {post.addr}
+                                </Typography>
+                                <Typography variant="subtitle1">
+                                    메뉴 : {post.food_name}
+                                </Typography>
+                                <Typography variant="subtitle1">
+                                    가격 : {post.price}원
+                                </Typography>
+
+                                <Typography variant="subtitle1" className={classes.subtitle}>
+                                    주문하신 음식은 약 40분 뒤에 배달이 될 예정입니다.
+                               </Typography>
+
                             </CardContent>
                         </CardActionArea>
                     </Card>
-                    <Grid container justify="center" className={classes.mrb}>
-                        <Typography variant="subtitle2" >
-                            {userid}님의 예상 평점 {post.shop_pred_avg}
-                        </Typography>
-                    </Grid>
+            
                 </Grid>
 
             </Grid>
@@ -112,8 +118,8 @@ const ChatbotMenuSearchContents = (props) => {
     );
 }
 
-ChatbotMenuSearchContents.propTypes = {
+ChatbotOrderContents.propTypes = {
     post: PropTypes.object,
 };
 
-export default ChatbotMenuSearchContents
+export default ChatbotOrderContents
