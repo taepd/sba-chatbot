@@ -28,7 +28,7 @@ class ActionProvider {
     }));
   }
   recommendSearchBotMessage = (key, menu) => {
-    const message = this.createChatBotMessage(key + "를 추천해 드리겠습니다.", {
+    const message = this.createChatBotMessage(key + "을(를) 추천해 드리겠습니다.", {
       widget: "ChatbotMenuSearchContents",
     });
     console.log(JSON.stringify(menu))

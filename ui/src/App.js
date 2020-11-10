@@ -84,7 +84,7 @@ const App = () => {
                     </Provider>,
                 </Switch>
                 <Fab color="secondary" aria-label="add" className={classes.fab} onClick={()=>setToggle(!toggle)}>
-                    C
+                    Chat
                 </Fab>
                 {toggle &&
                    <div style={{position: 'fixed', right: '35px',  bottom: '80px'}} >

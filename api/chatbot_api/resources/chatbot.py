@@ -1,6 +1,8 @@
 from flask_restful import Resource, reqparse
 from chatbot_api.resources.food import FoodDao
-from chatbot_api.ext.searchChatbot import chatbot
+from chatbot_api.resources.shop import ShopDao, ShopService
+# from chatbot_api.ext.searchChatbot import chatbot
+from chatbot_api.ext.kobert_chatbot import chatbot
 
 
 class ChatbotService:
@@ -14,21 +16,26 @@ class ChatbotService:
         return model
 
     @staticmethod
-    def text(text):
+    def response_message(text):
         print("chatbot 2 text : ", text)
         chat = chatbot(text)
-        word = chat[1]
-        text = chat[0]
-        print('하이', chat[0])
-        print('dhdn', chat[1])
-        chatsearch = FoodDao.chat_food_find(word)
-        print('조회',chatsearch)
-        return chatsearch, text, word, 200
+        intent = chat[0]
+        keyword = chat[1]
+        print('intent', chat[0])
+        print('keyword', chat[1])
+        chatsearch = ''
+        if intent != '인사':
+        # chatsearch = FoodDao.chat_food_find(keyword)
+            chatsearch = ShopDao.search(keyword)
+        print(chatsearch[0])
+        # search = ShopService.shop_rev_predict_by_surprise(chatsearch[0])
+        return chatsearch, intent, keyword, 200
+
 
 class Chatbot(Resource):
     
     @staticmethod
     def get(key : str):
         print("chatbot 1 key : ", key)
-        words = ChatbotService.text(key)
+        words = ChatbotService.response_message(key)
         return words, 200

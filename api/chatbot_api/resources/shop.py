@@ -173,7 +173,7 @@ class ShopDao(ShopDto):
         sql = db.session.query(ShopDto, FoodDto).\
                 filter(ShopDto.shop_id == FoodDto.shop_id).\
                 filter(ShopDto.cat.like('%'+cat_id+'%')).\
-                filter(func.mychatbot.dist(ShopDto.shop_lat, ShopDto.shop_lng,
+                filter(func.mariadb.dist(ShopDto.shop_lat, ShopDto.shop_lng,
                 user_location[0], user_location[1]) <= 1).\
                 order_by(FoodDto.food_rev_cnt.desc()).\
                 group_by(ShopDto.shop_id)
@@ -195,7 +195,7 @@ class ShopDao(ShopDto):
             filter(ShopDto.shop_id == FoodDto.shop_id).\
             filter(or_(ShopDto.shop_name.like('%'+key+'%'),
             FoodDto.food_name.like('%'+key+'%'))).\
-            filter(func.mychatbot.dist(ShopDto.shop_lat, ShopDto.shop_lng,
+            filter(func.mariadb.dist(ShopDto.shop_lat, ShopDto.shop_lng,
             user_location[0], user_location[1]) <= 1).\
             order_by(FoodDto.food_rev_cnt.desc()).\
             group_by(ShopDto.shop_id)       

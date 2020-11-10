@@ -1,4 +1,3 @@
-# terminal에서 pip freeze 하면 아래 리스트 출력됨
 aniso8601==8.0.0
 certifi==2020.6.20
 chardet==3.0.4
@@ -28,3 +27,7 @@ urllib3==1.25.10
 Werkzeug==1.0.1
 wincertstore==0.2
 yarn==0.0.9
+kogpt2-transformers
+kobert-transformers
+transformers==3.0.2
+torch
