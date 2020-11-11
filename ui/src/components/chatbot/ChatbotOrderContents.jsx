@@ -75,13 +75,8 @@ const ChatbotOrderContents = (props) => {
                 <Grid>
                     <Card className={classes.root} square elevation={0} variant="outlined" >
                         <CardActionArea >
-                            <CardMedia
-                                className={classes.media}
-                                image={'https://www.yogiyo.co.kr' + post.food_img}
-                                title="Contemplative Reptile"
-                            />
                             <CardContent>
-                                <Typography variant="h5" className={classes.title}>
+                                <Typography variant="h6" className={classes.title}>
                                     {sessionStorage.getItem("sessionUser")} 님의 주문이 완료 되었습니다.
                                 </Typography>
                                 <Divider variant="inset" variant="middle" />

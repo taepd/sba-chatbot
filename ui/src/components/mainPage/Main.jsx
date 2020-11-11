@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -13,16 +13,28 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import CheckIcon from '@material-ui/icons/Check';
-import main2 from '../img/main2.jpg'
+import Tooltip from '@material-ui/core/Tooltip';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
+
+import main2 from '../img/main2.jpg'
 import MainNavigation from '../common/MainNavigation';
 import MainList from './MainList';
 
 
+const LightTooltip = withStyles((theme) => ({
+    tooltip: {
+        backgroundColor: theme.palette.common.white,
+        color: 'rgba(0, 0, 0, 0.87)',
+        boxShadow: theme.shadows[1],
+        fontSize: 11,
+    },
+}))(Tooltip);
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        minHeight : 600,
+        minHeight: 600,
     },
     wd: {
         width: 1130,
@@ -59,23 +71,23 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         color: theme.palette.getContrastText(pink[500]),
         backgroundColor: pink[500],
-        marginRight:theme.spacing(2),
-        
+        marginRight: theme.spacing(2),
+
     },
     cardroot: {
         width: 700,
     },
-    margt:{
-        marginTop : theme.spacing(2),
+    margt: {
+        marginTop: theme.spacing(2),
     },
-    margtt:{
-        marginTop : theme.spacing(1),
+    margtt: {
+        marginTop: theme.spacing(1),
     },
-    pad:{
-        padding : 25,
+    pad: {
+        padding: 25,
     },
-    margttt:{
-        marginTop : theme.spacing(8)
+    margttt: {
+        marginTop: theme.spacing(8)
     }
 }));
 
@@ -130,14 +142,14 @@ const Main = () => {
                     <>
                         {loggedIn === null
                             ?
-                            <Grid container justify="center" direction="column" alignItems="center" className={classes.margttt}> 
+                            <Grid container justify="center" direction="column" alignItems="center" className={classes.margttt}>
                                 <Card className={classes.cardroot}>
-                                <CardMedia
-                                    className={classes.media}
-                                    image={main2}
-                                    // image="https://images.unsplash.com/photo-1546548970-71785318a17b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2134&q=80"
-                                    title="Paella dish"
-                                />
+                                    <CardMedia
+                                        className={classes.media}
+                                        image={main2}
+                                        // image="https://images.unsplash.com/photo-1546548970-71785318a17b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2134&q=80"
+                                        title="Paella dish"
+                                    />
                                     {/* <CardHeader
                                         avatar={
                                             <Avatar aria-label="recipe" className={classes.avatar}>
@@ -171,10 +183,13 @@ const Main = () => {
                             :
                             <>
                                 <Grid container justify="center" className={classes.wd}>
-                                    <Grid container justify="center" direction="column" alignItems="center" className={classes.title}>
+                                    <Grid container justify="center" direction="row" alignItems="center" className={classes.title}>
                                         <Typography variant="h5" >
                                             {userid} 님을 위한 추천 매장
                                         </Typography>
+                                        <LightTooltip title="사용자 기반 유사도를 분석하여 로그인 유저와 가장 유사한 유저들이 선호하는 아이템을 협업필터링과 하이브리드하여 추천합니다.">
+                                            <HelpOutlineIcon style={{marginLeft:'20px'}}/>
+                                        </LightTooltip>
 
                                     </Grid>
                                     {/* <Divider variant="middle" /> */}
@@ -185,10 +200,13 @@ const Main = () => {
                                     </Grid>
                                 </Grid>
                                 <Grid container justify="center" className={classes.wd}>
-                                    <Grid container justify="center" direction="column" alignItems="center" className={classes.titleb}>
+                                    <Grid container justify="center" direction="row" alignItems="center" className={classes.titleb}>
                                         <Typography variant="h5" >
                                             [{recommendShopName}]과 함께 다른 고객 님들이 찾은 매장
                                     </Typography>
+                                    <LightTooltip title="아이템 기반 유사도를 분석하여 로그인 유저가 높은 평점을 준 아이템과 가장 유사한 아이템을 협업필터링과 하이브리드하여 추천합니다.">
+                                            <HelpOutlineIcon style={{marginLeft:'20px'}}/>
+                                        </LightTooltip>
                                     </Grid>
                                     {/* <Divider variant="middle" /> */}
                                     <Grid container justify="center" spacing={2} >
