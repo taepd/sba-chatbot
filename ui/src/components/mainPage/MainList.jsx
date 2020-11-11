@@ -90,6 +90,7 @@ const MainList = (props) => {
                                         {post.shop_rev_avg} /
                                     </Typography>
                                     <Rating name="iconstar" defaultValue={1} max={1} />
+                                    
                                     <Typography variant="subtitle1" color="textSecondary" className={classes.marr}>
                                         예상 {post.shop_pred_avg}
                                     </Typography>

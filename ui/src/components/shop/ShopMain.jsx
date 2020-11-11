@@ -55,14 +55,19 @@ const ShopMain = ({ match }) => {
 
     useEffect(() => {
         axios.get((() => {
+            setLoading(true)
             if (catif == '전체보기') {
+               
                 return noncaturl
             } else {
+              
                 return caturl
             }
         })())
             .then(res => {
+                setPage(1)  // 페이지 index 리셋
                 setData(res.data)
+            
             })
             .catch(e => {
                 alert(`List Failure`)
@@ -70,6 +75,14 @@ const ShopMain = ({ match }) => {
             })
 
     }, [catif])
+
+       useEffect(() => {
+        if (loading) {
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        }
+    }, [loading]);
 
     const itemsPerPage = 10;
     const [page, setPage] = React.useState(1);

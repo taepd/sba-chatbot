@@ -128,12 +128,13 @@ class ShopDao(ShopDto):
         from chatbot_api.resources.food import FoodDto
         sql = db.session.query(ShopDto, FoodDto).\
                 filter(ShopDto.shop_id == FoodDto.shop_id).\
-                order_by(FoodDto.food_rev_cnt.desc()).\
+                order_by(ShopDto.shop_rev_cnt.desc()).\
                 group_by(ShopDto.shop_id)
 
-        df = pd.read_sql(sql.statement, sql.session.bind)
+        df = pd.read_sql(sql.statement, sql.session.bind)  
 
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
+        df = df.head(200) # 로딩이 길어서 임시적으로 일부만 표시
         return json.loads(df.to_json(orient='records'))
 
     @classmethod
@@ -175,7 +176,7 @@ class ShopDao(ShopDto):
                 filter(ShopDto.cat.like('%'+cat_id+'%')).\
                 filter(func.mariadb.dist(ShopDto.shop_lat, ShopDto.shop_lng,
                 user_location[0], user_location[1]) <= 1).\
-                order_by(FoodDto.food_rev_cnt.desc()).\
+                order_by(ShopDto.shop_rev_cnt.desc()).\
                 group_by(ShopDto.shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
@@ -197,7 +198,7 @@ class ShopDao(ShopDto):
             FoodDto.food_name.like('%'+key+'%'))).\
             filter(func.mariadb.dist(ShopDto.shop_lat, ShopDto.shop_lng,
             user_location[0], user_location[1]) <= 1).\
-            order_by(FoodDto.food_rev_cnt.desc()).\
+            order_by(ShopDto.shop_rev_cnt.desc()).\
             group_by(ShopDto.shop_id)       
 
         # sql = cls.query(ShopDto, FoodDto).from_statement(\
