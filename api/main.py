@@ -2,11 +2,15 @@ from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS, cross_origin
 from chatbot_api.ext.db import url, db, openSession
-from chatbot_api.resources import user
-from chatbot_api.resources.user import UserDto
-from chatbot_api.resources.food import FoodDto
-from chatbot_api.resources.order_review import OrderReviewDto
+
+
+# from chatbot_api.resources import user
+# from chatbot_api.resources.user import UserDto
+# from chatbot_api.resources.shop import ShopDto
+# from chatbot_api.resources.food import FoodDto
+# from chatbot_api.resources.order_review import OrderReviewDto
 import numpy as np
+from numpy.lib.function_base import insert
 import pandas as pd
 print('========== url ==========')
 print(url)
@@ -38,9 +42,11 @@ with app.app_context():
     db.create_all()
 '''
 
+
 # 테이블 일괄 생성
 with app.app_context():
     from chatbot_api.ext.routes import initialize_routes  # db에서 sql를 첫 로딩시 실행하기 위한 임시 방편.. 모듈 로딩 관련
+    # print('테이블 일괄 생성 완료')
     db.create_all()
 
 
@@ -80,8 +86,7 @@ initialize_routes(api)
 # food/order_review 테이블 데이터 일괄 입력
 def insert_at_all(fila_name, dto):
     chunksize = 10 ** 4
-    # for cnt, chunk in enumerate(pd.read_csv(f'./data/db/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)): # 혜정
-    for cnt, chunk in enumerate(pd.read_csv(f'./data/csv/important/db/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)): # 영돈
+    for cnt, chunk in enumerate(pd.read_csv(f'./../data/db/{fila_name}.csv', sep=',', encoding='utf-8-sig', chunksize=chunksize)): # 영돈
         df = chunk.replace(np.nan, 1, regex=True)
         # print(df.head())
 
@@ -92,11 +97,21 @@ def insert_at_all(fila_name, dto):
         session.close()
         print(f'{cnt*chunksize}건 입력 완료')
 
+# ######## 테이블 데이터 입력#########
+# 최초 입력 후 주석처리 해야 함
 
-# food 테이블 입력
+# user 테이블 입력
+# insert_at_all('user', UserDto)
+
+# # shop 테이블 입력
+# insert_at_all('shop', ShopDto)
+
+# # food 테이블 입력
 # insert_at_all('food', FoodDto)        
-# order_review 테이블 입력
-# insert_at_all('order_review(remove_userid_nan)', OrderReviewDto)        
+
+# # order_review 테이블 입력
+# insert_at_all('order_review', OrderReviewDto)        
+# ##################################
 
 
 # shop_seoul = df.loc[df['shop_addr'].str.contains('서울', na=False)]

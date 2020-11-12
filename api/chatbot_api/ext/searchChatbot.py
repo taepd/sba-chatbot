@@ -17,7 +17,7 @@ from sklearn.naive_bayes import MultinomialNB
 komoran = konlpy.tag.Komoran()
 
 ##########데이터 로드
-chatbot_data = pd.read_csv('./data/NLP_data/running.csv')
+chatbot_data = pd.read_csv('./../data/NLP_data/running.csv')
 data = list(chatbot_data['data'])
 label = list(chatbot_data['label'])
 

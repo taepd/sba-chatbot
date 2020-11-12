@@ -1,7 +1,5 @@
 # from sqlalchemy import Column, Integer, Float, String, ForeignKey, create_engine
 # from sqlalchemy.dialects.mysql import DECIMAL, VARCHAR, LONGTEXT
-from pdb import main
-from typing import List
 from flask import request, session
 from flask_cors import cross_origin
 
@@ -612,8 +610,7 @@ class Access(Resource):
 if __name__ == '__main__':
      
     # 데이터 일괄 입력
-    # df = pd.read_csv('./data/db/user.csv', sep=',', encoding='utf-8-sig') # 혜정
-    df = pd.read_csv('./data/csv/important/db/user.csv', sep=',', encoding='utf-8-sig') # 영돈
+    df = pd.read_csv('./../../../data/db/user.csv', sep=',', encoding='utf-8-sig') 
     df = df.replace(np.nan, 0, regex=True)
 
 

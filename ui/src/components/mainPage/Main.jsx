@@ -17,7 +17,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 
-import main2 from '../img/main2.jpg'
+import main2 from '../../asset/img/main2.jpg'
 import MainNavigation from '../common/MainNavigation';
 import MainList from './MainList';
 
@@ -187,7 +187,7 @@ const Main = () => {
                                         <Typography variant="h5" >
                                             {userid} 님을 위한 추천 매장
                                         </Typography>
-                                        <LightTooltip title="사용자 기반 유사도를 분석하여 로그인 유저와 가장 유사한 유저들이 선호하는 아이템을 협업필터링과 하이브리드하여 추천합니다.">
+                                        <LightTooltip title="사용자 기반 유사도를 분석하여 로그인 유저와 가장 유사한 유저들이 선호하는 아이템을 추천합니다.">
                                             <HelpOutlineIcon style={{marginLeft:'20px'}}/>
                                         </LightTooltip>
 
@@ -204,7 +204,7 @@ const Main = () => {
                                         <Typography variant="h5" >
                                             [{recommendShopName}]과 함께 다른 고객 님들이 찾은 매장
                                     </Typography>
-                                    <LightTooltip title="아이템 기반 유사도를 분석하여 로그인 유저가 높은 평점을 준 아이템과 가장 유사한 아이템을 협업필터링과 하이브리드하여 추천합니다.">
+                                    <LightTooltip title="아이템 기반 유사도를 분석하여 로그인 유저가 높은 평점을 준 아이템과 가장 유사한 아이템을 추천합니다.">
                                             <HelpOutlineIcon style={{marginLeft:'20px'}}/>
                                         </LightTooltip>
                                     </Grid>
