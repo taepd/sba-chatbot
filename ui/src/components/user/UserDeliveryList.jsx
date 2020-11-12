@@ -104,6 +104,7 @@ const UserDeliveryList = (props) => {
                                         {rdate.getFullYear() + "-" + (rdate.getMonth()+1) + "-" + rdate.getDate()+" "+ rdate.getHours()+":"+rdate.getMinutes()+ day()}
                                     </Typography>
                                     <Typography color="textSecondary" className={classes.listtext}>{post.food_name}</Typography>
+                                    <Typography color="Primary" className={classes.listtext} noWrap>{post.review_cmnt}</Typography>
                                 </React.Fragment>
                             }
                         />

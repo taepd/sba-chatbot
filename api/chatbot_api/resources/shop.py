@@ -174,7 +174,7 @@ class ShopDao(ShopDto):
         sql = db.session.query(ShopDto, FoodDto).\
                 filter(ShopDto.shop_id == FoodDto.shop_id).\
                 filter(ShopDto.cat.like('%'+cat_id+'%')).\
-                filter(func.mariadb.dist(ShopDto.shop_lat, ShopDto.shop_lng,
+                filter(func.mychatbot.dist(ShopDto.shop_lat, ShopDto.shop_lng,
                 user_location[0], user_location[1]) <= 1).\
                 order_by(ShopDto.shop_rev_cnt.desc()).\
                 group_by(ShopDto.shop_id)
@@ -196,7 +196,7 @@ class ShopDao(ShopDto):
             filter(ShopDto.shop_id == FoodDto.shop_id).\
             filter(or_(ShopDto.shop_name.like('%'+key+'%'),
             FoodDto.food_name.like('%'+key+'%'))).\
-            filter(func.mariadb.dist(ShopDto.shop_lat, ShopDto.shop_lng,
+            filter(func.mychatbot.dist(ShopDto.shop_lat, ShopDto.shop_lng,
             user_location[0], user_location[1]) <= 1).\
             order_by(ShopDto.shop_rev_cnt.desc()).\
             group_by(ShopDto.shop_id)       
@@ -225,11 +225,11 @@ from surprise import dump
 
 class ShopService:
 
-    @staticmethod
-    def load_model_from_file():
-        fname = r'./modeling/recommender_mf.h5'
-        model = load_model(fname)
-        return model
+    # @staticmethod
+    # def load_model_from_file():
+    #     fname = r'./modeling/recommender_mf.h5'
+    #     model = load_model(fname)
+    #     return model
 
     @staticmethod
     def shop_rev_predict_by_keras(model, userid, shop_id):
@@ -385,8 +385,7 @@ if __name__ == '__main__':
 
     # import pdb
     # 데이터 일괄 입력
-    # df = pd.read_csv('./data/db/shop.csv', sep=',', encoding='utf-8-sig') # 혜정
-    df = pd.read_csv('./data/csv/important/db/shop.csv', sep=',', encoding='utf-8-sig') # 영돈
+    df = pd.read_csv('./../../../data/db/shop.csv', sep=',', encoding='utf-8-sig') # 영돈
     df = df.replace(np.nan, '', regex=True)
 
     # ------------------

@@ -6,7 +6,7 @@ baseurl = os.path.dirname(os.path.abspath(__file__))
 
 
 from surprise import Reader, Dataset, Trainset
-from surprise import SVD, NMF, KNNBaseline, KNNBasic
+from surprise import SVD, SVDpp, NMF, KNNBaseline, KNNBasic
 from surprise.model_selection import train_test_split, cross_validate
 import pandas as pd
 
@@ -15,9 +15,11 @@ from chatbot_api.ext.db import db
 데이터 로딩
 surprise data형식에 맞춰 dataframe 변환
 """
-# 파일에서 불러옴
-# df = pd.read_csv("./data/csv/important/db/order_review(remove_userid_nan).csv", sep=",", encoding='utf-8-sig', error_bad_lines=False, engine="python")
+# 파일에서 불러옴 
+# db 첫 생성 시 이 코드로 해야함. 
+# df = pd.read_csv("./../data/db/order_review.csv", sep=",", encoding='utf-8-sig', error_bad_lines=False, engine="python")
 
+# db 생성 후엔 위 코드 주석처리 하고 아래 코드 활성화
 # db에서 불러옴
 
 sql = db.engine.execute("select * from order_review")
@@ -166,7 +168,7 @@ def prep_surprise_dataset(df, id_column_name):
 def train_model(model, data, train, test):
 
     algo = model(n_factors=64, n_epochs=20, random_state=42)
-    # cross_validate(algo, data, measures=['rmse', 'mae'], cv=5, verbose=True)
+    cross_validate(algo, data, measures=['rmse', 'mae'], cv=5, verbose=True)
     # model.fit(train)
     algo.fit(train)
 
@@ -186,7 +188,8 @@ def hook_shop(df, model):
 
     return algo, df_shop
 
-shop_algo, df_shop = hook_shop(df, KNNBaseline)
+shop_algo, df_shop = hook_shop(df, SVDpp)
+# shop_algo, df_shop = hook_shop(df, KNNBaseline)
 
 
 # 예측 평점
@@ -208,7 +211,7 @@ def hook_food(df, model):
 
     return algo, df_food
 
-food_algo, df_food = hook_food(df, SVD)
+food_algo, df_food = hook_food(df, SVDpp)
 
 
 def predict_food(user, item):

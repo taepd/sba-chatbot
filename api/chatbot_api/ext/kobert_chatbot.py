@@ -115,8 +115,8 @@ def kobert_input(tokenizer, str, device = None, max_seq_len = 512):
     return data
 
 def load_answer():
-    category_path = "./chatbot/bert_c_most_update.txt"
-    answer_path = "./chatbot/bert_a_most_update.txt"
+    category_path = "./../data/NLP_data/bert_c_most_update.txt"
+    answer_path = "./../data/NLP_data/bert_a_most_update.txt"
 
     c_f = open(category_path,'r',encoding='utf-8')
     a_f = open(answer_path,'r',encoding='utf-8')
@@ -142,7 +142,7 @@ def load_answer():
 
 # #############################
 # 로딩 init용
-save_ckpt_path = "./chatbot/kobert-wellnesee-text-classification.pth"
+save_ckpt_path = "./../data/NLP_data/kobert-wellnesee-text-classification.pth"
 
 #답변과 카테고리 불러오기
 category, answer = load_answer()
