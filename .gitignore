@@ -26,6 +26,9 @@ yarn-error.log*
 /data
 api/data
 
+# security
+dont_upload.py
+
 # data
 *.pth
 *.h5
