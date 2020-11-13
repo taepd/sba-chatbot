@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from chatbot_api.ext.dont_upload import db_config
 
 '''
 어플리케이션이 SQLAlchemy ORM을 사용한다면, 
@@ -15,11 +16,11 @@ db = SQLAlchemy()
 
 # aws rds 일때
 config = {
-    'user': 'mychatbot',
-    'password': 'mychatbot',
-    'host': 'mychatbot.cghkqk2zeb0q.ap-northeast-2.rds.amazonaws.com',
-    'port': '3306',
-    'database': 'mychatbot'
+    'user': db_config['user'],
+    'password': db_config['password'],
+    'host': db_config['host'],
+    'port': db_config['port'],
+    'database': db_config['database']
 }
 
 # local mariadb 일 때
