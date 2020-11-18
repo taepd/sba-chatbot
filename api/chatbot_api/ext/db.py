@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from chatbot_api.ext.dont_upload import db_config
+from chatbot_api.ext.do_not_upload import db_config
 
 '''
 어플리케이션이 SQLAlchemy ORM을 사용한다면, 
@@ -22,6 +22,7 @@ config = {
     'port': db_config['port'],
     'database': db_config['database']
 }
+
 
 # local mariadb 일 때
 # config = {

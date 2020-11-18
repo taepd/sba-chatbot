@@ -168,7 +168,7 @@ def prep_surprise_dataset(df, id_column_name):
 def train_model(model, data, train, test):
 
     algo = model(n_factors=64, n_epochs=20, random_state=42)
-    cross_validate(algo, data, measures=['rmse', 'mae'], cv=5, verbose=True)
+    # cross_validate(algo, data, measures=['rmse', 'mae'], cv=5, verbose=True)
     # model.fit(train)
     algo.fit(train)
 
@@ -188,7 +188,7 @@ def hook_shop(df, model):
 
     return algo, df_shop
 
-shop_algo, df_shop = hook_shop(df, SVDpp)
+shop_algo, df_shop = hook_shop(df, SVD)
 # shop_algo, df_shop = hook_shop(df, KNNBaseline)
 
 
@@ -211,7 +211,7 @@ def hook_food(df, model):
 
     return algo, df_food
 
-food_algo, df_food = hook_food(df, SVDpp)
+food_algo, df_food = hook_food(df, SVD)
 
 
 def predict_food(user, item):
