@@ -217,9 +217,9 @@ class ShopDao(ShopDto):
 # ==============================================================
 # ==============================================================
 
-from keras.models import Sequential
-from keras.layers import Dense, Activation
-from keras.models import load_model
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Activation
+from tensorflow.keras.models import load_model
 
 from surprise import dump
 
