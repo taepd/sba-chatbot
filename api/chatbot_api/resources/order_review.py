@@ -10,17 +10,6 @@ import os
 import numpy as np
 import pandas as pd
 
-from sklearn.ensemble import RandomForestClassifier  # rforest
-from sklearn.tree import DecisionTreeClassifier  # dtree
-from sklearn.ensemble import RandomForestClassifier  # rforest
-from sklearn.naive_bayes import GaussianNB  # nb
-from sklearn.neighbors import KNeighborsClassifier  # knn
-from sklearn.svm import SVC  # svm
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import KFold  # k value is understood as count
-from sklearn.model_selection import cross_val_score
-from pathlib import Path
-
 from chatbot_api.ext.db import db, openSession
 from chatbot_api.util.file_handler import FileReader
 

@@ -92,7 +92,6 @@ class Home(Resource):
        
         return recommedation_list, 200        
  
- 
         # return {'message': 'Server Start'}
 
 

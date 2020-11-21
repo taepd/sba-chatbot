@@ -11,20 +11,6 @@ import pandas as pd
 import joblib
 import konlpy
 # from eunjeon import Mecab
-from bs4 import BeautifulSoup
-
-
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.ensemble import RandomForestClassifier  # rforest
-from sklearn.tree import DecisionTreeClassifier  # dtree
-from sklearn.ensemble import RandomForestClassifier  # rforest
-from sklearn.naive_bayes import GaussianNB  # nb
-from sklearn.neighbors import KNeighborsClassifier  # knn
-from sklearn.svm import SVC  # svm
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import KFold  # k value is understood as count
-from sklearn.model_selection import cross_val_score
-from pathlib import Path
 
 from chatbot_api.ext.db import db, openSession
 from chatbot_api.util.file_handler import FileReader
@@ -93,26 +79,22 @@ class FoodDao(FoodDto):
 
     @classmethod
     def food_find_by_shopid(cls,shop_id):
-        print("==============test=====================")
-        # print(shop_id)
-        # print(cls.query.filter_by(shop_id = shopid))
         # sql = cls.query.filter_by(shop_id = shopid)
         sql = cls.query.filter_by(shop_id = shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
-        # print(df)
+
         return json.loads(df.to_json(orient='records'))
         # return cls.query.filter_by(shop_id = shopid).all()
     
     @classmethod
     def food_find_by_foodid(cls,food_id):
-        print("메뉴찾자ㅏ아아아아" + food_id)
         # sql = cls.query.filter_by(food_id = food_id)
         # df = pd.read_sql(sql.statement, sql.session.bind)
         return cls.query.filter_by(food_id = food_id).first()
 
     @classmethod
     def chat_food_find(cls, key):
-        # print('basequery',cls.query)
+
         sql = cls.query.filter(FoodDto.food_name.like('%'+key+'%')).\
             order_by(FoodDao.food_rev_cnt.desc())
         df = pd.read_sql(sql.statement,sql.session.bind)
@@ -125,7 +107,7 @@ class Food(Resource):
     def get(food_id : int):
         food = FoodDao.food_find_by_foodid(food_id)
         print(food)
-        # print(type(shop))
+
         return food.json, 200
 
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom'
 import axios from 'axios'
 
 import AppBar from '@material-ui/core/AppBar';
@@ -11,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-import { Link, useHistory } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton';
 
 
@@ -157,7 +156,7 @@ const Header = props => {
                     <Toolbar className={classes.toolbar}>
                         <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
                             <Link to="/" className={classes.toolbarLink}>
-                                메추리
+                                오늘 뭐 먹지?
                             </Link>
                         </Typography>
                         <div className={classes.search}>

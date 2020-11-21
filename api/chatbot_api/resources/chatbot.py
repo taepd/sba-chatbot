@@ -10,15 +10,21 @@ from chatbot_api.resources.home import HomeService
 from chatbot_api.ext.searchChatbot import process_nb
 from chatbot_api.ext.kobert_chatbot import process_kobert
 
+
+# ==============================================================
+# ==============================================================
+# ====================     Service  ============================
+# ==============================================================
+# ==============================================================
+
 class ChatbotService:
     
-    @staticmethod
-    def load_model_from_file():
-        print("어디까지 오니 ================")
-        fname = r'./modeling/chatbot_model.h5'
-        model = joblib.load(fname)
-        print("모델 리턴전 ")
-        return model
+    # @staticmethod
+    # def load_model_from_file():
+    #     fname = r'./modeling/chatbot_model.h5'
+    #     model = joblib.load(fname)
+    #     print("모델 리턴전 ")
+    #     return model
 
     @staticmethod
     def response_message(text):
@@ -62,6 +68,11 @@ class ChatbotService:
             
         return chatsearch, intent, cat, 200
 
+# ==============================================================
+# ==============================================================
+# =================     Controller  ============================
+# ==============================================================
+# ==============================================================
 
 class Chatbot(Resource):
     
