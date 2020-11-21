@@ -8,19 +8,7 @@ import json
 import os
 import numpy as np
 import pandas as pd
-from sqlalchemy import or_
-
-
-from sklearn.ensemble import RandomForestClassifier  # rforest
-from sklearn.tree import DecisionTreeClassifier  # dtree
-from sklearn.ensemble import RandomForestClassifier  # rforest
-from sklearn.naive_bayes import GaussianNB  # nb
-from sklearn.neighbors import KNeighborsClassifier  # knn
-from sklearn.svm import SVC  # svm
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import KFold  # k value is understood as count
-from sklearn.model_selection import cross_val_score
-from pathlib import Path
+from haversine import haversine
 
 from chatbot_api.ext.db import db, openSession
 from chatbot_api.util.file_handler import FileReader
@@ -30,8 +18,8 @@ from chatbot_api.resources.user import UserDao, UserDto
 from chatbot_api.resources.order_review import OrderReviewDto, OrderReviewDao
 from chatbot_api.ext.model import df_shop, predict_shop, df_food, predict_food
 
-from haversine import haversine
 import sqlalchemy
+from sqlalchemy import or_
 from sqlalchemy import func
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from sqlalchemy.sql.expression import cast
@@ -158,8 +146,6 @@ class ShopDao(ShopDto):
     def find_limit(cls):
         # sql = cls.query.join(FoodDto).filter(FoodDto.shop_id == cls.shop_id).all()
         sql = cls.query
-        # print(type(sql))
-        # print('**************test******************')
         df = pd.read_sql(sql.statement, sql.session.bind)
         df = df.head(50)
         return json.loads(df.to_json(orient='records'))
@@ -186,9 +172,7 @@ class ShopDao(ShopDto):
 
     @classmethod
     def search(cls,key):
-        from chatbot_api.resources.food import FoodDto
-        # sql = cls.query.filter(ShopDto.shop_name.like('%'+key+'%'))
-        # df = pd.read_sql(sql.statement,sql.session.bind)
+        from chatbot_api.resources.food import FoodDto  # circular import 우회
         
         user_location = (session['user']['lat'], session['user']['lng'])
 
@@ -207,7 +191,6 @@ class ShopDao(ShopDto):
 
         df = pd.read_sql(sql.statement,sql.session.bind)
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
-        # print(df)
 
         return json.loads(df.to_json(orient='records'))
 
@@ -316,7 +299,7 @@ class Shopscat(Resource):
 
     #     return shopscat, 200
 
-    # surprise로 만든 svd모델
+    # surprise로 만든 모델
     @staticmethod
     def get(cat_id : str):
         print('select catid : ' + cat_id)
@@ -397,7 +380,6 @@ if __name__ == '__main__':
 
     # pdb.set_trace()
     # -------------------
-
 
     Session = openSession()
     session = Session()

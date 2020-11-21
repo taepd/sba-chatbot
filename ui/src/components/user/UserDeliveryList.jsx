@@ -60,25 +60,25 @@ const UserDeliveryList = (props) => {
     const rdate = new Date(date);
 
     const day =() =>{
-        if (rdate.getDay() == 0) {
+        if (rdate.getDay() === 0) {
             return ' (일)'
         }
-        else if (rdate.getDay() == 1) {
+        else if (rdate.getDay() === 1) {
             return ' (월)'
         }
-        else if (rdate.getDay() == 2) {
+        else if (rdate.getDay() === 2) {
             return ' (화)'
         }
-        else if (rdate.getDay() == 3) {
+        else if (rdate.getDay() === 3) {
             return ' (수)'
         }
-        else if (rdate.getDay() == 4) {
+        else if (rdate.getDay() === 4) {
             return ' (목)'
         }
-        else if (rdate.getDay() == 5) {
+        else if (rdate.getDay() === 5) {
             return ' (금)'
         }
-        else if (rdate.getDay() == 6) {
+        else if (rdate.getDay() === 6) {
             return ' (토)'
         }
     }

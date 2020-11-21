@@ -75,7 +75,8 @@ model = MultinomialNB(alpha=1.0)
 ##########모델 학습
 
 model.fit(x_train, y_train)
-print('============= chatbot 모델 학습 완료 ==============')
+print('========= chatbot 모델 학습 완료 ==========')
+
 
 ##########모델 예측
 
@@ -148,7 +149,6 @@ def process_nb(text):
         text = 'none'
         return text
 
-    print("장난하냐", text)
 ##########모델 저장
 
 # joblib.dump(model,'chatbot_model.h5')

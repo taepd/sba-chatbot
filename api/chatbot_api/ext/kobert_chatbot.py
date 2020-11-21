@@ -161,6 +161,8 @@ model.load_state_dict(checkpoint['model_state_dict']) #모델 저장 & 불러오
 model.eval()
 
 tokenizer = get_tokenizer()
+
+print('========= kobert 모델 학습 완료 ==========')
 # #############################
 
 def process_kobert(text):

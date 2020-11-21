@@ -221,27 +221,6 @@ const Navigation = () => {
                         </Typography>
                     </Grid>
                 </Button>
-
-                {/* <BottomNavigation
-                        value={value}
-                        onChange={(event, newValue) => {
-                            setValue(newValue);
-                        }}
-                        showLabels
-                        className={classes.root}
-                        >
-                            <BottomNavigationAction label="전체보기" href="/shops"/>
-                            <BottomNavigationAction label="프렌차이즈"/>
-                            <BottomNavigationAction label="치킨"/>
-                            <BottomNavigationAction label="피자/양식"/>
-                            <BottomNavigationAction label="중국집"/>
-                            <BottomNavigationAction label="한식"/>
-                            <BottomNavigationAction label="일식/돈까스"/>
-                            <BottomNavigationAction label="족발/보쌈"/>
-                            <BottomNavigationAction label="야식"/>
-                            <BottomNavigationAction label="분식"/>
-                            <BottomNavigationAction label="카페/디저트"/>
-                    </BottomNavigation> */}
             </Grid>
         </React.Fragment>
     );
