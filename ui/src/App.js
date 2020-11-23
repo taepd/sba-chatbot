@@ -92,7 +92,7 @@ const App = () => {
                     </div>
                 }
             </main>
-            <Footer title="Footer" description="SBA React Machine Learning Project Team#1" />
+            <Footer title="오늘 뭐 먹지?" description="SBA React-Flask and Machine Learning Project Team#1" />
         </Router>
         {/* </div> */}
     </>)
