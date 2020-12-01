@@ -3,6 +3,7 @@ from flask_restful import Api
 from flask_cors import CORS, cross_origin
 from chatbot_api.ext.db import url, db, openSession
 
+from datetime import timedelta 
 
 # from chatbot_api.resources import user
 # from chatbot_api.resources.user import UserDto
@@ -30,6 +31,8 @@ CORS(app, supports_credentials=True, resources={r'/*': {"origins": "*"}})
 
 app.config['SQLALCHEMY_DATABASE_URI'] = url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=30) # 세션유지 시간을 30분으로 지정
+
 # app.config [ 'CORS_HEADERS' ]  =  'Content-Type'
 db.init_app(app)
 api = Api(app)
