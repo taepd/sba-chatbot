@@ -34,6 +34,8 @@ do_not_upload.py
 *.h5
 *.csv
 *.whl
+*.cert
+*.key
 
 
 #pyc
