@@ -4,13 +4,13 @@
 
 ## **프로젝트 설명**
 
----
+
 
 ### **기획 의도**
 
 - IT 서비스에 있어서 개인화 시스템은 이제 선택이 아닌 필수인 시대가 되었습니다. 그래서 넷플릭스, 왓차 등에서 이미 성공적으로 자리매김한 추천시스템을 코로나 시대 더욱 주목받고 있는 음식배달 서비스에 접목시켜보았습니다. 또한 챗봇을 탑재하여 대화형 추천/검색/주문이 가능하도록 하였습니다.
 
----
+
 
 ### **구성**
 
@@ -26,7 +26,7 @@
     - 챗봇(ChatBot)
         - 작성 중
 
----
+
 
 ### 실행 방법
 
@@ -35,11 +35,11 @@
     - ex) `yarn` 으로 모듈 다운로드 후, `yarn start` 로 실행
 - BackEnd
     - api폴더를 다운받고 `requirements.txt`의 패키지를 다운받은 후, api폴더 상에서 `[run.py](http://run.py)` 를 실행합니다.
-    - ex) `pip install -r requirements.txt` 로 패키지 설치 후, `python[run.py](http://run.py)` 로 실행
+    - ex) `pip install -r requirements.txt` 로 패키지 설치 후, `python run.py` 로 실행
 
 ## etc.
 
----
+
 
 - [http://react-flask.taepd.p-e.kr](http://react-flask.taepd.p-e.kr/) 에서 본 프로젝트를 직접 테스트해 볼 수 있습니다.
 - 프로젝트에 대한 보다 자세한 설명은 (링크 추가할 것)에 있습니다.
