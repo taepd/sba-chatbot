@@ -1,12 +1,13 @@
-import numpy as np
-from bs4 import BeautifulSoup
 import re
+import pickle
+
+import joblib
+from bs4 import BeautifulSoup
+import numpy as np
 import pandas as pd
 import konlpy
-import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
-import pickle
 from sklearn.naive_bayes import MultinomialNB
 # from eunjeon import Mecab
 # from dataCreate import dataCreate
@@ -151,5 +152,5 @@ def process_nb(text):
 
 ##########모델 저장
 
-# joblib.dump(model,'chatbot_model.h5')
 # print("저장 되었나")
+# joblib.dump(model,'chatbot_model.h5')
