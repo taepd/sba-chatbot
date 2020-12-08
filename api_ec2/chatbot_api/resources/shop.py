@@ -166,8 +166,8 @@ class ShopDao(ShopDto):
                 group_by(ShopDto.shop_id)
         df = pd.read_sql(sql.statement, sql.session.bind)
         df = df.loc[:,~df.columns.duplicated()] # 중복 컬럼 제거
-        print('*********')
-        print(df)
+        # print('*********')
+        # print(df)
         return json.loads(df.to_json(orient='records'))
 
     @classmethod
@@ -272,7 +272,7 @@ class Shops(Resource):
 
     @staticmethod
     def get():
-        print('select all')
+        # print('select all')
         shops = ShopDao.find_all()
         # print('shops: ', shops)
         # test = ShopDao.find_cat()
@@ -368,7 +368,7 @@ if __name__ == '__main__':
 
     # import pdb
     # 데이터 일괄 입력
-    df = pd.read_csv('./../../../data/db/shop.csv', sep=',', encoding='utf-8-sig') # 영돈
+    df = pd.read_csv('./../../../data/db/shop.csv', sep=',', encoding='utf-8-sig')
     df = df.replace(np.nan, '', regex=True)
 
     # ------------------
