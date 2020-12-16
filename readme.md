@@ -37,5 +37,5 @@
 
 
 - [http://react-flask.taepd.p-e.kr](http://react-flask.taepd.p-e.kr/) 에서 본 프로젝트를 직접 테스트해 볼 수 있습니다.
-- 프로젝트에 대한 보다 자세한 설명은 (링크 추가할 것)에 있습니다.
+- 프로젝트에 대한 보다 자세한 설명은 [여기](https://www.notion.so/taepd/f01d4ba61bd84cb58d7a426db23ba091)에 있습니다.
 - raw data 및 preprocessing data 등의 데이터는 업로드하지 않았습니다. 프로젝트에 대한 보다 자세한 설명을 참조바랍니다.
