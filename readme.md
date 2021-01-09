@@ -1,6 +1,6 @@
 # **🍔 오늘 뭐 먹지? - 추천시스템과 챗봇을 적용한 배달 WebApp Project**
 
-
+![screenshot](./images/screenshot.png)
 ## **프로젝트 설명**
 
 
