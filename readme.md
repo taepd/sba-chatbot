@@ -18,7 +18,7 @@
     - **Flask**로 **REST API**를 구현하였습니다. DB는 **MariaDB**를 사용하였고 **SqlAlchemy**를 이용해 **ORM**를 활용하여 연계하였습니다.
 - **Machine Learning**
     - 추천시스템(recommender system)
-        - **MF(Matrix Factorization) 알고리즘**을 **tensorflow**를 기반으로 구현하였습니다. -> 성능상의 문제를 해결하기 위해 **Surprise**로 대체하였습니다.
+        - **MF(Matrix Factorization) 알고리즘**을 **tensorflow**를 기반으로 구현하였습니다. -> 성능상의 문제를 해결하기 위해 **Surprise** library를 활용하여 SVD기반으로 대체하였습니다.
         - **잠재요인/최근접이웃 협업필터링**을 사용하여 예상평점 및 사용자/아이템 기반 유사도 추천을 구현하였습니다.
     - 챗봇(ChatBot)
         - 작성 중
